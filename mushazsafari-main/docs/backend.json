@@ -1,0 +1,93 @@
+
+{
+  "entities": {
+    "Itinerary": {
+      "title": "Itinerary",
+      "description": "A bookable safari package.",
+      "type": "object",
+      "properties": {
+        "title": { "type": "string" },
+        "slug": { "type": "string" },
+        "tagline": { "type": "string" },
+        "shortDescription": { "type": "string" },
+        "overview": { "type": "string" },
+        "durationDays": { "type": "number" },
+        "durationNights": { "type": "number" },
+        "priceFrom": { "type": "number" },
+        "currency": { "type": "string", "default": "USD" },
+        "tourType": { "type": "string" },
+        "difficulty": { "type": "string" },
+        "bestSeason": { "type": "string" },
+        "heroImage": { "type": "string" },
+        "gallery": { "type": "array", "items": { "type": "string" } },
+        "destinations": { "type": "array", "items": { "type": "string" } },
+        "highlights": { "type": "array" },
+        "timeline": { "type": "array" },
+        "included": { "type": "array" },
+        "excluded": { "type": "array" },
+        "pricingNotes": { "type": "string" },
+        "ctaText": { "type": "string" },
+        "trustBadges": { "type": "array" },
+        "status": { "type": "string", "enum": ["active", "draft", "archived"] },
+        "featured": { "type": "boolean" },
+        "seo": { "type": "object" },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      }
+    },
+    "Destination": {
+      "title": "Destination",
+      "description": "Informational guide for a park or region.",
+      "type": "object",
+      "properties": {
+        "name": { "type": "string" },
+        "circuit": { "type": "string" },
+        "type": { "type": "string" },
+        "distance": { "type": "string" },
+        "featuredImage": { "type": "string" },
+        "shortDescription": { "type": "string" },
+        "description": { "type": "string" },
+        "status": { "type": "string", "enum": ["active", "draft"] }
+      }
+    },
+    "Booking": {
+      "title": "Booking",
+      "description": "A customer reservation or quote request.",
+      "type": "object",
+      "properties": {
+        "customerName": { "type": "string" },
+        "email": { "type": "string" },
+        "phone": { "type": "string" },
+        "startDate": { "type": "string" },
+        "endDate": { "type": "string" },
+        "adults": { "type": "number" },
+        "children": { "type": "number" },
+        "tier": { "type": "string" },
+        "budget": { "type": "string" },
+        "requests": { "type": "string" },
+        "status": { "type": "string", "enum": ["pending", "confirmed", "cancelled"] }
+      }
+    }
+  },
+  "auth": {
+    "providers": ["password"]
+  },
+  "firestore": {
+    "/itineraries/{id}": {
+      "schema": { "$ref": "#/entities/Itinerary" },
+      "description": "Master safari packages."
+    },
+    "/destinations/{id}": {
+      "schema": { "$ref": "#/entities/Destination" },
+      "description": "Regional guides."
+    },
+    "/bookings/{id}": {
+      "schema": { "$ref": "#/entities/Booking" },
+      "description": "Client reservation requests."
+    },
+    "/system/config": {
+      "schema": "object",
+      "description": "Global settings."
+    }
+  }
+}

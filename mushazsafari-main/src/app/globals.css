@@ -1,0 +1,108 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 48 33% 96%; /* Off White #F8F7F3 */
+    --foreground: 0 0% 12%; /* Charcoal #1E1E1E */
+    --card: 0 0% 100%;
+    --card-foreground: 0 0% 12%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 0 0% 12%;
+    
+    /* Forest Green #23412E */
+    --primary: 142 30% 20%;
+    --primary-foreground: 48 33% 96%;
+    
+    /* Safari Gold #B68D40 */
+    --secondary: 39 48% 48%;
+    --secondary-foreground: 0 0% 100%;
+    
+    /* Warm Sand #E8DDC4 */
+    --muted: 41 41% 84%;
+    --muted-foreground: 0 0% 40%;
+    
+    /* Sunset Orange #D97A32 */
+    --accent: 26 68% 52%;
+    --accent-foreground: 48 33% 96%;
+    
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 41 20% 80%;
+    --input: 41 20% 80%;
+    --ring: 142 30% 20%;
+    --radius: 0.75rem;
+  }
+
+  .dark {
+    --background: 0 0% 7%;
+    --foreground: 48 33% 96%;
+    --primary: 39 48% 48%;
+    --primary-foreground: 0 0% 12%;
+    --muted: 0 0% 15%;
+    --muted-foreground: 0 0% 65%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground antialiased selection:bg-secondary/30;
+    font-feature-settings: "ss01", "ss02", "cv01", "cv02";
+  }
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-serif tracking-tight text-primary;
+  }
+}
+
+/* Optimization: Hardware Acceleration */
+.accelerate {
+  will-change: transform, opacity;
+  transform: translateZ(0);
+}
+
+.font-display {
+  font-family: var(--font-display), serif;
+}
+
+.font-body {
+  font-family: var(--font-sans), sans-serif;
+}
+
+.font-space {
+  font-family: var(--font-space), sans-serif;
+}
+
+/* Lenis Smooth Scroll Fix */
+html.lenis {
+  height: auto;
+}
+
+.lenis.lenis-smooth {
+  scroll-behavior: auto;
+}
+
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+/* Glass Morphism */
+.glass {
+  @apply bg-white/10 backdrop-blur-xl border border-white/20;
+}
+
+/* Luxury Transitions */
+.reveal-up {
+  @apply opacity-0 translate-y-10 transition-all duration-700 ease-out;
+}
+
+.reveal-up.active {
+  @apply opacity-100 translate-y-0;
+}

@@ -1,0 +1,58 @@
+
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    
+    // 1. PUBLIC CONTENT (READ ONLY)
+    // Authorization for visitors to explore the Safari Collection and Atlas.
+    match /itineraries/{id} {
+      allow get, list: if resource.data.status == 'active';
+    }
+    match /destinations/{id} {
+      allow get, list: if resource.data.status == 'active';
+    }
+    match /hero_slides/{id} {
+      allow get, list: if true;
+    }
+    match /media/{id} {
+      allow get, list: if true;
+    }
+    match /categories/{id} {
+      allow get, list: if true;
+    }
+
+    // 2. PUBLIC SUBMISSIONS
+    // Secure submission of booking requests.
+    match /bookings/{id} {
+      allow create: if true;
+    }
+    match /messages/{id} {
+      allow create: if true;
+    }
+    match /newsletter/{id} {
+      allow create: if true;
+    }
+
+    // 3. ADMINISTRATIVE IDENTITY
+    function isAdmin() {
+      return request.auth != null && 
+             request.auth.token.email != null &&
+             (request.auth.token.email.lower().matches('.*@mialesafari.com') || 
+              request.auth.token.email.lower().matches('.*@mialesafaris.com'));
+    }
+
+    // 4. MANAGEMENT PRIVILEGES
+    match /itineraries/{id} { allow write: if isAdmin(); allow read: if isAdmin(); }
+    match /destinations/{id} { allow write: if isAdmin(); allow read: if isAdmin(); }
+    match /bookings/{id} { allow read, write: if isAdmin(); }
+    match /hero_slides/{id} { allow write: if isAdmin(); }
+    match /media/{id} { allow write: if isAdmin(); }
+    match /system/{id} { allow read, write: if isAdmin(); }
+    match /activity_logs/{id} { allow read, write: if isAdmin(); }
+
+    // 5. GLOBAL FALLBACK
+    match /{document=**} {
+      allow read, write: if isAdmin();
+    }
+  }
+}

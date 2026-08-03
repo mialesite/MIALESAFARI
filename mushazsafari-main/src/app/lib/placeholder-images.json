@@ -1,0 +1,125 @@
+
+{
+  "placeholderImages": [
+    {
+      "id": "hero-serengeti-sunrise",
+      "description": "Sunrise over Serengeti",
+      "imageUrl": "https://development.orbituniverse.co.tz/uploads/Mushaz%20safaris/Destinations/tanzania-wild-sky-rcGU1VUgLos-unsplash.jpg",
+      "imageHint": "tanzania landscape sky"
+    },
+    {
+      "id": "hero-lion",
+      "description": "The Serengeti Pride Expedition",
+      "imageUrl": "https://development.orbituniverse.co.tz/uploads/Mushaz%20safaris/Destinations/steve-ody-rb9amyVVD3Q-unsplash.jpg",
+      "imageHint": "serengeti lion"
+    },
+    {
+      "id": "elephant-herd",
+      "description": "Elephant Heritage Journey",
+      "imageUrl": "https://development.orbituniverse.co.tz/uploads/Mushaz%20safaris/Destinations/tanzania-wild-sky-NHQOJBbJgdk-unsplash.jpg",
+      "imageHint": "elephant conservation"
+    },
+    {
+      "id": "giraffe-acacia",
+      "description": "Giraffe under Acacia Tree",
+      "imageUrl": "https://development.orbituniverse.co.tz/uploads/Mushaz%20safaris/Destinations/elliot-paris-Q3AXzPB5bCA-unsplash.jpg",
+      "imageHint": "giraffe africa"
+    },
+    {
+      "id": "migration",
+      "description": "Great Migration Crossing",
+      "imageUrl": "https://development.orbituniverse.co.tz/uploads/Mushaz%20safaris/Destinations/jorge-tung-1pZJqQlgpsY-unsplash.jpg",
+      "imageHint": "great migration"
+    },
+    {
+      "id": "ngorongoro-hero",
+      "description": "Ngorongoro Crater Landscape",
+      "imageUrl": "https://development.orbituniverse.co.tz/uploads/Mushaz%20safaris/Destinations/mwandwe-chileshe-q9SMUy4Hee8-unsplash.jpg",
+      "imageHint": "ngorongoro crater"
+    },
+    {
+      "id": "safari-editorial",
+      "description": "Luxury Safari Experience",
+      "imageUrl": "https://development.orbituniverse.co.tz/uploads/Mushaz%20safaris/Destinations/uzuri-safaris-tanzania-tyxN9RIba8U-unsplash.jpg",
+      "imageHint": "safari vehicle"
+    },
+    {
+      "id": "zanzibar-beach",
+      "description": "Zanzibar White Sands",
+      "imageUrl": "https://development.orbituniverse.co.tz/uploads/Mushaz%20safaris/Destinations/olga-budko-hl0W9gS0C6k-unsplash.jpg",
+      "imageHint": "zanzibar beach"
+    },
+    {
+      "id": "kilimanjaro-trek",
+      "description": "Mount Kilimanjaro View",
+      "imageUrl": "https://development.orbituniverse.co.tz/uploads/Mushaz%20safaris/Destinations/stephan-bechert-xQWelDCacZE-unsplash.jpg",
+      "imageHint": "kilimanjaro mountain"
+    },
+    {
+      "id": "mount-meru",
+      "description": "Mount Meru Peaks",
+      "imageUrl": "https://development.orbituniverse.co.tz/uploads/Mushaz%20safaris/Destinations/k15-photos-_21baKUW_cw-unsplash.jpg",
+      "imageHint": "mount meru tanzania"
+    },
+    {
+      "id": "manyara-lake",
+      "description": "Lake Manyara landscape",
+      "imageUrl": "https://development.orbituniverse.co.tz/uploads/Mushaz%20safaris/Destinations/hu-chen-BRXn1JtdXtc-unsplash.jpg",
+      "imageHint": "lake manyara"
+    },
+    {
+      "id": "arusha-park",
+      "description": "Arusha National Park view",
+      "imageUrl": "https://development.orbituniverse.co.tz/uploads/Mushaz%20safaris/Destinations/jeff-lemond-bwr9XpsYK98-unsplash.jpg",
+      "imageHint": "arusha park"
+    },
+    {
+      "id": "ruaha-wilderness",
+      "description": "Ruaha wilderness",
+      "imageUrl": "https://development.orbituniverse.co.tz/uploads/Mushaz%20safaris/Destinations/steve-ody-rb9amyVVD3Q-unsplash.jpg",
+      "imageHint": "ruaha tanzania"
+    },
+    {
+      "id": "nyerere-river",
+      "description": "Nyerere National Park river",
+      "imageUrl": "https://development.orbituniverse.co.tz/uploads/Mushaz%20safaris/Destinations/tanzania-wild-sky-esqhSWDzOWk-unsplash.jpg",
+      "imageHint": "nyerere park"
+    },
+    {
+      "id": "mikumi-savanna",
+      "description": "Mikumi savanna",
+      "imageUrl": "https://development.orbituniverse.co.tz/uploads/Mushaz%20safaris/Destinations/tanzania-wild-sky-NHQOJBbJgdk-unsplash.jpg",
+      "imageHint": "mikumi savanna"
+    },
+    {
+      "id": "mahale-mountains",
+      "description": "Mahale Mountains chimpanzee habitat",
+      "imageUrl": "https://development.orbituniverse.co.tz/uploads/Mushaz%20safaris/Destinations/GettyImages-1361427581-2.webp",
+      "imageHint": "mahale chimpanzee"
+    },
+    {
+      "id": "katavi-untamed",
+      "description": "Katavi untamed plains",
+      "imageUrl": "https://development.orbituniverse.co.tz/uploads/Mushaz%20safaris/Destinations/dmitry-limonov-tey68pExQKM-unsplash.jpg",
+      "imageHint": "katavi safari"
+    },
+    {
+      "id": "lake-natron",
+      "description": "Lake Natron landscape",
+      "imageUrl": "https://development.orbituniverse.co.tz/uploads/Mushaz%20safaris/Destinations/lake-natron.jpg",
+      "imageHint": "lake natron"
+    },
+    {
+      "id": "gombe-stream",
+      "description": "Gombe Stream chimpanzees",
+      "imageUrl": "https://development.orbituniverse.co.tz/uploads/Mushaz%20safaris/Destinations/Gombe_Stream_NP_Mutter_und_Kind.jpg",
+      "imageHint": "gombe chimpanzee"
+    },
+    {
+      "id": "olduvai-gorge",
+      "description": "Olduvai Gorge historical site",
+      "imageUrl": "https://development.orbituniverse.co.tz/uploads/Mushaz%20safaris/Destinations/Oldupai_Hairy_Scrambler1.jpeg",
+      "imageHint": "olduvai gorge"
+    }
+  ]
+}
