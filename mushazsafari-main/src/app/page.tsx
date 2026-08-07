@@ -25,7 +25,7 @@ export default function Home() {
       <Navbar />
       <Hero />
       <TrustBadges />
-      
+
       {/* Editorial Narrative Section */}
       <section className="py-16 md:py-32 px-6 md:px-12 lg:px-24 bg-safari-white overflow-hidden" id="about">
         <div className="max-w-[1400px] mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-24 items-center">
@@ -36,9 +36,9 @@ export default function Home() {
             viewport={{ once: true, margin: "-100px" }}
             className="relative h-[400px] sm:h-[500px] lg:h-[700px] rounded-[2.5rem] md:rounded-[4rem] overflow-hidden shadow-2xl accelerate"
           >
-            <Image 
-              src={editorialImageUrl} 
-              alt="Luxury Safari Ambience" 
+            <Image
+              src={editorialImageUrl}
+              alt="Luxury Safari Ambience"
               fill
               className="object-cover"
               sizes="(max-width: 768px) 100vw, 50vw"
@@ -89,7 +89,7 @@ export default function Home() {
           <div className="flex flex-col md:flex-row justify-between items-start gap-12 border-b border-white/5 pb-12">
             <div className="space-y-6 md:space-y-8 max-w-md w-full">
               <div className="relative w-48 h-10 md:w-64 md:h-14">
-                <Image 
+                <Image
                   src={logoUrl}
                   alt="Miale"
                   fill
@@ -133,14 +133,14 @@ export default function Home() {
               </div>
               <div className="space-y-6 md:space-y-8 col-span-2 md:col-span-1 pt-6 md:pt-0 border-t border-white/5 md:border-none">
                 <p className="text-[9px] md:text-[10px] font-space font-bold text-secondary uppercase tracking-[0.3em] md:tracking-[0.4em]">The Base</p>
-                
+
                 <div className="flex items-center gap-3 md:gap-4 group">
                   <div className="w-9 h-9 md:w-10 md:h-10 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-secondary group-hover:bg-secondary group-hover:text-white transition-all duration-500 shrink-0">
                     <Phone className="w-3.5 h-3.5 md:w-4 md:h-4" />
                   </div>
                   <div>
                     <h4 className="text-[7px] md:text-[8px] text-white/40 uppercase tracking-widest font-bold font-space">Direct Line</h4>
-                    <p className="text-xs md:text-sm font-serif font-bold text-white">0769 333 331</p>
+                    <p className="text-xs md:text-sm font-serif font-bold text-white">+255 769 333 331</p>
                     <p className="text-[8px] md:text-[10px] font-bold text-secondary">+44 7769 202031</p>
                   </div>
                 </div>
@@ -167,7 +167,7 @@ export default function Home() {
               </div>
             </div>
           </div>
-          
+
           <div className="pt-8 flex flex-col md:flex-row justify-between items-center gap-6">
             <div className="flex flex-col md:flex-row items-center gap-2 md:gap-4 text-center">
               <p className="text-white/20 text-[9px] md:text-[10px] font-space font-bold uppercase tracking-[0.2em] md:tracking-[0.3em]">
@@ -184,8 +184,8 @@ export default function Home() {
               <Link href="/privacy" className="hover:text-secondary transition-colors">Privacy Policy</Link>
               <div className="flex items-center gap-2 group">
                 <Link href="/terms" className="hover:text-secondary transition-colors">Terms of Service</Link>
-                <Link 
-                  href="/admin" 
+                <Link
+                  href="/admin"
                   className="opacity-20 group-hover:opacity-100 transition-opacity hover:text-secondary"
                   aria-label="Admin Console"
                 >
