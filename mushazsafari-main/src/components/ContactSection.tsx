@@ -79,7 +79,7 @@ export const ContactSection = () => {
 
       <div className="max-w-[1800px] mx-auto relative z-10">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 mb-12 md:mb-20">
-          
+
           <motion.div
             initial={{ opacity: 0, x: -30 }}
             whileInView={{ opacity: 1, x: 0 }}
@@ -102,7 +102,7 @@ export const ContactSection = () => {
                 </div>
                 <div>
                   <h4 className="text-[9px] md:text-[10px] text-muted-foreground uppercase tracking-widest font-bold font-space mb-1">Direct Line</h4>
-                  <p className="text-lg md:text-xl font-serif font-bold text-primary">0769 333 331</p>
+                  <p className="text-lg md:text-xl font-serif font-bold text-primary">+255 769 333 331</p>
                 </div>
               </div>
 
@@ -136,14 +136,14 @@ export const ContactSection = () => {
           >
             <div className="bg-white p-6 md:p-10 rounded-[2rem] md:rounded-[3rem] border border-muted shadow-2xl relative overflow-hidden">
               <div className="absolute top-0 right-0 w-24 h-24 md:w-32 md:h-32 bg-secondary/5 blur-[40px] md:blur-[50px] rounded-full" />
-              
+
               <h3 className="text-xl md:text-2xl font-bold font-serif mb-6 md:mb-8 flex items-center gap-3">
                 <MessageSquare className="w-5 h-5 md:w-6 md:h-6 text-secondary" />
                 Send a Message
               </h3>
-              
+
               {submitted ? (
-                <motion.div 
+                <motion.div
                   initial={{ opacity: 0, scale: 0.9 }}
                   animate={{ opacity: 1, scale: 1 }}
                   className="py-8 md:py-12 text-center"
@@ -153,7 +153,7 @@ export const ContactSection = () => {
                   </div>
                   <h4 className="text-xl md:text-2xl font-bold mb-2">Message Dispatched!</h4>
                   <p className="text-sm md:text-base text-muted-foreground font-light mb-8">Thank you for reaching out. A travel designer will review your request and get back to you shortly.</p>
-                  <Button 
+                  <Button
                     onClick={() => setSubmitted(false)}
                     className="rounded-full bg-primary text-white hover:bg-primary/90 font-bold h-12 w-full uppercase tracking-widest text-[9px] md:text-[10px] font-space"
                   >
@@ -183,7 +183,7 @@ export const ContactSection = () => {
                     <Textarea name="message" required placeholder="Tell us about your travel goals..." className="bg-muted/30 border-muted min-h-[120px] md:min-h-[150px] rounded-xl focus:ring-secondary" />
                   </div>
 
-                  <Button 
+                  <Button
                     disabled={loading}
                     type="submit"
                     className="w-full bg-secondary text-white hover:bg-accent h-12 md:h-14 rounded-full font-bold text-[10px] md:text-xs uppercase tracking-widest shadow-xl shadow-secondary/10 group font-space mt-2"
@@ -209,13 +209,13 @@ export const ContactSection = () => {
           transition={{ duration: 0.8, delay: 0.4 }}
           className="w-full h-[300px] md:h-[450px] rounded-[2rem] md:rounded-[3rem] overflow-hidden shadow-2xl border border-muted relative group"
         >
-          <iframe 
-            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3982.8405472365057!2d36.65972407548163!3d-3.3890876965855155!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x18371d732584d27d%3A0x6a57dbd479364848!2sMushaz%20safari!5e0!3m2!1sen!2stz!4v1783705048418!5m2!1sen!2stz" 
-            width="100%" 
-            height="100%" 
-            style={{ border: 0 }} 
-            allowFullScreen={true} 
-            loading="lazy" 
+          <iframe
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3982.8405472365057!2d36.65972407548163!3d-3.3890876965855155!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x18371d732584d27d%3A0x6a57dbd479364848!2sMushaz%20safari!5e0!3m2!1sen!2stz!4v1783705048418!5m2!1sen!2stz"
+            width="100%"
+            height="100%"
+            style={{ border: 0 }}
+            allowFullScreen={true}
+            loading="lazy"
             referrerPolicy="no-referrer-when-downgrade"
             title="Miale Office"
           ></iframe>
