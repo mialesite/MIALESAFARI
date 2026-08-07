@@ -23,7 +23,7 @@ export const Footer = () => {
   const [email, setEmail] = useState("");
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
-  
+
   const db = useFirestore();
   const { toast } = useToast();
   const logoUrl = "https://uploads.mushazsafari.com/Miale.png";
@@ -88,10 +88,10 @@ export const Footer = () => {
             </p>
             <div className="flex gap-4 justify-center sm:justify-start">
               {SOCIAL_LINKS.map(({ Icon, href }, i) => (
-                <Link 
-                  key={i} 
-                  href={href} 
-                  target="_blank" 
+                <Link
+                  key={i}
+                  href={href}
+                  target="_blank"
                   rel="noopener noreferrer"
                   className="w-10 h-10 rounded-full border border-border bg-muted/50 flex items-center justify-center hover:bg-secondary hover:text-white transition-all"
                 >
@@ -120,7 +120,7 @@ export const Footer = () => {
                 </div>
                 <div className="text-left">
                   <h4 className="text-[8px] text-muted-foreground uppercase tracking-widest font-bold font-space">Direct Line</h4>
-                  <p className="text-sm font-serif font-bold text-primary">0769 333 331</p>
+                  <p className="text-sm font-serif font-bold text-primary">+255 769 333 331</p>
                   <p className="text-[10px] font-bold text-secondary">+44 7769 202031</p>
                 </div>
               </div>
@@ -150,7 +150,7 @@ export const Footer = () => {
           <div className="text-center sm:text-left">
             <h4 className="font-headline text-lg md:text-xl font-bold mb-6 text-foreground">The Dispatch</h4>
             <p className="text-muted-foreground mb-4 text-xs md:text-sm font-light">Join our inner circle for exclusive seasonal insights and conservation updates.</p>
-            
+
             {success ? (
               <div className="flex items-center gap-2 text-secondary font-bold text-sm bg-secondary/5 p-4 rounded-xl border border-secondary/20">
                 <CheckCircle2 className="w-5 h-5" />
@@ -158,17 +158,17 @@ export const Footer = () => {
               </div>
             ) : (
               <form onSubmit={handleSubscribe} className="flex flex-col gap-3">
-                <input 
-                  type="email" 
+                <input
+                  type="email"
                   required
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  placeholder="Email address" 
-                  className="flex h-10 w-full rounded-xl border border-input bg-muted/30 px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50" 
+                  placeholder="Email address"
+                  className="flex h-10 w-full rounded-xl border border-input bg-muted/30 px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
                 />
-                <Button 
+                <Button
                   disabled={loading}
-                  size="sm" 
+                  size="sm"
                   type="submit"
                   className="bg-primary text-white hover:bg-primary/90 rounded-xl w-full font-bold h-10"
                 >
@@ -186,8 +186,8 @@ export const Footer = () => {
             <span className="text-border">|</span>
             <div className="flex items-center gap-2 group">
               <Link href="/terms" className="hover:text-secondary transition-colors">Terms of Service</Link>
-              <Link 
-                href="/admin" 
+              <Link
+                href="/admin"
                 className="opacity-20 hover:opacity-100 transition-opacity hover:text-secondary"
                 aria-label="Admin Console"
               >

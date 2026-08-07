@@ -85,7 +85,7 @@ export default function ContactPage() {
 
       <div className="max-w-7xl mx-auto relative z-10">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-20 mb-20">
-          
+
           <motion.div
             initial={{ opacity: 0, x: -30 }}
             animate={{ opacity: 1, x: 0 }}
@@ -104,7 +104,7 @@ export default function ContactPage() {
                 </div>
                 <div>
                   <h4 className="text-sm text-muted-foreground uppercase tracking-widest font-medium mb-1">Direct Lines</h4>
-                  <p className="text-xl font-bold">0769 333 331</p>
+                  <p className="text-xl font-bold">+255 769 333 331</p>
                   <p className="text-sm font-bold text-honey-gold">+44 7769 202031</p>
                 </div>
               </div>
@@ -138,14 +138,14 @@ export default function ContactPage() {
           >
             <div className="glass p-10 rounded-[3rem] border-border/50 shadow-2xl relative overflow-hidden bg-white/40 backdrop-blur-3xl">
               <div className="absolute top-0 right-0 w-32 h-32 bg-honey-gold/10 blur-[50px] rounded-full" />
-              
+
               <h3 className="text-2xl font-bold font-headline mb-8 flex items-center gap-3">
                 <MessageSquare className="w-6 h-6 text-honey-gold" />
                 Send a Message
               </h3>
-              
+
               {submitted ? (
-                <motion.div 
+                <motion.div
                   initial={{ opacity: 0, scale: 0.9 }}
                   animate={{ opacity: 1, scale: 1 }}
                   className="py-12 text-center"
@@ -182,7 +182,7 @@ export default function ContactPage() {
                     <Textarea name="message" required placeholder="Tell us about your travel goals..." className="bg-white/50 border-border min-h-[150px] rounded-xl focus:ring-honey-gold" />
                   </div>
 
-                  <Button 
+                  <Button
                     disabled={loading}
                     type="submit"
                     className="w-full bg-honey-gold text-honey-dark hover:bg-honey-amber h-14 rounded-xl font-bold text-lg shadow-xl shadow-honey-gold/20 group"
@@ -209,13 +209,13 @@ export default function ContactPage() {
           transition={{ duration: 0.8, delay: 0.4 }}
           className="w-full h-[450px] rounded-[3rem] overflow-hidden shadow-2xl border border-border/50 relative group"
         >
-          <iframe 
-            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3982.8405472365057!2d36.65972407548163!3d-3.3890876965855155!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x18371d732584d27d%3A0x6a57dbd479364848!2sMushaz%20safari!5e0!3m2!1sen!2stz!4v1783705048418!5m2!1sen!2stz" 
-            width="100%" 
-            height="100%" 
-            style={{ border: 0 }} 
-            allowFullScreen={true} 
-            loading="lazy" 
+          <iframe
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3982.8405472365057!2d36.65972407548163!3d-3.3890876965855155!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x18371d732584d27d%3A0x6a57dbd479364848!2sMushaz%20safari!5e0!3m2!1sen!2stz!4v1783705048418!5m2!1sen!2stz"
+            width="100%"
+            height="100%"
+            style={{ border: 0 }}
+            allowFullScreen={true}
+            loading="lazy"
             referrerPolicy="no-referrer-when-downgrade"
             title="Miale Office"
           ></iframe>
