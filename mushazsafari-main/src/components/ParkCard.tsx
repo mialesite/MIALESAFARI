@@ -15,7 +15,8 @@ import { MASTER_DESTINATIONS } from "@/lib/master-destinations";
  * @fileOverview Full-bleed park card in the house listing style: the photo is
  * the link, a gradient scrim carries the title, and the blurb, animals and
  * tags reveal on hover on desktop while staying open on touch screens. A
- * frosted mini boundary map keeps the to-scale identity on every card.
+ * frosted mini boundary map keeps the to-scale identity on every card, drawn
+ * glass so the photograph reads through it.
  */
 
 const IMAGE_BY_NAME: Record<string, string> = Object.fromEntries(
@@ -66,10 +67,15 @@ export function ParkMiniMap({ shapeKeys }: { shapeKeys: string[] }) {
 
   if (!geo) return null;
   return (
-    <svg viewBox={`0 0 ${geo.VW} ${geo.VH}`} className="w-full h-full" aria-hidden="true">
-      <path d={geo.countryPath} fill="#EFE8D8" stroke="#C9B992" strokeWidth={1.4} />
+    <svg
+      viewBox={`0 0 ${geo.VW} ${geo.VH}`}
+      className="w-full h-full"
+      style={{ filter: "drop-shadow(0 1px 2px rgba(13, 26, 18, 0.55))" }}
+      aria-hidden="true"
+    >
+      <path d={geo.countryPath} fill="none" stroke="#DFCFA6" strokeWidth={2} />
       {geo.shapePaths.map((d, i) => (
-        <path key={i} d={d} fill="#F6E3A6" stroke="#B68D40" strokeWidth={1.8} />
+        <path key={i} d={d} fill="none" stroke="#E5C37D" strokeWidth={2.6} />
       ))}
     </svg>
   );
@@ -99,7 +105,7 @@ export function ParkCard({ park, index }: { park: any; index: number }) {
       <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/35 to-black/5 pointer-events-none" />
 
       {hasShape && (
-        <div className="absolute top-5 right-5 w-16 h-16 md:w-20 md:h-20 rounded-2xl bg-white/85 backdrop-blur-sm border border-white/70 p-1.5 pointer-events-none">
+        <div className="absolute top-5 right-5 w-16 h-16 md:w-20 md:h-20 pointer-events-none">
           <ParkMiniMap shapeKeys={shapeKeys} />
         </div>
       )}
