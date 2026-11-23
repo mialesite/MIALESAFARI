@@ -152,8 +152,8 @@ export default function AboutPage() {
           sizes="100vw"
           className="object-cover object-center"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-primary via-primary/55 to-primary/10" />
-        <div className="absolute inset-0 bg-gradient-to-r from-primary/60 via-primary/15 to-transparent" />
+        <div className="absolute inset-0 bg-[linear-gradient(100deg,rgba(13,26,18,0.92)_0%,rgba(13,26,18,0.66)_45%,rgba(13,26,18,0.28)_100%)]" />
+        <div className="absolute inset-0 bg-gradient-to-t from-primary via-transparent to-transparent" />
 
         <div className="relative z-10 max-w-[1400px] mx-auto px-6 md:px-12 lg:px-24 pb-16 md:pb-24 pt-40 w-full">
           <span className="text-secondary font-space font-bold uppercase tracking-[0.4em] text-[10px] md:text-xs block mb-5">
@@ -183,15 +183,15 @@ export default function AboutPage() {
       </section>
 
       {/* Facts band — only verifiable items, no invented numbers */}
-      <section className="bg-primary border-t border-white/5">
-        <div className="max-w-[1400px] mx-auto px-6 md:px-12 lg:px-24 py-10 md:py-12 grid grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-10">
+      <section className="bg-primary border-t border-white/10">
+        <div className="max-w-[1400px] mx-auto px-6 md:px-12 lg:px-24 py-10 md:py-12 grid grid-cols-2 lg:grid-cols-4 gap-x-6 gap-y-8 lg:gap-x-0 lg:divide-x lg:divide-white/10">
           {FACTS.map((fact) => (
-            <div key={fact.label}>
-              <p className="text-xl md:text-3xl font-serif font-bold text-secondary leading-none tracking-tight">
-                {fact.value}
-              </p>
-              <p className="mt-3 text-[9px] md:text-[10px] font-space font-bold uppercase tracking-[0.3em] text-white/50">
+            <div key={fact.label} className="lg:px-8 lg:first:pl-0 lg:last:pr-0">
+              <p className="text-accent font-space font-bold uppercase tracking-[0.3em] text-[9px] md:text-[10px] mb-3">
                 {fact.label}
+              </p>
+              <p className="text-xl md:text-3xl font-serif font-bold text-white leading-none tracking-tight">
+                {fact.value}
               </p>
             </div>
           ))}

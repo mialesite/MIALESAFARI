@@ -1,10 +1,8 @@
 "use client";
 
 import { Navbar } from "@/components/Navbar";
-import { HeroFigure } from "@/components/HeroFigure";
 import { TanzaniaParksMap } from "@/components/TanzaniaParksMap";
 import { ParkCard } from "@/components/ParkCard";
-import { motion } from "framer-motion";
 import Link from "next/link";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
@@ -108,31 +106,8 @@ export default function ParksPage() {
   return (
     <main className="min-h-screen bg-safari-white">
       <Navbar />
-      
-      <section className="relative bg-safari-white overflow-hidden">
-        <div className="grid grid-cols-1 lg:grid-cols-12">
-          <div className="relative h-[300px] sm:h-[400px] lg:h-auto lg:col-span-5 lg:col-start-8">
-            <HeroFigure assetRef="elephant-family-crossing" caption="Elephant family · Tarangire" />
-          </div>
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="lg:col-span-7 lg:col-start-1 lg:row-start-1 px-6 md:px-12 lg:px-24 lg:pr-14 pt-10 md:pt-14 pb-14 md:pb-20 lg:pt-44 lg:pb-24 text-center lg:text-left"
-          >
-            <span className="text-secondary font-space font-bold uppercase tracking-[0.4em] md:tracking-[0.5em] text-[10px] md:text-xs mb-4 block">
-              Wildlife Sanctuaries
-            </span>
-            <h1 className="text-5xl md:text-7xl lg:text-8xl font-serif text-primary leading-[0.92] tracking-tighter mb-6 md:mb-8">
-              Tanzania <br />
-              <span className="italic font-light text-muted-foreground/60">Parks</span>
-            </h1>
-            <p className="text-lg md:text-xl text-muted-foreground font-light max-w-2xl mx-auto lg:mx-0 leading-relaxed">
-              Every park and reserve Tanzania protects, and what each one is genuinely good for: the herds of the
-              Serengeti, the chimpanzee forests of Mahale, the elephant corridors of Tarangire.
-            </p>
-          </motion.div>
-        </div>
-      </section>
+
+      <h1 className="sr-only">Tanzania Parks</h1>
 
       <TanzaniaParksMap destinations={(parks as any[]).map((p) => ({ id: p.id, name: p.name }))} />
 

@@ -2,18 +2,23 @@
 
 import { useMemo, useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { MapPin } from "lucide-react";
 import { buildParksProjection } from "@/lib/parks-projection";
 import { PARK_SHAPES, REF_POINTS } from "@/lib/parks-geo";
 import { REGION_SHAPES } from "@/lib/regions-geo";
 import { SHAPE_LABEL } from "@/lib/destination-shapes";
+import { mediaFor } from "@/lib/media";
 
 /**
  * @fileOverview To-scale Tanzania parks map for the /parks page, drawn in the
- * same quiet outline language as the circuit maps: transparent plate, faint
- * country and region borders, gold outlines marking the places the desk plans.
- * Boundaries come from public OSM/Natural Earth data.
+ * same quiet outline language as the circuit maps. The band opens the page
+ * over a photograph of the ground itself, the map drawn glass (strokes and
+ * labels only) so the photograph reads through. Boundaries come from public
+ * OSM/Natural Earth data.
  */
+
+const bandImage = mediaFor("rift-valley-escarpment");
 
 const LINK_ORDER: { key: string; name: string }[] = [
   { key: "serengeti", name: "Serengeti National Park" },
@@ -36,21 +41,37 @@ export function TanzaniaParksMap({ destinations }: { destinations: { id: string;
   const linkFor = (name: string) => destinations.find((d) => d.name === name);
 
   return (
-    <section id="map" className="pb-4 md:pb-8">
-      <div className="w-full bg-white">
-        <div className="max-w-[1600px] mx-auto grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 p-6 md:p-10 lg:p-14">
+    <section id="map" className="relative overflow-hidden">
+      <Image
+        src={bandImage.src}
+        alt={bandImage.alt}
+        fill
+        quality={70}
+        sizes="100vw"
+        className="object-cover"
+      />
+      <div className="absolute inset-0 bg-[linear-gradient(100deg,rgba(13,26,18,0.92)_0%,rgba(13,26,18,0.72)_45%,rgba(13,26,18,0.35)_100%)]" />
+      <div className="absolute inset-0 bg-gradient-to-t from-[rgba(13,26,18,0.55)] via-transparent to-transparent" />
+
+      <div className="relative z-10 max-w-[1600px] mx-auto grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-center px-6 md:px-12 lg:px-24 pt-32 md:pt-44 pb-14 md:pb-20">
         <div>
-          <svg viewBox={`0 0 ${proj.VW} ${proj.VH}`} className="w-full h-auto" role="img" aria-label="Tanzania parks drawn to scale">
+          <svg
+            viewBox={`0 0 ${proj.VW} ${proj.VH}`}
+            className="w-full h-auto"
+            style={{ filter: "drop-shadow(0 1px 2px rgba(13, 26, 18, 0.55))" }}
+            role="img"
+            aria-label="Tanzania parks drawn to scale"
+          >
             <defs>
               <clipPath id="tz-clip">
                 <path d={countryPath} />
               </clipPath>
             </defs>
 
-            <path d={countryPath} fill="none" stroke="#C9B992" strokeWidth={1.5} />
+            <path d={countryPath} fill="none" stroke="#DFCFA6" strokeWidth={1.8} />
 
             <g clipPath="url(#tz-clip)">
-              <path d={proj.pathFor("victoria")} fill="none" stroke="#C6D6DD" strokeWidth={1} />
+              <path d={proj.pathFor("victoria")} fill="none" stroke="#A9C2CF" strokeWidth={1} />
             </g>
 
             {REGION_SHAPES.map((r) => (
@@ -58,7 +79,7 @@ export function TanzaniaParksMap({ destinations }: { destinations: { id: string;
                 key={r.key}
                 d={proj.pathFor(r.key)}
                 fill="none"
-                stroke="#D8CCB2"
+                stroke="#C7B98F"
                 strokeWidth={1}
                 strokeDasharray="3.2 2.4"
               />
@@ -69,7 +90,7 @@ export function TanzaniaParksMap({ destinations }: { destinations: { id: string;
                 key={s.key}
                 d={proj.pathFor(s.key)}
                 fill="none"
-                stroke="#D6CBB0"
+                stroke="#BFB18B"
                 strokeWidth={1.2}
               />
             ))}
@@ -83,8 +104,8 @@ export function TanzaniaParksMap({ destinations }: { destinations: { id: string;
                   key={l.key}
                   d={d}
                   fill="transparent"
-                  stroke="#B68D40"
-                  strokeWidth={active ? 2.6 : 2}
+                  stroke="#E5C37D"
+                  strokeWidth={active ? 2.8 : 2.2}
                   className="transition-all duration-300 cursor-pointer"
                   onMouseEnter={() => setHovered(l.key)}
                   onMouseLeave={() => setHovered(null)}
@@ -103,8 +124,8 @@ export function TanzaniaParksMap({ destinations }: { destinations: { id: string;
                   textAnchor="middle"
                   fontSize={13}
                   fontWeight={700}
-                  fill="#3D3223"
-                  stroke="#FFF9EE"
+                  fill="#FFFFFF"
+                  stroke="#17301F"
                   strokeWidth={3.5}
                   paintOrder="stroke"
                   style={{ pointerEvents: "none" }}
@@ -114,15 +135,15 @@ export function TanzaniaParksMap({ destinations }: { destinations: { id: string;
               );
             })}
 
-            <circle cx={arusha[0]} cy={arusha[1]} r={4} fill="#B04A2A" />
+            <circle cx={arusha[0]} cy={arusha[1]} r={4} fill="#E2633C" />
             <text
               x={arusha[0] + 10}
               y={arusha[1] + 4}
               fontSize={12.5}
               fontWeight={600}
               fontStyle="italic"
-              fill="#B04A2A"
-              stroke="#FFF9EE"
+              fill="#E8905E"
+              stroke="#17301F"
               strokeWidth={3.5}
               paintOrder="stroke"
               style={{ pointerEvents: "none" }}
@@ -133,13 +154,13 @@ export function TanzaniaParksMap({ destinations }: { destinations: { id: string;
         </div>
 
         <div className="flex flex-col justify-center">
-          <span className="text-secondary font-space font-bold uppercase tracking-[0.4em] text-[10px] mb-4 block">
+          <span className="text-accent font-space font-bold uppercase tracking-[0.4em] text-[10px] mb-4 block">
             The Shape of the Route
           </span>
-          <h2 className="text-4xl md:text-5xl font-serif text-primary leading-[1.05] tracking-tight mb-6">
+          <h2 className="text-4xl md:text-5xl font-serif text-white leading-[1.05] tracking-tight mb-6">
             Ground, to scale
           </h2>
-          <p className="text-base md:text-lg text-muted-foreground font-light leading-relaxed mb-8">
+          <p className="text-base md:text-lg text-white/80 font-light leading-relaxed mb-8">
             The gold outlines are the places the desk plans, traced from public boundary data and drawn at
             their real size against the rest of the country. The pale outlines are parks left for another
             trip, and they show how close everything really is. The gaps between the gold ones are the
@@ -147,18 +168,18 @@ export function TanzaniaParksMap({ destinations }: { destinations: { id: string;
             around distance.
           </p>
 
-          <div className="h-px bg-muted mb-8" />
+          <div className="h-px bg-white/20 mb-8" />
 
           <ul className="flex flex-wrap gap-x-8 gap-y-3.5">
             {LINK_ORDER.map((l) => {
               const dest = linkFor(l.name);
               const content = (
                 <>
-                  <MapPin className="w-3.5 h-3.5" />
+                  <MapPin className="w-3.5 h-3.5 text-accent" />
                   {l.name}
                 </>
               );
-              const cls = "inline-flex items-center gap-2 text-[10px] font-space font-bold uppercase tracking-widest text-[#B04A2A] transition-colors";
+              const cls = "inline-flex items-center gap-2 text-[10px] font-space font-bold uppercase tracking-widest text-white/85 transition-colors";
               if (!dest) return <li key={l.key}><span className={cls + " opacity-60"}>{content}</span></li>;
               return (
                 <li key={l.key}>
@@ -166,7 +187,7 @@ export function TanzaniaParksMap({ destinations }: { destinations: { id: string;
                     href={`/destinations/${dest.id}`}
                     onMouseEnter={() => setHovered(l.key)}
                     onMouseLeave={() => setHovered(null)}
-                    className={cls + " hover:text-primary"}
+                    className={cls + " hover:text-accent"}
                   >
                     {content}
                   </Link>
@@ -175,10 +196,9 @@ export function TanzaniaParksMap({ destinations }: { destinations: { id: string;
             })}
           </ul>
 
-          <p className="mt-10 text-[9px] font-space uppercase tracking-[0.2em] text-muted-foreground/70">
+          <p className="mt-10 text-[9px] font-space uppercase tracking-[0.2em] text-white/60">
             Boundaries traced from OpenStreetMap and Natural Earth public data
           </p>
-        </div>
         </div>
       </div>
     </section>
