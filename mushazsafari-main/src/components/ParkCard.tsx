@@ -81,7 +81,7 @@ export function ParkMiniMap({ shapeKeys }: { shapeKeys: string[] }) {
   );
 }
 
-export function ParkCard({ park, index }: { park: any; index: number }) {
+export function ParkCard({ park, index, badge }: { park: any; index: number; badge?: string }) {
   const facts = parkFacts(park.name);
   const shapeKeys = SHAPE_KEYS_BY_DEST[park.name] || [];
   const hasShape = shapeKeys.length > 0 && shapeKeys.some((k) => PARK_SHAPES.some((s) => s.key === k));
@@ -103,6 +103,14 @@ export function ParkCard({ park, index }: { park: any; index: number }) {
         className="object-cover transition-transform duration-[4000ms] ease-out group-hover:scale-[1.06]"
       />
       <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/35 to-black/5 pointer-events-none" />
+
+      {badge && (
+        <div className="absolute top-5 left-5 pointer-events-none">
+          <span className="glass border border-white/20 px-4 py-2 rounded-full text-[10px] font-bold text-white uppercase tracking-widest">
+            {badge}
+          </span>
+        </div>
+      )}
 
       {hasShape && (
         <div className="absolute top-5 right-5 w-16 h-16 md:w-20 md:h-20 pointer-events-none">

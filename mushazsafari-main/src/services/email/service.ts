@@ -261,8 +261,7 @@ class EmailService {
 
   public async sendBookingRequest(data: any, signature?: string) {
     const config = await this.getConfig();
-    const transporter = this.createTransporter(config);
-    return transporter.sendMail({
+    return this.dispatch(config, {
       from: `"${config.fromName}" <${config.fromAddress}>`,
       to: config.adminEmail,
       subject: `Expedition Inquiry: ${data.fullName}`,
@@ -272,10 +271,10 @@ class EmailService {
 
   public async sendContactInquiry(data: any, signature?: string) {
     const config = await this.getConfig();
-    const transporter = this.createTransporter(config);
-    return transporter.sendMail({
+    return this.dispatch(config, {
       from: `"${config.fromName}" <${config.fromAddress}>`,
       to: config.adminEmail,
+      replyTo: data.email,
       subject: `Website Inquiry from ${data.fullName}`,
       html: templates.contactInquiry(data, signature || "MIALE • ARUSHA"),
     });
@@ -283,9 +282,8 @@ class EmailService {
 
   public async sendOrderNotification(order: any, signature?: string) {
     const config = await this.getConfig();
-    const transporter = this.createTransporter(config);
-    
-    await transporter.sendMail({
+
+    await this.dispatch(config, {
       from: `"${config.fromName}" <${config.fromAddress}>`,
       to: config.adminEmail,
       subject: `New Booking Ticket — ${order.customerName}`,
@@ -293,7 +291,7 @@ class EmailService {
     });
 
     if (order.email) {
-      await transporter.sendMail({
+      await this.dispatch(config, {
         from: `"${config.fromName}" <${config.fromAddress}>`,
         to: order.email,
         subject: `Your Miale booking request has been received!`,
@@ -304,8 +302,7 @@ class EmailService {
 
   public async sendDiagnostic(recipient: string) {
     const config = await this.getConfig();
-    const transporter = this.createTransporter(config);
-    return transporter.sendMail({
+    return this.dispatch(config, {
       from: `"${config.fromName}" <${config.fromAddress}>`,
       to: recipient,
       subject: `SMTP Diagnostic: Connection Active`,

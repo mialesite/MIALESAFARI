@@ -3,10 +3,9 @@
 
 import { useState, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { MapPin, Gauge, Zap, Compass, Loader2, RefreshCw, Plus } from "lucide-react";
-import Image from "next/image";
-import Link from "next/link";
+import { Compass, Loader2, RefreshCw, Plus } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { ParkCard } from "@/components/ParkCard";
 import { useCollection, useFirestore, useMemoFirebase, useUser } from "@/firebase";
 import { collection, query, where, writeBatch, doc, serverTimestamp, getDocs, limit } from "firebase/firestore";
 import { cn } from "@/lib/utils";
@@ -141,7 +140,7 @@ export const InteractiveExplorer = () => {
           </div>
         ) : (
           <>
-            <motion.div layout className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <motion.div layout className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
               <AnimatePresence mode="popLayout">
                 {visibleDestinations.map((dest: any, i) => (
                   <motion.div
@@ -151,38 +150,12 @@ export const InteractiveExplorer = () => {
                     animate={{ opacity: 1, scale: 1 }}
                     exit={{ opacity: 0, scale: 0.9 }}
                     transition={{ duration: 0.5, delay: (i % 6) * 0.05 }}
-                    className="group relative h-[400px] rounded-[2.5rem] overflow-hidden shadow-2xl cursor-pointer accelerate"
                   >
-                    <Image
-                      src={mediaFor(dest.featuredImage).src}
-                      alt={dest.name}
-                      fill
-                      quality={70}
-                      className="object-cover transition-transform duration-1000 group-hover:scale-110"
-                      sizes="(min-width: 1024px) 33vw, (min-width: 768px) 48vw, 70vw"
+                    <ParkCard
+                      park={dest}
+                      index={i}
+                      badge={labelFor(CIRCUIT_LABEL, lang, dest.circuit)}
                     />
-                    {/* Bottom-weighted scrim: the photograph keeps its colour above the caption. */}
-                    <div className="absolute inset-0 bg-[linear-gradient(to_top,rgba(36,66,46,0.96),rgba(36,66,46,0.78)_30%,rgba(36,66,46,0.15)_62%,transparent_80%)]" />
-                    
-                    <div className="absolute top-8 left-8">
-                      <div className="glass px-4 py-2 rounded-full border-white/20 text-[10px] font-bold text-white uppercase tracking-widest">
-                        {labelFor(CIRCUIT_LABEL, lang, dest.circuit)}
-                      </div>
-                    </div>
-
-                    <div className="absolute bottom-10 left-10 right-10 text-white">
-                      <div className="flex items-center gap-2 text-secondary mb-2">
-                        <Compass className="w-4 h-4" />
-                        <span className="text-[10px] font-bold uppercase tracking-widest">{dest.type}</span>
-                      </div>
-                      <h3 className="text-2xl font-serif font-bold mb-4 text-white leading-tight">{dest.name}</h3>
-                      
-                      <Link href={`/destinations/${dest.id}`} className="w-full">
-                        <Button variant="outline" className="w-full rounded-full border-white/20 bg-white/10 hover:bg-white hover:text-primary transition-all font-bold text-[10px] uppercase tracking-[0.2em] py-5 h-auto">
-                          {t("ex.details")}
-                        </Button>
-                      </Link>
-                    </div>
                   </motion.div>
                 ))}
               </AnimatePresence>
