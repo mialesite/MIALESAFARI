@@ -35,6 +35,7 @@ export default function DestinationsRegistry() {
   const [editingDest, setEditingDest] = useState<any>(null);
   const [saving, setSaving] = useState(false);
   const [pulling, setPulling] = useState(false);
+  const [deduping, setDeduping] = useState(false);
 
   const destinationsQuery = useMemoFirebase(() => 
     user ? query(collection(db, "destinations"), orderBy("createdAt", "desc")) : null, 
@@ -130,6 +131,50 @@ export default function DestinationsRegistry() {
     }
   };
 
+  // Repeated syncs from several admin surfaces wrote extra rows per name.
+  // This keeps the newest copy per name (the one the sync keeps refreshing)
+  // and deletes the rest, so every public link keeps resolving.
+  const handleDeleteDuplicates = async () => {
+    if (!destinations?.length) return;
+
+    const groups = new Map<string, any[]>();
+    for (const d of destinations) {
+      const key = (d.name || "").trim().toLowerCase().replace(/\s+/g, " ");
+      if (!key) continue;
+      groups.set(key, [...(groups.get(key) || []), d]);
+    }
+
+    const dupes = [...groups.entries()].filter(([, rows]) => rows.length > 1);
+    if (!dupes.length) {
+      toast({ title: "No Duplicates", description: "Every landmark name is already unique in the registry." });
+      return;
+    }
+
+    const stamp = (v: any) => (typeof v?.toMillis === "function" ? v.toMillis() : typeof v === "number" ? v : 0);
+    const victims = dupes.flatMap(([, rows]) =>
+      [...rows]
+        .sort((a, b) => stamp(b.createdAt) - stamp(a.createdAt) || (b.shortDescription?.length || 0) - (a.shortDescription?.length || 0))
+        .slice(1)
+    );
+
+    const summary = dupes
+      .map(([key, rows]) => `${rows[0]?.name || key}: ${rows.length} rows, ${rows.length - 1} removed`)
+      .join("\n");
+    if (!confirm(`Keep one row per name and delete ${victims.length} duplicates?\n\n${summary}`)) return;
+
+    setDeduping(true);
+    try {
+      for (const v of victims) {
+        await deleteDoc(doc(db, "destinations", v.id));
+      }
+      toast({ title: "Registry Deduplicated", description: `Deleted ${victims.length} duplicate rows. One row per landmark remains.` });
+    } catch (err) {
+      toast({ variant: "destructive", title: "Error", description: "Some rows could not be deleted." });
+    } finally {
+      setDeduping(false);
+    }
+  };
+
   const handleSave = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setSaving(true);
@@ -201,6 +246,15 @@ export default function DestinationsRegistry() {
           >
             {pulling ? <Loader2 className="w-4 h-4 animate-spin mr-2" /> : <RefreshCw className="w-4 h-4 mr-2" />}
             Pull from Website
+          </Button>
+          <Button 
+            variant="outline" 
+            onClick={handleDeleteDuplicates} 
+            disabled={deduping}
+            className="border-destructive/40 text-destructive hover:bg-destructive hover:text-white rounded-xl font-bold"
+          >
+            {deduping ? <Loader2 className="w-4 h-4 animate-spin mr-2" /> : <Trash2 className="w-4 h-4 mr-2" />}
+            Delete Duplicates
           </Button>
           <Button onClick={() => setIsDialogOpen(true)} className="bg-honey-gold text-honey-dark hover:bg-honey-amber rounded-xl font-bold">
             <Plus className="w-4 h-4 mr-2" /> New Landmark

@@ -1,7 +1,7 @@
 "use client";
 
 import { useCollection, useFirestore, useMemoFirebase, useUser } from "@/firebase";
-import { collection, query, orderBy, deleteDoc, doc, serverTimestamp, setDoc, writeBatch, getDocs, where } from "firebase/firestore";
+import { collection, query, orderBy, deleteDoc, doc, serverTimestamp, setDoc, writeBatch, getDocs, where, updateDoc, deleteField } from "firebase/firestore";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
@@ -19,6 +19,23 @@ import Link from "next/link";
 import { cn } from "@/lib/utils";
 import { TOURS } from "@/lib/tours";
 
+// The figures the old static list invented for these slugs. A row is only
+// touched when its priceFrom still equals the placeholder for its own slug,
+// so any real figure the desk enters later is never cleared.
+const INVENTED_PRICE_BY_SLUG: Record<string, number> = {
+  "serengeti-migration-journey": 6500,
+  "central-serengeti-deep-dive": 4200,
+  "ndutu-calving-season": 3200,
+  "kilimanjaro-lemosho-route": 2300,
+  "tarangire-elephant-heritage": 850,
+  "zanzibar-stone-town-beach": 1400,
+  "nyerere-river-boat-safari": 1500,
+  "ruaha-wilderness-expedition": 1680,
+  "mikumi-savanna-escape": 480,
+  "gombe-chimpanzee-trek": 2100,
+  "mahale-mountains-luxury": 3000,
+};
+
 export default function ItineraryManager() {
   const db = useFirestore();
   const { user } = useUser();
@@ -28,6 +45,7 @@ export default function ItineraryManager() {
   const [editingItem, setEditingItem] = useState<any>(null);
   const [saving, setSaving] = useState(false);
   const [seeding, setSeeding] = useState(false);
+  const [clearing, setClearing] = useState(false);
   const [step, setStep] = useState(1);
 
   const itinerariesQuery = useMemoFirebase(() => 
@@ -74,6 +92,35 @@ export default function ItineraryManager() {
       toast({ variant: "destructive", title: "Sync Error", description: "Authorization required for master updates." });
     } finally {
       setSeeding(false);
+    }
+  };
+
+  const handleClearPlaceholderPrices = async () => {
+    if (!itineraries?.length) return;
+
+    const rows = itineraries.filter((i: any) => {
+      const invented = i.slug ? INVENTED_PRICE_BY_SLUG[i.slug] : undefined;
+      return invented !== undefined && Number(i.priceFrom) === invented;
+    });
+
+    if (!rows.length) {
+      toast({ title: "Nothing to Clear", description: "No row still carries the old placeholder figure for its slug." });
+      return;
+    }
+
+    const summary = rows.map((r: any) => `${r.title} ($${Number(r.priceFrom).toLocaleString()})`).join("\n");
+    if (!confirm(`Remove the placeholder price from ${rows.length} rows?\n\n${summary}\n\nRows carrying a different figure are left untouched.`)) return;
+
+    setClearing(true);
+    try {
+      for (const r of rows) {
+        await updateDoc(doc(db, "itineraries", r.id), { priceFrom: deleteField() });
+      }
+      toast({ title: "Placeholder Prices Cleared", description: `${rows.length} rows now read "Priced to order" until the desk enters a real figure.` });
+    } catch (err) {
+      toast({ variant: "destructive", title: "Error", description: "Some rows could not be updated." });
+    } finally {
+      setClearing(false);
     }
   };
 
@@ -155,6 +202,15 @@ export default function ItineraryManager() {
             {seeding ? <Loader2 className="w-4 h-4 animate-spin mr-2" /> : <Globe className="w-4 h-4 mr-2" />}
             Restore Signatures
           </Button>
+          <Button 
+            variant="outline" 
+            onClick={handleClearPlaceholderPrices} 
+            disabled={clearing}
+            className="border-destructive/40 text-destructive hover:bg-destructive hover:text-white rounded-xl h-12 px-6 font-bold"
+          >
+            {clearing ? <Loader2 className="w-4 h-4 animate-spin mr-2" /> : <Trash2 className="w-4 h-4 mr-2" />}
+            Clear Placeholder Prices
+          </Button>
           <Button onClick={() => setIsDialogOpen(true)} className="bg-primary text-white rounded-xl h-12 px-8 font-bold shadow-xl shadow-primary/20">
             <Plus className="w-4 h-4 mr-2" /> New Package
           </Button>
@@ -192,7 +248,9 @@ export default function ItineraryManager() {
                     </div>
                   </TableCell>
                   <TableCell><Badge variant="outline" className="text-[10px] uppercase font-bold text-secondary">{item.category}</Badge></TableCell>
-                  <TableCell className="font-bold text-primary">${item.priceFrom?.toLocaleString()}</TableCell>
+                  <TableCell className="font-bold text-primary">
+                    {item.priceFrom ? `$${Number(item.priceFrom).toLocaleString()}` : item.priceString || "Priced to order"}
+                  </TableCell>
                   <TableCell>
                     <Badge className={cn(
                       "font-bold uppercase text-[9px] px-3 py-1",
@@ -230,7 +288,7 @@ export default function ItineraryManager() {
             <DialogHeader className="p-6 border-b shrink-0 bg-white">
               <div className="flex items-center gap-3 text-secondary mb-1">
                 <Compass className="w-4 h-4" />
-                <span className="text-[10px] font-space font-bold uppercase tracking-[0.3em]">Editor Mode — Step {step} of 2</span>
+                <span className="text-[10px] font-space font-bold uppercase tracking-[0.3em]">Editor Mode · Step {step} of 2</span>
               </div>
               <DialogTitle className="text-xl font-headline font-bold">Package Detail Architect</DialogTitle>
             </DialogHeader>
