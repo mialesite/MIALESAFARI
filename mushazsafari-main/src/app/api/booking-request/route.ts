@@ -1,7 +1,5 @@
 import { NextResponse } from 'next/server';
 import { emailService } from '@/services/email/service';
-import { initializeFirebase } from '@/firebase';
-import { doc, getDoc } from 'firebase/firestore';
 
 export async function POST(request: Request) {
   try {
@@ -11,9 +9,7 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: 'Missing core identity details.' }, { status: 400 });
     }
 
-    const { firestore } = initializeFirebase();
-    const configDoc = await getDoc(doc(firestore, 'system', 'config'));
-    const signature = configDoc.exists() ? configDoc.data()?.companySignature : null;
+    const signature = await emailService.getCompanySignature();
 
     await emailService.sendBookingRequest(data, signature);
 

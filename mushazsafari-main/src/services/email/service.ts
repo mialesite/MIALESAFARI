@@ -40,14 +40,36 @@ class EmailService {
   }
 
   /**
+   * Reads the admin-authored settings document.
+   * firestore.rules restricts /system/{id} to signed-in staff, so an anonymous
+   * request from a public form endpoint gets permission-denied rather than an
+   * empty snapshot. Falling back to environment settings keeps mail flowing.
+   */
+  private async readConfigDoc(): Promise<Record<string, any>> {
+    try {
+      const { firestore } = initializeFirebase();
+      const configDoc = await getDoc(doc(firestore, 'system', 'config'));
+      return configDoc.exists() ? configDoc.data() : {};
+    } catch (error: any) {
+      console.warn('[SMTP] system/config unavailable, using environment settings:', error?.code || error?.message);
+      return {};
+    }
+  }
+
+  public async getCompanySignature(): Promise<string> {
+    const data = await this.readConfigDoc();
+    return data.companySignature || "MIALE • ARUSHA";
+  }
+
+  /**
    * Loads credentials from Firestore (Priority) or Env Variables (Fallback)
    */
   private async getConfig() {
-    const { firestore } = initializeFirebase();
-    const configDoc = await getDoc(doc(firestore, 'system', 'config'));
-    const data = configDoc.exists() ? configDoc.data() : {};
+    const data = await this.readConfigDoc();
 
-    const host = data.emailHost || process.env.SMTP_HOST || "mialesafari.com";
+    // The bare domain no longer routes to the mail server (its DNS record
+    // moved off Hostinger), so Hostinger's SMTP hostname is the default.
+    const host = data.emailHost || process.env.SMTP_HOST || "smtp.hostinger.com";
     const port = Number(data.emailPort || process.env.SMTP_PORT || 465);
     const user = data.emailUser || process.env.SMTP_USER || "info@mialesafari.com";
     const pass = data.emailPass || process.env.SMTP_PASS;
@@ -187,6 +209,54 @@ class EmailService {
       errorDetail: detail,
       suggestedFix: fix
     };
+  }
+
+  /**
+   * Sends one message, retrying over port 587 STARTTLS when the configured
+   * 465 socket is unreachable. Cloud hosts commonly block 465 egress, and the
+   * verify path already treated 587 as the fallback, so sending must too.
+   */
+  private async dispatch(config: Awaited<ReturnType<EmailService['getConfig']>>, mail: nodemailer.SendMailOptions) {
+    const attempts: Array<[number, boolean]> = [[config.port, config.port === 465]];
+    if (config.port === 465) attempts.push([587, false]);
+
+    let lastError: any;
+    for (const [port, secure] of attempts) {
+      try {
+        await this.createTransporter(config, port, secure).sendMail(mail);
+        return { port };
+      } catch (error: any) {
+        lastError = error;
+        console.warn(`[SMTP] Send failed on port ${port}:`, error.code || error.message);
+        const retryable = ['ETIMEDOUT', 'ECONNREFUSED', 'ECONERROR', 'ESOCKET'].includes(error.code);
+        if (!retryable) break;
+      }
+    }
+    throw lastError;
+  }
+
+  /**
+   * Non-throwing notification send for visitor-facing forms: the caller needs to
+   * know whether the office was told, not to surface a mail-server fault.
+   */
+  public async trySendContactInquiry(
+    data: any,
+    signature?: string,
+  ): Promise<{ sent: boolean; detail?: string }> {
+    try {
+      const config = await this.getConfig();
+      await this.dispatch(config, {
+        from: `"${config.fromName}" <${config.fromAddress}>`,
+        to: config.adminEmail,
+        replyTo: data.email,
+        subject: `Website Inquiry from ${data.fullName}`,
+        html: templates.contactInquiry(data, signature || "MIALE • ARUSHA"),
+      });
+      return { sent: true };
+    } catch (error: any) {
+      console.error('[SMTP] Contact inquiry not delivered:', error?.code || error?.message);
+      return { sent: false, detail: error?.message };
+    }
   }
 
   public async sendBookingRequest(data: any, signature?: string) {

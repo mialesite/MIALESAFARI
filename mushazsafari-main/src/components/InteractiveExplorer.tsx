@@ -11,8 +11,11 @@ import { useCollection, useFirestore, useMemoFirebase, useUser } from "@/firebas
 import { collection, query, where, writeBatch, doc, serverTimestamp, getDocs, limit } from "firebase/firestore";
 import { cn } from "@/lib/utils";
 import { MASTER_DESTINATIONS } from "@/lib/master-destinations";
-import { getImageById } from "@/app/lib/placeholder-images";
+import { uniqueByName } from "@/lib/uniqueByName";
+import { mediaFor } from "@/lib/media";
 import { useToast } from "@/hooks/use-toast";
+import { useLanguage } from "@/context/LanguageContext";
+import { CIRCUIT_LABEL, labelFor } from "@/lib/i18n";
 
 type Circuit = "All" | "Northern Circuit" | "Southern Circuit" | "Western Frontiers" | "Zanzibar & Islands" | "The Peaks";
 
@@ -21,6 +24,7 @@ const CIRCUITS: Circuit[] = ["All", "Northern Circuit", "Southern Circuit", "Wes
 export const InteractiveExplorer = () => {
   const db = useFirestore();
   const { user } = useUser();
+  const { lang, t } = useLanguage();
   const { toast } = useToast();
   const [activeCircuit, setActiveCircuit] = useState<Circuit>("All");
   const [syncing, setSyncing] = useState(false);
@@ -38,13 +42,15 @@ export const InteractiveExplorer = () => {
   const { data: firestoreData, loading, error } = useCollection(destinationsQuery);
 
   // "Direct-to-App" Logic: Fallback to static master data for instant results
-  const allDestinations = firestoreData && firestoreData.length > 0 
-    ? firestoreData 
-    : MASTER_DESTINATIONS.map((d, i) => ({ 
-        ...d, 
-        id: d.name.toLowerCase().replace(/\s+/g, '-'),
-        featuredImage: getImageById(d.imageId).imageUrl 
-      })).filter(d => activeCircuit === "All" || d.circuit === activeCircuit);
+  const allDestinations = uniqueByName(
+    firestoreData && firestoreData.length > 0
+      ? firestoreData
+      : MASTER_DESTINATIONS.map((d, i) => ({
+          ...d,
+          id: d.name.toLowerCase().replace(/\s+/g, '-'),
+          featuredImage: mediaFor(d.imageId).src
+        }))
+  ).filter(d => activeCircuit === "All" || d.circuit === activeCircuit);
 
   const visibleDestinations = allDestinations.slice(0, visibleCount);
 
@@ -58,10 +64,10 @@ export const InteractiveExplorer = () => {
         const existingSnap = await getDocs(existingQuery);
         if (existingSnap.empty) {
           const docRef = doc(collection(db, "destinations"));
-          const imgData = getImageById(master.imageId);
+          const imgData = mediaFor(master.imageId);
           batch.set(docRef, {
             ...master,
-            featuredImage: imgData.imageUrl,
+            featuredImage: imgData.src,
             gallery: [],
             status: "active",
             createdAt: serverTimestamp(),
@@ -70,9 +76,9 @@ export const InteractiveExplorer = () => {
         }
       }
       await batch.commit();
-      toast({ title: "Destinations Synchronized" });
+      toast({ title: t("ex.syncToast") });
     } catch (err: any) {
-      toast({ variant: "destructive", title: "Sync Error" });
+      toast({ variant: "destructive", title: t("ex.syncError") });
     } finally {
       setSyncing(false);
     }
@@ -81,22 +87,22 @@ export const InteractiveExplorer = () => {
   const loadMore = useCallback(() => setVisibleCount(prev => prev + 8), []);
 
   return (
-    <section className="py-32 px-6 md:px-12 bg-safari-white" id="destinations">
+    <section className="py-24 md:py-28 px-6 md:px-12 bg-safari-white" id="destinations">
       <div className="max-w-[1800px] mx-auto">
-        <div className="flex flex-col lg:flex-row items-end justify-between mb-16 gap-8">
+        <div className="flex flex-col lg:flex-row items-end justify-between mb-12 gap-8">
           <div className="max-w-2xl">
-            <span className="text-[10px] uppercase tracking-[0.4em] font-bold text-secondary mb-4 block">Primary Circuits</span>
-            <h2 className="text-5xl md:text-7xl lg:text-8xl font-serif text-primary uppercase leading-none">
-              Explore <br />
-              <span className="font-serif lowercase text-muted-foreground italic">the wild</span>
+            <span className="text-[10px] uppercase tracking-[0.4em] font-bold text-secondary mb-4 block">{t("ex.eyebrow")}</span>
+            <h2 className="text-5xl md:text-7xl lg:text-8xl font-serif text-primary leading-none">
+              {t("ex.title")} <br />
+              <span className="font-serif text-muted-foreground italic">{t("ex.titleAccent")}</span>
             </h2>
           </div>
-          <p className="text-lg text-muted-foreground font-light max-w-sm border-r-2 border-secondary pr-8 py-2">
-            Curated safari destinations managed instantly via persistent app cache. Near-zero latency discovery.
+          <p className="text-lg text-muted-foreground font-light max-w-sm border-l-2 border-secondary/40 pl-8 py-2">
+            {t("ex.side")}
           </p>
         </div>
 
-        <div className="mb-16 flex flex-wrap gap-3 justify-center lg:justify-start">
+        <div className="mb-12 flex flex-wrap gap-3 justify-center lg:justify-start">
           {CIRCUITS.map((circuit) => (
             <button
               key={circuit}
@@ -108,20 +114,20 @@ export const InteractiveExplorer = () => {
                   : "bg-white text-muted-foreground border-muted hover:border-secondary hover:text-secondary"
               )}
             >
-              {circuit}
+              {circuit && labelFor(CIRCUIT_LABEL, lang, circuit)}
             </button>
           ))}
         </div>
 
         {loading && !firestoreData ? (
           <div className="py-40 flex flex-col items-center justify-center gap-4 text-muted-foreground">
-            <Loader2 className="w-10 h-10 animate-spin text-honey-gold" />
-            <p className="text-xs uppercase font-bold tracking-[0.3em]">Synchronizing Landmarks...</p>
+            <Loader2 className="w-10 h-10 animate-spin text-secondary" />
+            <p className="text-xs uppercase font-bold tracking-[0.3em]">{t("ex.loading")}</p>
           </div>
         ) : visibleDestinations.length === 0 ? (
           <div className="py-24 text-center bg-muted/10 rounded-[3rem] border border-dashed border-muted/30 max-w-4xl mx-auto flex flex-col items-center">
             <Compass className="w-12 h-12 text-secondary/20 mx-auto mb-6" />
-            <p className="text-muted-foreground font-serif italic text-2xl mb-4">No landmarks found.</p>
+            <p className="text-muted-foreground font-serif italic text-2xl mb-4">{t("ex.empty")}</p>
             {user && (
               <button 
                 onClick={handleSync} 
@@ -129,13 +135,13 @@ export const InteractiveExplorer = () => {
                 className="bg-primary text-white rounded-full px-8 h-12 font-bold uppercase tracking-widest text-[10px] flex items-center gap-2"
               >
                 {syncing ? <Loader2 className="w-4 h-4 animate-spin" /> : <RefreshCw className="w-4 h-4" />}
-                Synchronize Registry
+                {t("ex.sync")}
               </button>
             )}
           </div>
         ) : (
           <>
-            <motion.div layout className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+            <motion.div layout className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
               <AnimatePresence mode="popLayout">
                 {visibleDestinations.map((dest: any, i) => (
                   <motion.div
@@ -148,17 +154,19 @@ export const InteractiveExplorer = () => {
                     className="group relative h-[400px] rounded-[2.5rem] overflow-hidden shadow-2xl cursor-pointer accelerate"
                   >
                     <Image
-                      src={dest.featuredImage || "https://picsum.photos/seed/safari/800/1200"}
+                      src={mediaFor(dest.featuredImage).src}
                       alt={dest.name}
                       fill
+                      quality={70}
                       className="object-cover transition-transform duration-1000 group-hover:scale-110"
-                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw"
+                      sizes="(min-width: 1024px) 33vw, (min-width: 768px) 48vw, 70vw"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-primary/95 via-primary/30 to-transparent" />
+                    {/* Bottom-weighted scrim: the photograph keeps its colour above the caption. */}
+                    <div className="absolute inset-0 bg-[linear-gradient(to_top,rgba(36,66,46,0.96),rgba(36,66,46,0.78)_30%,rgba(36,66,46,0.15)_62%,transparent_80%)]" />
                     
                     <div className="absolute top-8 left-8">
                       <div className="glass px-4 py-2 rounded-full border-white/20 text-[10px] font-bold text-white uppercase tracking-widest">
-                        {dest.circuit}
+                        {labelFor(CIRCUIT_LABEL, lang, dest.circuit)}
                       </div>
                     </div>
 
@@ -171,7 +179,7 @@ export const InteractiveExplorer = () => {
                       
                       <Link href={`/destinations/${dest.id}`} className="w-full">
                         <Button variant="outline" className="w-full rounded-full border-white/20 bg-white/10 hover:bg-white hover:text-primary transition-all font-bold text-[10px] uppercase tracking-[0.2em] py-5 h-auto">
-                          Discovery Details
+                          {t("ex.details")}
                         </Button>
                       </Link>
                     </div>
@@ -188,7 +196,7 @@ export const InteractiveExplorer = () => {
                   className="h-16 px-12 rounded-full border-primary text-primary hover:bg-primary hover:text-white transition-all font-space font-bold uppercase tracking-widest text-[10px] group shadow-xl"
                 >
                   <Plus className="mr-2 w-4 h-4 group-hover:rotate-90 transition-transform" />
-                  Load More Landmarks
+                  {t("ex.loadMore")}
                 </Button>
               </div>
             )}

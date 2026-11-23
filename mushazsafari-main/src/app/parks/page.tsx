@@ -1,22 +1,34 @@
 "use client";
 
 import { Navbar } from "@/components/Navbar";
+import { HeroFigure } from "@/components/HeroFigure";
+import { TanzaniaParksMap } from "@/components/TanzaniaParksMap";
+import { ParkCard } from "@/components/ParkCard";
 import { motion } from "framer-motion";
-import Image from "next/image";
 import Link from "next/link";
-import { Button } from "@/components/ui/button";
-import { MapPin, Compass, ArrowRight, Loader2, RefreshCw } from "lucide-react";
-import { useCollection, useFirestore, useMemoFirebase, useUser } from "@/firebase";
-import { collection, query, where, writeBatch, doc, serverTimestamp, getDocs } from "firebase/firestore";
 import { useState } from "react";
+import { Button } from "@/components/ui/button";
+import { Compass, Loader2, RefreshCw } from "lucide-react";
+import { useCollection, useFirestore, useMemoFirebase, useUser } from "@/firebase";
+import { collection, query, writeBatch, doc, serverTimestamp, getDocs, where } from "firebase/firestore";
 import { useToast } from "@/hooks/use-toast";
 import { MASTER_DESTINATIONS } from "@/lib/master-destinations";
-import { getImageById } from "@/app/lib/placeholder-images";
+import { uniqueByName } from "@/lib/uniqueByName";
+import { mediaFor } from "@/lib/media";
 
 /**
  * @fileOverview Parks Index Page
- * Provides a high-end list view of all active destinations (Parks & Reserves).
+ * Every active park and reserve, grouped by the circuit the desk plans them into.
  */
+
+const CIRCUIT_ORDER = [
+  "Northern Circuit",
+  "Southern Circuit",
+  "Western Frontiers",
+  "The Peaks",
+  "Zanzibar & Islands",
+];
+
 export default function ParksPage() {
   const db = useFirestore();
   const { user } = useUser();
@@ -29,7 +41,17 @@ export default function ParksPage() {
   [db]);
   const { data: results, loading, error } = useCollection(parksQuery);
 
-  const parks = results || [];
+  const parks = uniqueByName(results || []);
+
+  const groups = CIRCUIT_ORDER.map((circuit) => ({
+    circuit,
+    items: parks.filter((park: any) => (park.circuit || "").trim() === circuit),
+  })).filter((group) => group.items.length > 0);
+
+  const ungrouped = parks.filter(
+    (park: any) => !CIRCUIT_ORDER.includes((park.circuit || "").trim())
+  );
+  if (ungrouped.length > 0) groups.push({ circuit: "Beyond the circuits", items: ungrouped });
 
   const handleSync = async () => {
     if (!user) {
@@ -52,10 +74,10 @@ export default function ParksPage() {
         
         if (existingSnap.empty) {
           const docRef = doc(collection(db, "destinations"));
-          const imgData = getImageById(master.imageId);
+          const imgData = mediaFor(master.imageId);
           batch.set(docRef, {
             ...master,
-            featuredImage: imgData.imageUrl,
+            featuredImage: imgData.src,
             gallery: [],
             status: "active",
             createdAt: serverTimestamp(),
@@ -86,26 +108,34 @@ export default function ParksPage() {
     <main className="min-h-screen bg-safari-white">
       <Navbar />
       
-      <section className="pt-40 pb-24 px-6 md:px-12 lg:px-24">
+      <section className="pt-32 pb-16 md:pt-40 md:pb-24 px-6 md:px-12 lg:px-24">
         <div className="max-w-[1400px] mx-auto">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="mb-20 text-center lg:text-left"
-          >
-            <span className="text-secondary font-space font-bold uppercase tracking-[0.5em] text-xs mb-4 block">Wildlife Sanctuaries</span>
-            <h1 className="text-6xl md:text-8xl font-serif text-primary leading-tight tracking-tighter mb-8">
-              Tanzania <br />
-              <span className="italic text-muted-foreground/60">Parks</span>
-            </h1>
-            <p className="text-xl text-muted-foreground font-light max-w-2xl mx-auto lg:mx-0 leading-relaxed">
-              Explore our registry of protected ecosystems. From the great herds of the Serengeti to the hidden chimpanzee forests of Mahale, discover the benchmarks of African conservation.
-            </p>
-          </motion.div>
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-center mb-16 md:mb-20">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="lg:col-span-7 text-center lg:text-left"
+            >
+              <span className="text-secondary font-space font-bold uppercase tracking-[0.4em] md:tracking-[0.5em] text-[10px] md:text-xs mb-4 block">
+                Wildlife Sanctuaries
+              </span>
+              <h1 className="text-5xl md:text-7xl lg:text-8xl font-serif text-primary leading-[0.92] tracking-tighter mb-6 md:mb-8">
+                Tanzania <br />
+                <span className="italic font-light text-muted-foreground/60">Parks</span>
+              </h1>
+              <p className="text-lg md:text-xl text-muted-foreground font-light max-w-2xl mx-auto lg:mx-0 leading-relaxed">
+                Every park and reserve Tanzania protects, and what each one is genuinely good for: the herds of the
+                Serengeti, the chimpanzee forests of Mahale, the elephant corridors of Tarangire.
+              </p>
+            </motion.div>
+            <HeroFigure assetRef="elephant-family-crossing" caption="Elephant family · Tarangire" className="lg:col-span-5" />
+          </div>
+
+          <TanzaniaParksMap destinations={(parks as any[]).map((p) => ({ id: p.id, name: p.name }))} />
 
           {loading ? (
             <div className="py-40 flex flex-col items-center justify-center gap-4 text-muted-foreground">
-              <Loader2 className="w-10 h-10 animate-spin text-honey-gold" />
+              <Loader2 className="w-10 h-10 animate-spin text-secondary" />
               <p className="text-xs uppercase font-bold tracking-[0.3em]">Opening Destinations...</p>
             </div>
           ) : error ? (
@@ -130,64 +160,40 @@ export default function ParksPage() {
                </Button>
             </div>
           ) : (
-            <div className="grid grid-cols-1 gap-12 lg:gap-24">
-              {parks.map((park: any, i) => (
-                <motion.div
-                  key={park.id}
-                  initial={{ opacity: 0, y: 30 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.8, delay: i * 0.1 }}
-                  viewport={{ once: true, margin: "-100px" }}
-                  className="group relative overflow-hidden rounded-[3rem] bg-white border border-muted shadow-sm hover:shadow-2xl transition-all duration-700"
-                >
-                  <div className="grid grid-cols-1 lg:grid-cols-2">
-                    <div className="relative h-64 lg:h-[500px] overflow-hidden">
-                      <Image 
-                        src={park.featuredImage || "https://picsum.photos/seed/park/800/600"} 
-                        alt={park.name} 
-                        fill 
-                        className="object-cover transition-transform duration-1000 group-hover:scale-110"
-                        sizes="(max-width: 768px) 100vw, 50vw"
-                      />
-                      <div className="absolute inset-0 bg-black/10 group-hover:bg-transparent transition-colors duration-700" />
-                    </div>
-                    <div className="p-10 lg:p-20 flex flex-col justify-center">
-                      <div className="flex items-center gap-3 text-secondary mb-6">
-                        <MapPin className="w-4 h-4" />
-                        <span className="text-[10px] font-space font-bold uppercase tracking-[0.3em]">{park.circuit}</span>
-                      </div>
-                      <h3 className="text-4xl lg:text-6xl font-serif font-bold text-primary mb-6 group-hover:text-secondary transition-colors leading-tight">
-                        {park.name}
-                      </h3>
-                      <div className="h-px w-20 bg-muted mb-8 group-hover:w-full transition-all duration-700" />
-                      <p className="text-lg text-muted-foreground font-light leading-relaxed mb-10 italic">
-                        "{park.shortDescription}"
-                      </p>
-                      <Link href={`/destinations/${park.id}`}>
-                        <Button variant="outline" className="rounded-full border-primary text-primary hover:bg-primary hover:text-white px-10 h-14 font-space font-bold uppercase tracking-widest text-[10px] gap-2 transition-all">
-                          View Sanctuary Profile <ArrowRight className="w-4 h-4" />
-                        </Button>
-                      </Link>
-                    </div>
+            <div className="space-y-20 md:space-y-28">
+              {groups.map((group) => (
+                <div key={group.circuit}>
+                  <div className="flex items-baseline justify-between gap-6 border-b border-muted pb-4 mb-10 md:mb-14">
+                    <h2 className="text-[11px] md:text-xs font-space font-bold uppercase tracking-[0.35em] text-primary">
+                      {group.circuit}
+                    </h2>
+                    <span className="text-[9px] md:text-[10px] font-space uppercase tracking-[0.25em] text-muted-foreground">
+                      {group.items.length} {group.items.length === 1 ? "park" : "parks"}
+                    </span>
                   </div>
-                </motion.div>
+
+                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    {group.items.map((park: any, i) => (
+                      <ParkCard key={park.id} park={park} index={i} />
+                    ))}
+                  </div>
+                </div>
               ))}
             </div>
           )}
         </div>
       </section>
 
-      {/* Exploration Footer */}
       <section className="py-24 bg-primary text-white text-center px-6">
         <div className="max-w-4xl mx-auto">
-          <span className="text-secondary font-space font-bold uppercase tracking-[0.4em] text-[10px] mb-8 block">Bespoke Expeditions</span>
-          <h2 className="text-4xl md:text-6xl font-serif italic mb-12">"Every park tells a different story of the wild."</h2>
+          <span className="text-secondary font-space font-bold uppercase tracking-[0.4em] text-[10px] mb-8 block">Plan With The Desk</span>
+          <h2 className="text-4xl md:text-6xl font-serif italic text-white mb-12 leading-tight">"Pick the park. The route is built around it."</h2>
           <div className="flex flex-col sm:flex-row justify-center gap-6">
             <Button asChild className="h-16 px-12 rounded-full bg-secondary text-white hover:bg-accent transition-all font-space font-bold uppercase tracking-widest">
-              <Link href="/itineraries">Explore All Safaris</Link>
+              <Link href="/itineraries">Explore all safaris</Link>
             </Button>
-            <Button asChild variant="outline" className="h-16 px-12 rounded-full border-white/20 text-white hover:bg-white hover:text-primary transition-all font-space font-bold uppercase tracking-widest">
-              <Link href="/contact">Request Bespoke Planning</Link>
+            <Button asChild variant="outline" className="h-16 px-12 rounded-full bg-transparent border-white/20 text-white hover:bg-white hover:text-primary transition-all font-space font-bold uppercase tracking-widest">
+              <Link href="/contact">Send the dates</Link>
             </Button>
           </div>
         </div>

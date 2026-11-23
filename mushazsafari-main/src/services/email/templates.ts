@@ -67,10 +67,10 @@ export const templates = {
 
     <div style="margin-top: 20px; padding: 20px; background: #23412e; border-radius: 15px; text-align: center;">
       <div class="label" style="color: rgba(255,255,255,0.5);">Target Budget</div>
-      <div class="value" style="color: #b68d40; font-size: 24px;">$${data.budget || data.estimatedPrice?.toLocaleString()}</div>
+      <div class="value" style="color: #b68d40; font-size: 24px;">${data.budget ? `$${data.budget}` : "Not stated"}</div>
     </div>
 
-    <div class="section-title" style="margin-top: 40px;">Bespoke Brief</div>
+    <div class="section-title" style="margin-top: 40px;">The Brief</div>
     <div style="background: #fcfbf9; padding: 25px; border-radius: 20px; border: 1px solid #f0eee8; font-style: italic; font-size: 14px; line-height: 1.6; color: #555;">
       "${data.requests || 'No specific requests provided.'}"
     </div>
@@ -85,6 +85,8 @@ export const templates = {
     <div class="label">Name</div><div class="value">${data.fullName}</div>
     <div class="label">Email</div><div class="value">${data.email}</div>
     <div class="label">Phone</div><div class="value">${data.phone || 'N/A'}</div>
+    <div class="label">Travel Window</div><div class="value">${data.travelWindow || 'N/A'}</div>
+    <div class="label">Party Size</div><div class="value">${data.partySize || 'N/A'}</div>
     
     <div class="section-title" style="margin-top: 30px;">Message</div>
     <div style="background: #fcfbf9; padding: 25px; border-radius: 20px; border: 1px solid #f0eee8; font-style: italic; font-size: 14px; line-height: 1.6; color: #555;">

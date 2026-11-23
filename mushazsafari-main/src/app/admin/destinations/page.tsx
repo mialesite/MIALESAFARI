@@ -19,7 +19,7 @@ import { MediaLibraryDialog } from "@/components/admin/MediaLibraryDialog";
 import Image from "next/image";
 import Link from "next/link";
 import { MASTER_DESTINATIONS } from "@/lib/master-destinations";
-import { getImageById } from "@/app/lib/placeholder-images";
+import { mediaFor } from "@/lib/media";
 import { cn } from "@/lib/utils";
 import { errorEmitter } from "@/firebase/error-emitter";
 import { FirestorePermissionError, type SecurityRuleContext } from "@/firebase/errors";
@@ -79,20 +79,20 @@ export default function DestinationsRegistry() {
     try {
       for (const master of MASTER_DESTINATIONS) {
         const existing = destinations?.find(d => d.name === master.name);
-        const imgData = getImageById(master.imageId);
+        const imgData = mediaFor(master.imageId);
         
-        const mediaQuery = query(collection(db, "media"), where("url", "==", imgData.imageUrl));
+        const mediaQuery = query(collection(db, "media"), where("url", "==", imgData.src));
         const mediaSnap = await getDocs(mediaQuery);
         if (mediaSnap.empty) {
           const mediaRef = doc(collection(db, "media"));
           batch.set(mediaRef, {
             name: master.name,
-            url: imgData.imageUrl,
+            url: imgData.src,
             folder: "cms/destinations",
             status: "active",
             createdAt: serverTimestamp(),
             size: 0,
-            mimeType: "image/jpeg"
+            mimeType: "image/webp"
           });
         }
 
@@ -100,7 +100,7 @@ export default function DestinationsRegistry() {
           const docRef = doc(db, "destinations", existing.id);
           batch.update(docRef, {
             ...master,
-            featuredImage: imgData.imageUrl,
+            featuredImage: imgData.src,
             updatedAt: serverTimestamp()
           });
           updated++;
@@ -108,7 +108,7 @@ export default function DestinationsRegistry() {
           const docRef = doc(collection(db, "destinations"));
           batch.set(docRef, {
             ...master,
-            featuredImage: imgData.imageUrl,
+            featuredImage: imgData.src,
             gallery: [],
             status: "active",
             createdAt: serverTimestamp(),

@@ -21,15 +21,12 @@ import {
   Users
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { PlaceHolderImages } from "@/lib/placeholder-images";
+import { mediaFor } from "@/lib/media";
 
 export default function CompanyProfile() {
-  const logoUrl = "https://uploads.mushazsafari.com/Miale.png";
+  const logoUrl = mediaFor("miale-logo").src;
   
-  const getImage = (id: string) => {
-    const img = PlaceHolderImages.find(img => img.id === id);
-    return img?.imageUrl || "https://picsum.photos/seed/miale-placeholder/800/600";
-  };
+  const getImage = (id: string) => mediaFor(id).src;
 
   return (
     <div className="min-h-screen bg-[#FFF8E7] font-body text-[#111111] overflow-x-hidden selection:bg-honey-gold selection:text-honey-dark">

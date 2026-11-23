@@ -35,16 +35,17 @@ import { useFirestore } from "@/firebase";
 import { collection, addDoc, serverTimestamp } from "firebase/firestore";
 import { errorEmitter } from "@/firebase/error-emitter";
 import { FirestorePermissionError, type SecurityRuleContext } from "@/firebase/errors";
+import { useLanguage } from "@/context/LanguageContext";
 
 interface BookingDialogProps {
   children: React.ReactNode;
 }
 
 const STEPS = [
-  { id: 1, title: "The Journey", icon: CalendarIcon },
-  { id: 2, title: "Your Party", icon: Users },
-  { id: 3, title: "Luxury Level", icon: Crown },
-  { id: 4, title: "Final Details", icon: Sparkles },
+  { id: 1, icon: CalendarIcon },
+  { id: 2, icon: Users },
+  { id: 3, icon: Crown },
+  { id: 4, icon: Sparkles },
 ];
 
 const COUNTRIES = [
@@ -60,6 +61,7 @@ const COUNTRIES = [
 ].sort((a, b) => a.name.localeCompare(b.name));
 
 export const BookingDialog = ({ children }: BookingDialogProps) => {
+  const { t } = useLanguage();
   const [step, setStep] = useState(1);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -113,8 +115,8 @@ export const BookingDialog = ({ children }: BookingDialogProps) => {
     } else {
       toast({
         variant: "destructive",
-        title: "Information Required",
-        description: "Please complete the required fields for this step."
+        title: t("bk.toastInfoTitle"),
+        description: t("bk.toastInfoDesc")
       });
     }
   };
@@ -133,9 +135,9 @@ export const BookingDialog = ({ children }: BookingDialogProps) => {
     
     setLoading(true);
 
-    const bookingData = { 
-      ...formData, 
-      estimatedPrice: estimatePrice(),
+    const bookingData = {
+      ...formData,
+      tripDays: tripDays(),
     };
 
     const bookingsRef = collection(db, "bookings");
@@ -162,35 +164,31 @@ export const BookingDialog = ({ children }: BookingDialogProps) => {
       if (!response.ok) throw new Error("Email Dispatch Failed");
 
       setIsSubmitted(true);
-      toast({ 
-        title: "Brief Dispatched", 
-        description: "Your expedition request has been sent to our Arusha designers." 
+      toast({
+        title: t("bk.toastSentTitle"),
+        description: t("bk.toastSentDesc")
       });
     } catch (error) {
       console.error("Booking email error:", error);
       setIsSubmitted(true);
-      toast({ 
+      toast({
         variant: "destructive",
-        title: "Dispatch Note", 
-        description: "Request logged in system. Email notification delayed but our team will review it." 
+        title: t("bk.toastFallbackTitle"),
+        description: t("bk.toastFallbackDesc")
       });
     } finally {
       setLoading(false);
     }
   };
 
-  const estimatePrice = () => {
-    const adults = parseInt(formData.adults) || 0;
-    const children = parseInt(formData.children) || 0;
-    let days = 1;
-    if (formData.startDate && formData.endDate) {
-      const start = new Date(formData.startDate);
-      const end = new Date(formData.endDate);
-      days = Math.max(1, Math.ceil((end.getTime() - start.getTime()) / (1000 * 60 * 60 * 24)));
-    }
-    const multiplier = formData.tier === 'elite' ? 2.5 : formData.tier === 'luxury' ? 1.5 : 1;
-    return Math.round((adults + (children * 0.7)) * days * 500 * multiplier);
+  const tripDays = () => {
+    if (!formData.startDate || !formData.endDate) return 1;
+    const start = new Date(formData.startDate);
+    const end = new Date(formData.endDate);
+    return Math.max(1, Math.ceil((end.getTime() - start.getTime()) / (1000 * 60 * 60 * 24)));
   };
+
+  const travellerCount = () => (parseInt(formData.adults) || 0) + (parseInt(formData.children) || 0);
 
   const filteredCountries = COUNTRIES.filter(c => c.name.toLowerCase().includes(nationalitySearch.toLowerCase()));
 
@@ -205,9 +203,9 @@ export const BookingDialog = ({ children }: BookingDialogProps) => {
               <DialogHeader className="mb-8 shrink-0">
                 <div className="flex items-center gap-2 text-secondary mb-1">
                   <Compass className="w-4 h-4" />
-                  <span className="text-[10px] font-space font-bold uppercase tracking-[0.3em]">Bespoke Discovery</span>
+                  <span className="text-[10px] font-space font-bold uppercase tracking-[0.3em]">{t("bk.eyebrow")}</span>
                 </div>
-                <DialogTitle className="text-3xl md:text-4xl font-serif text-primary">Begin Your <span className="italic">Journey</span></DialogTitle>
+                <DialogTitle className="text-3xl md:text-4xl font-serif text-primary">{t("bk.title")} <span className="italic">{t("bk.titleAccent")}</span></DialogTitle>
               </DialogHeader>
 
               <div className="flex justify-between items-center mb-10 relative px-4 shrink-0">
@@ -231,11 +229,11 @@ export const BookingDialog = ({ children }: BookingDialogProps) => {
                       {step === 1 && (
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                           <div className="space-y-2">
-                            <Label className="text-[10px] uppercase tracking-widest font-bold text-muted-foreground">Start Date</Label>
+                            <Label className="text-[10px] uppercase tracking-widest font-bold text-muted-foreground">{t("bk.startDate")}</Label>
                             <Input type="date" min={today} className="h-12 rounded-xl border-muted" value={formData.startDate} onChange={e => setFormData(p => ({...p, startDate: e.target.value}))} />
                           </div>
                           <div className="space-y-2">
-                            <Label className="text-[10px] uppercase tracking-widest font-bold text-muted-foreground">Departure</Label>
+                            <Label className="text-[10px] uppercase tracking-widest font-bold text-muted-foreground">{t("bk.departure")}</Label>
                             <Input type="date" min={formData.startDate || today} className="h-12 rounded-xl border-muted" value={formData.endDate} onChange={e => setFormData(p => ({...p, endDate: e.target.value}))} />
                           </div>
                         </div>
@@ -243,7 +241,7 @@ export const BookingDialog = ({ children }: BookingDialogProps) => {
                       {step === 2 && (
                         <div className="space-y-6">
                           <div className="space-y-2 relative" ref={countryRef}>
-                            <Label className="text-[10px] uppercase tracking-widest font-bold text-muted-foreground">Nationality</Label>
+                            <Label className="text-[10px] uppercase tracking-widest font-bold text-muted-foreground">{t("bk.nationality")}</Label>
                             <div className="relative">
                               <Button 
                                 type="button"
@@ -251,7 +249,7 @@ export const BookingDialog = ({ children }: BookingDialogProps) => {
                                 onClick={() => setNationalityOpen(!nationalityOpen)}
                                 className="w-full justify-between h-12 rounded-xl border-muted bg-white/50"
                               >
-                                {formData.nationality ? formData.nationality : "Select Country"}
+                                {formData.nationality ? formData.nationality : t("bk.selectCountry")}
                                 <ChevronDown className={cn("w-4 h-4 opacity-50", nationalityOpen && "rotate-180")} />
                               </Button>
                               
@@ -259,9 +257,9 @@ export const BookingDialog = ({ children }: BookingDialogProps) => {
                                 <div className="absolute top-full left-0 right-0 z-50 mt-2 bg-white border border-muted shadow-2xl rounded-2xl overflow-hidden flex flex-col max-h-[300px]">
                                   <div className="p-3 border-b border-muted flex items-center gap-2 bg-muted/10 shrink-0">
                                     <Search className="w-4 h-4 text-muted-foreground" />
-                                    <Input 
-                                      placeholder="Search..." 
-                                      value={nationalitySearch} 
+                                    <Input
+                                      placeholder={t("bk.search")}
+                                      value={nationalitySearch}
                                       onChange={e => setNationalitySearch(e.target.value)} 
                                       onKeyDown={e => e.stopPropagation()}
                                       className="h-8 border-none focus-visible:ring-0 text-xs p-0 bg-transparent" 
@@ -289,11 +287,11 @@ export const BookingDialog = ({ children }: BookingDialogProps) => {
 
                           <div className="grid grid-cols-2 gap-4">
                             <div className="space-y-2">
-                              <Label className="text-[10px] uppercase tracking-widest font-bold text-muted-foreground">Adults</Label>
+                              <Label className="text-[10px] uppercase tracking-widest font-bold text-muted-foreground">{t("bk.adults")}</Label>
                               <Input type="number" min="1" className="h-12 rounded-xl border-muted" value={formData.adults} onChange={e => setFormData(p => ({...p, adults: e.target.value}))} />
                             </div>
                             <div className="space-y-2">
-                              <Label className="text-[10px] uppercase tracking-widest font-bold text-muted-foreground">Children</Label>
+                              <Label className="text-[10px] uppercase tracking-widest font-bold text-muted-foreground">{t("bk.children")}</Label>
                               <Input type="number" min="0" className="h-12 rounded-xl border-muted" value={formData.children} onChange={e => setFormData(p => ({...p, children: e.target.value}))} />
                             </div>
                           </div>
@@ -302,25 +300,25 @@ export const BookingDialog = ({ children }: BookingDialogProps) => {
                       {step === 3 && (
                         <div className="space-y-6">
                           <div className="grid grid-cols-3 gap-3">
-                            {['classic', 'luxury', 'elite'].map(t => (
-                              <button key={t} type="button" onClick={() => setFormData(p => ({...p, tier: t}))} className={cn("p-4 rounded-2xl border-2 text-left transition-all", formData.tier === t ? "border-secondary bg-secondary/5" : "border-transparent bg-muted/20")}>
-                                <p className="font-serif font-bold text-primary capitalize">{t}</p>
+                            {['classic', 'luxury', 'elite'].map(tier => (
+                              <button key={tier} type="button" onClick={() => setFormData(p => ({...p, tier}))} className={cn("p-4 rounded-2xl border-2 text-left transition-all", formData.tier === tier ? "border-secondary bg-secondary/5" : "border-transparent bg-muted/20")}>
+                                <p className="font-serif font-bold text-primary">{t(`bk.tier${tier.charAt(0).toUpperCase()}${tier.slice(1)}`)}</p>
                               </button>
                             ))}
                           </div>
                           <div className="space-y-2">
-                            <Label className="text-[10px] uppercase tracking-widest font-bold text-muted-foreground">Budget (USD)</Label>
+                            <Label className="text-[10px] uppercase tracking-widest font-bold text-muted-foreground">{t("bk.budget")}</Label>
                             <div className="relative">
                               <DollarSign className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
-                              <Input type="number" required placeholder="Target budget" className="pl-10 h-12 rounded-xl" value={formData.budget} onChange={e => setFormData(p => ({...p, budget: e.target.value}))} />
+                              <Input type="number" required placeholder={t("bk.budgetPlaceholder")} className="pl-10 h-12 rounded-xl" value={formData.budget} onChange={e => setFormData(p => ({...p, budget: e.target.value}))} />
                             </div>
                           </div>
                           <div className="p-4 bg-primary rounded-2xl text-white flex justify-between items-center">
                             <div className="flex items-center gap-3">
                               <Wallet className="w-5 h-5 text-secondary" />
                               <div>
-                                <p className="text-[8px] uppercase font-space text-white/40 tracking-widest">Guide Value</p>
-                                <p className="text-xl font-serif text-secondary">From ${estimatePrice().toLocaleString()}</p>
+                                <p className="text-[8px] uppercase font-space text-white/40 tracking-widest">{t("bk.theBrief")}</p>
+                                <p className="text-xl font-serif text-secondary">{t("bk.briefLine", { n: travellerCount(), d: tripDays() })}</p>
                               </div>
                             </div>
                           </div>
@@ -330,17 +328,17 @@ export const BookingDialog = ({ children }: BookingDialogProps) => {
                         <div className="space-y-5">
                           <div className="grid grid-cols-2 gap-4">
                             <div className="space-y-2">
-                              <Label className="text-[10px] uppercase tracking-widest font-bold text-muted-foreground">Full Name</Label>
-                              <Input required value={formData.fullName} onChange={e => setFormData(p => ({...p, fullName: e.target.value}))} placeholder="Jane Doe" className="h-12 rounded-xl" />
+                              <Label className="text-[10px] uppercase tracking-widest font-bold text-muted-foreground">{t("bk.fullName")}</Label>
+                              <Input required value={formData.fullName} onChange={e => setFormData(p => ({...p, fullName: e.target.value}))} placeholder={t("bk.namePlaceholder")} className="h-12 rounded-xl" />
                             </div>
                             <div className="space-y-2">
-                              <Label className="text-[10px] uppercase tracking-widest font-bold text-muted-foreground">Email</Label>
-                              <Input type="email" required value={formData.email} onChange={e => setFormData(p => ({...p, email: e.target.value}))} placeholder="jane@example.com" className="h-12 rounded-xl" />
+                              <Label className="text-[10px] uppercase tracking-widest font-bold text-muted-foreground">{t("bk.email")}</Label>
+                              <Input type="email" required value={formData.email} onChange={e => setFormData(p => ({...p, email: e.target.value}))} placeholder={t("bk.emailPlaceholder")} className="h-12 rounded-xl" />
                             </div>
                           </div>
                           <div className="space-y-2">
-                            <Label className="text-[10px] uppercase tracking-widest font-bold text-muted-foreground">Special Requests</Label>
-                            <Textarea placeholder="Wildife priorities, dietary, etc." className="min-h-[100px] rounded-xl" value={formData.requests} onChange={e => setFormData(p => ({...p, requests: e.target.value}))} />
+                            <Label className="text-[10px] uppercase tracking-widest font-bold text-muted-foreground">{t("bk.requests")}</Label>
+                            <Textarea placeholder={t("bk.requestsPlaceholder")} className="min-h-[100px] rounded-xl" value={formData.requests} onChange={e => setFormData(p => ({...p, requests: e.target.value}))} />
                           </div>
                         </div>
                       )}
@@ -350,10 +348,10 @@ export const BookingDialog = ({ children }: BookingDialogProps) => {
 
                 <div className="flex justify-between items-center pt-6 border-t border-muted bg-safari-white mt-auto shrink-0">
                   <Button type="button" variant="ghost" onClick={prevStep} disabled={step === 1 || loading} className="text-muted-foreground font-space font-bold uppercase tracking-widest text-[10px]">
-                    <ArrowLeft className="w-4 h-4 mr-2" /> Back
+                    <ArrowLeft className="w-4 h-4 mr-2" /> {t("bk.back")}
                   </Button>
                   <Button type="submit" disabled={loading} className="rounded-full bg-primary text-white hover:bg-primary/90 px-10 h-12 font-space font-bold uppercase tracking-widest text-[10px]">
-                    {loading ? <Loader2 className="w-4 h-4 animate-spin mr-2" /> : (step === 4 ? "Request Quote" : "Continue")}
+                    {loading ? <Loader2 className="w-4 h-4 animate-spin mr-2" /> : (step === 4 ? t("bk.requestQuote") : t("bk.continue"))}
                     {step < 4 && <ArrowRight className="ml-2 w-4 h-4" />}
                   </Button>
                 </div>
@@ -364,9 +362,9 @@ export const BookingDialog = ({ children }: BookingDialogProps) => {
               <div className="w-20 h-20 bg-secondary/10 rounded-full flex items-center justify-center mx-auto mb-8">
                 <CheckCircle2 className="w-10 h-10 text-secondary" />
               </div>
-              <h2 className="text-4xl font-serif text-primary mb-4">Brief <span className="italic">Received</span></h2>
-              <p className="text-muted-foreground font-light mb-12 max-w-sm mx-auto">Expect your bespoke itinerary from our Arusha designers within 24 hours.</p>
-              <DialogClose asChild><Button className="rounded-full bg-primary text-white px-12 h-14 font-space font-bold uppercase tracking-widest text-[10px] mx-auto">Return to Exploration</Button></DialogClose>
+              <h2 className="text-4xl font-serif text-primary mb-4">{t("bk.successTitle")}</h2>
+              <p className="text-muted-foreground font-light mb-12 max-w-sm mx-auto">{t("bk.successBody")}</p>
+              <DialogClose asChild><Button className="rounded-full bg-primary text-white px-12 h-14 font-space font-bold uppercase tracking-widest text-[10px] mx-auto">{t("bk.successCta")}</Button></DialogClose>
             </div>
           )}
         </div>

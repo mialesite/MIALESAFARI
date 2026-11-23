@@ -1,0 +1,7 @@
+# local-only working directories, not part of the published repo
+/backup-credits
+tools/
+shots/
+
+# macOS
+.DS_Store

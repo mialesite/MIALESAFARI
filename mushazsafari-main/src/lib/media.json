@@ -1,0 +1,992 @@
+{
+  "generatedBy": "tools/build-images.js",
+  "images": [
+    {
+      "id": "acacia-and-safari-vehicle",
+      "src": "/images/acacia-and-safari-vehicle.webp",
+      "alt": "A safari vehicle parked beneath a classic umbrella acacia on open plains with distant hills",
+      "width": 1024,
+      "height": 683,
+      "bytes": 92738,
+      "kind": "operator-photography"
+    },
+    {
+      "id": "afcon-arusha-city",
+      "src": "/images/afcon-arusha-city.webp",
+      "alt": "Arusha seen from above, market and buses in the foreground with Mount Meru behind",
+      "width": 1600,
+      "height": 1113,
+      "bytes": 396412,
+      "kind": "wikimedia-commons",
+      "license": "CC BY-SA 4.0",
+      "author": "Halidtz",
+      "wikimediaFile": "File:Arusha_City_view.jpg"
+    },
+    {
+      "id": "afcon-arusha-stadium",
+      "src": "/images/afcon-arusha-stadium.webp",
+      "alt": "The Samia Suluhu Hassan Stadium under construction on the outskirts of Arusha",
+      "width": 828,
+      "height": 600,
+      "bytes": 85844,
+      "kind": "wikimedia-commons",
+      "license": "CC0",
+      "author": "Ymax2016",
+      "wikimediaFile": "File:Samia_Suluhu_Hassan_Stadium.jpg"
+    },
+    {
+      "id": "afcon-dar-city",
+      "src": "/images/afcon-dar-city.webp",
+      "alt": "The Dar es Salaam skyline at dusk, minarets and high-rises under a pale coastal sky",
+      "width": 1600,
+      "height": 858,
+      "bytes": 228694,
+      "kind": "wikimedia-commons",
+      "license": "GFDL 1.2",
+      "author": "Muhammad Mahdi Karim",
+      "wikimediaFile": "File:Dar_es_Salaam_before_dusk.jpg"
+    },
+    {
+      "id": "afcon-mkapa-stadium",
+      "src": "/images/afcon-mkapa-stadium.webp",
+      "alt": "Aerial view of the Benjamin Mkapa Stadium in Dar es Salaam",
+      "width": 1600,
+      "height": 899,
+      "bytes": 354274,
+      "kind": "wikimedia-commons",
+      "license": "CC BY-SA 4.0",
+      "author": "Mxcarter",
+      "wikimediaFile": "File:UwanjaWaTaifaTanzania.jpg"
+    },
+    {
+      "id": "amboni-caves-chamber",
+      "src": "/images/amboni-caves-chamber.webp",
+      "alt": "A torch-lit limestone chamber with a stalagmite column inside the Amboni Caves near Tanga",
+      "width": 1275,
+      "height": 1600,
+      "bytes": 103730,
+      "kind": "wikimedia-commons",
+      "license": "CC BY-SA 4.0",
+      "author": "Veronika Berdnikova",
+      "wikimediaFile": "File:Amboni_Caves,_Tanga_3.jpg"
+    },
+    {
+      "id": "baby-elephant-feeding",
+      "src": "/images/baby-elephant-feeding.webp",
+      "alt": "A baby elephant feeding at low bushes with an adult's leg at the edge of the frame",
+      "width": 1024,
+      "height": 1433,
+      "bytes": 177370,
+      "kind": "operator-photography"
+    },
+    {
+      "id": "buffalo-and-lioness-standoff",
+      "src": "/images/buffalo-and-lioness-standoff.webp",
+      "alt": "A Cape buffalo facing the camera with a lioness lying low nearby",
+      "width": 1024,
+      "height": 683,
+      "bytes": 60408,
+      "kind": "operator-photography"
+    },
+    {
+      "id": "buffalo-with-cattle-egret",
+      "src": "/images/buffalo-with-cattle-egret.webp",
+      "alt": "A buffalo herd in tawny grass with a cattle egret perched on the lead animal's back",
+      "width": 1024,
+      "height": 683,
+      "bytes": 111300,
+      "kind": "operator-photography"
+    },
+    {
+      "id": "cape-buffalo-dry-grass",
+      "src": "/images/cape-buffalo-dry-grass.webp",
+      "alt": "A Cape buffalo standing in dry golden grass with scattered dead trees behind",
+      "width": 1024,
+      "height": 683,
+      "bytes": 67234,
+      "kind": "operator-photography"
+    },
+    {
+      "id": "cheetah-close-encounter",
+      "src": "/images/cheetah-close-encounter.webp",
+      "alt": "A cheetah at close range with mouth open, head and shoulders filling the frame",
+      "width": 1024,
+      "height": 1434,
+      "bytes": 166080,
+      "kind": "operator-photography"
+    },
+    {
+      "id": "cheetah-in-tall-grass",
+      "src": "/images/cheetah-in-tall-grass.webp",
+      "alt": "A cheetah standing half-hidden in tall dry grass, facing right",
+      "width": 1024,
+      "height": 683,
+      "bytes": 71582,
+      "kind": "operator-photography"
+    },
+    {
+      "id": "cheetah-stalking-golden-grass",
+      "src": "/images/cheetah-stalking-golden-grass.webp",
+      "alt": "A cheetah walking directly toward the camera through tall golden grass",
+      "width": 1024,
+      "height": 1534,
+      "bytes": 211326,
+      "kind": "operator-photography"
+    },
+    {
+      "id": "cheetah-termite-mound",
+      "src": "/images/cheetah-termite-mound.webp",
+      "alt": "A cheetah standing in profile on a raised termite mound against a clear sky",
+      "width": 1024,
+      "height": 1433,
+      "bytes": 87622,
+      "kind": "operator-photography"
+    },
+    {
+      "id": "elephant-calf-between-adults",
+      "src": "/images/elephant-calf-between-adults.webp",
+      "alt": "A young elephant walking away between two adults in dusty brown grass",
+      "width": 1024,
+      "height": 1534,
+      "bytes": 211092,
+      "kind": "operator-photography"
+    },
+    {
+      "id": "elephant-cow-and-calf",
+      "src": "/images/elephant-cow-and-calf.webp",
+      "alt": "An elephant walking across dry grassland with a calf beside it, thorny trees behind",
+      "width": 1024,
+      "height": 683,
+      "bytes": 94192,
+      "kind": "operator-photography"
+    },
+    {
+      "id": "elephant-family-crossing",
+      "src": "/images/elephant-family-crossing.webp",
+      "alt": "A small elephant family walking across open grassland beneath a wide sky",
+      "width": 1024,
+      "height": 683,
+      "bytes": 97986,
+      "kind": "operator-photography"
+    },
+    {
+      "id": "elephant-head-on-portrait",
+      "src": "/images/elephant-head-on-portrait.webp",
+      "alt": "An African elephant facing the camera at close range, tusks visible against soft-focused bush",
+      "width": 1024,
+      "height": 1534,
+      "bytes": 166022,
+      "kind": "operator-photography"
+    },
+    {
+      "id": "elephant-through-shrubs",
+      "src": "/images/elephant-through-shrubs.webp",
+      "alt": "An elephant walking toward the camera through green shrubs, trunk curled, tusks visible",
+      "width": 1024,
+      "height": 1433,
+      "bytes": 175310,
+      "kind": "operator-photography"
+    },
+    {
+      "id": "elephants-head-on-bush",
+      "src": "/images/elephants-head-on-bush.webp",
+      "alt": "Two elephants facing the camera through scrub, one with visible tusks",
+      "width": 1024,
+      "height": 1433,
+      "bytes": 237158,
+      "kind": "operator-photography"
+    },
+    {
+      "id": "elephants-under-acacia-monochrome",
+      "src": "/images/elephants-under-acacia-monochrome.webp",
+      "alt": "Elephants grazing in tall pale grass beneath a lone flat-topped acacia, in monochrome",
+      "width": 1024,
+      "height": 731,
+      "bytes": 34328,
+      "kind": "operator-photography"
+    },
+    {
+      "id": "elephants-under-tree",
+      "src": "/images/elephants-under-tree.webp",
+      "alt": "Several elephants grouped beneath a large tree on an open plain",
+      "width": 1024,
+      "height": 683,
+      "bytes": 164818,
+      "kind": "operator-photography"
+    },
+    {
+      "id": "flamingo-in-flight",
+      "src": "/images/flamingo-in-flight.webp",
+      "alt": "A flamingo in full flight with wings raised over blurred blue-grey water",
+      "width": 1024,
+      "height": 684,
+      "bytes": 17758,
+      "kind": "operator-photography"
+    },
+    {
+      "id": "flamingos-shallow-water",
+      "src": "/images/flamingos-shallow-water.webp",
+      "alt": "Two pink flamingos wading in shallow bright water, one preening",
+      "width": 1024,
+      "height": 1434,
+      "bytes": 103652,
+      "kind": "operator-photography"
+    },
+    {
+      "id": "giraffe-above-shrubs",
+      "src": "/images/giraffe-above-shrubs.webp",
+      "alt": "A giraffe's head and neck rising above green shrubs",
+      "width": 1024,
+      "height": 1534,
+      "bytes": 120306,
+      "kind": "operator-photography"
+    },
+    {
+      "id": "giraffe-profile-savanna",
+      "src": "/images/giraffe-profile-savanna.webp",
+      "alt": "A giraffe standing in profile on open savanna with low scrub and distant trees",
+      "width": 1024,
+      "height": 1534,
+      "bytes": 178616,
+      "kind": "operator-photography"
+    },
+    {
+      "id": "giraffes-at-dead-tree",
+      "src": "/images/giraffes-at-dead-tree.webp",
+      "alt": "Giraffes browsing near a leafless dead tree on the savanna",
+      "width": 1024,
+      "height": 683,
+      "bytes": 64318,
+      "kind": "operator-photography"
+    },
+    {
+      "id": "giraffes-in-mist",
+      "src": "/images/giraffes-in-mist.webp",
+      "alt": "Giraffes in pale misty light with acacia silhouettes around them",
+      "width": 1024,
+      "height": 1534,
+      "bytes": 88308,
+      "kind": "operator-photography"
+    },
+    {
+      "id": "giraffes-necking",
+      "src": "/images/giraffes-necking.webp",
+      "alt": "Two giraffes crossing necks against a pale sky",
+      "width": 1024,
+      "height": 1534,
+      "bytes": 55180,
+      "kind": "operator-photography"
+    },
+    {
+      "id": "giraffes-open-grassland",
+      "src": "/images/giraffes-open-grassland.webp",
+      "alt": "Four giraffes spread across open grassland dotted with flat-topped acacias",
+      "width": 1024,
+      "height": 683,
+      "bytes": 50614,
+      "kind": "operator-photography"
+    },
+    {
+      "id": "gombe-chimpanzee",
+      "src": "/images/gombe-chimpanzee.webp",
+      "alt": "A chimpanzee feeding on the forest floor of Gombe Stream National Park",
+      "width": 960,
+      "height": 1280,
+      "bytes": 222952,
+      "kind": "wikimedia-commons",
+      "license": "CC BY-SA 4.0",
+      "author": "AmyAbroad",
+      "wikimediaFile": "File:Chimpanzee_Gombe_Tanzania.jpg"
+    },
+    {
+      "id": "hippo-open-mouth",
+      "src": "/images/hippo-open-mouth.webp",
+      "alt": "A hippopotamus with mouth wide open, head and teeth filling the frame in muddy water",
+      "width": 1024,
+      "height": 1534,
+      "bytes": 157136,
+      "kind": "operator-photography"
+    },
+    {
+      "id": "hippo-pool",
+      "src": "/images/hippo-pool.webp",
+      "alt": "Hippos crowded in a muddy pool beneath an eroded bank, one yawning upright",
+      "width": 1024,
+      "height": 683,
+      "bytes": 84436,
+      "kind": "operator-photography"
+    },
+    {
+      "id": "impala-on-track-edge",
+      "src": "/images/impala-on-track-edge.webp",
+      "alt": "A horned impala standing alert at the edge of a dry bush track",
+      "width": 1024,
+      "height": 684,
+      "bytes": 57694,
+      "kind": "operator-photography"
+    },
+    {
+      "id": "impala-with-young",
+      "src": "/images/impala-with-young.webp",
+      "alt": "An adult impala and its young standing in green grass, the adult looking at the camera",
+      "width": 1024,
+      "height": 1534,
+      "bytes": 161918,
+      "kind": "operator-photography"
+    },
+    {
+      "id": "kilimanjaro-summit-clear",
+      "src": "/images/kilimanjaro-summit-clear.webp",
+      "alt": "Mount Kilimanjaro's snowfield rising above the green slopes near Moshi",
+      "width": 1600,
+      "height": 1200,
+      "bytes": 227366,
+      "kind": "wikimedia-commons",
+      "license": "CC BY-SA 4.0",
+      "author": "RVBS",
+      "wikimediaFile": "File:Mountain_at_the_border_of_Kenya_and_Tanzania-_Mount_Kilimanjaro_08.jpg"
+    },
+    {
+      "id": "kitulo-plateau-flowers",
+      "src": "/images/kitulo-plateau-flowers.webp",
+      "alt": "Rolling grassland hills of the Kitulo Plateau dotted with wildflowers",
+      "width": 1600,
+      "height": 1067,
+      "bytes": 193436,
+      "kind": "wikimedia-commons",
+      "license": "CC BY-SA 4.0",
+      "author": "Daniel Msirikale",
+      "wikimediaFile": "File:Kitulo_National_Park.jpg"
+    },
+    {
+      "id": "lake-natron-flamingos",
+      "src": "/images/lake-natron-flamingos.webp",
+      "alt": "A flock of flamingos wading along the shore of Lake Natron",
+      "width": 1280,
+      "height": 720,
+      "bytes": 88388,
+      "kind": "wikimedia-commons",
+      "license": "CC BY-SA 2.0",
+      "author": "Christoph Strässler",
+      "wikimediaFile": "File:Flamingos_at_Lake_Natron,_Tanzania.jpg"
+    },
+    {
+      "id": "lake-victoria-sunset",
+      "src": "/images/lake-victoria-sunset.webp",
+      "alt": "Sunset over Lake Victoria with a fishing boat on the water",
+      "width": 1279,
+      "height": 365,
+      "bytes": 29772,
+      "kind": "wikimedia-commons",
+      "license": "CC BY 2.0",
+      "author": "Robin Hutton",
+      "wikimediaFile": "File:Lake_Victoria_2005_Sunset2.jpg"
+    },
+    {
+      "id": "leopard-in-bush",
+      "src": "/images/leopard-in-bush.webp",
+      "alt": "A leopard resting in dense green bush, head turned toward the camera",
+      "width": 1024,
+      "height": 683,
+      "bytes": 147114,
+      "kind": "operator-photography"
+    },
+    {
+      "id": "leopard-on-branch",
+      "src": "/images/leopard-on-branch.webp",
+      "alt": "A leopard draped along a thick horizontal tree branch, rosettes sharp against the bark",
+      "width": 1024,
+      "height": 732,
+      "bytes": 189646,
+      "kind": "operator-photography"
+    },
+    {
+      "id": "lilac-breasted-roller-branch",
+      "src": "/images/lilac-breasted-roller-branch.webp",
+      "alt": "A lilac-breasted roller perched on a bare branch against clear blue sky",
+      "width": 1024,
+      "height": 1434,
+      "bytes": 63190,
+      "kind": "operator-photography"
+    },
+    {
+      "id": "lion-cub-and-adult",
+      "src": "/images/lion-cub-and-adult.webp",
+      "alt": "A lion cub resting alert in front of an adult in warm side light",
+      "width": 1024,
+      "height": 683,
+      "bytes": 163588,
+      "kind": "operator-photography"
+    },
+    {
+      "id": "lion-cub-in-grass",
+      "src": "/images/lion-cub-in-grass.webp",
+      "alt": "A lion cub's face peeking out of tawny grass",
+      "width": 840,
+      "height": 1259,
+      "bytes": 196124,
+      "kind": "operator-photography"
+    },
+    {
+      "id": "lion-cubs-on-track",
+      "src": "/images/lion-cubs-on-track.webp",
+      "alt": "A group of young lions crowded together on a dirt game-drive track",
+      "width": 1024,
+      "height": 683,
+      "bytes": 99120,
+      "kind": "operator-photography"
+    },
+    {
+      "id": "lion-pride-on-kopje",
+      "src": "/images/lion-pride-on-kopje.webp",
+      "alt": "Lionesses and cubs resting together on a rocky kopje",
+      "width": 1024,
+      "height": 683,
+      "bytes": 82870,
+      "kind": "operator-photography"
+    },
+    {
+      "id": "lioness-and-cubs-golden-hour",
+      "src": "/images/lioness-and-cubs-golden-hour.webp",
+      "alt": "A lioness raising her head to the sky on a rock beside two cubs in low golden light",
+      "width": 1024,
+      "height": 683,
+      "bytes": 114402,
+      "kind": "operator-photography"
+    },
+    {
+      "id": "lioness-approaching-camera",
+      "src": "/images/lioness-approaching-camera.webp",
+      "alt": "A lioness walking directly toward the camera through short grass, tail raised",
+      "width": 1024,
+      "height": 1434,
+      "bytes": 152328,
+      "kind": "operator-photography"
+    },
+    {
+      "id": "lioness-between-tree-trunks",
+      "src": "/images/lioness-between-tree-trunks.webp",
+      "alt": "A lioness framed between two dark tree trunks, sunlit face turned to the camera",
+      "width": 1024,
+      "height": 1434,
+      "bytes": 173442,
+      "kind": "operator-photography"
+    },
+    {
+      "id": "lioness-cubs-storm-sky",
+      "src": "/images/lioness-cubs-storm-sky.webp",
+      "alt": "A lioness lying on a rock with two cubs beneath a dark storm-blue sky",
+      "width": 1024,
+      "height": 683,
+      "bytes": 84416,
+      "kind": "operator-photography"
+    },
+    {
+      "id": "lioness-nursing-cubs",
+      "src": "/images/lioness-nursing-cubs.webp",
+      "alt": "A lioness standing in dry grass while a cub nurses at her flank",
+      "width": 1024,
+      "height": 683,
+      "bytes": 124710,
+      "kind": "operator-photography"
+    },
+    {
+      "id": "lioness-pride-close-up",
+      "src": "/images/lioness-pride-close-up.webp",
+      "alt": "A lioness's face in close view, resting among other members of the pride",
+      "width": 1024,
+      "height": 1433,
+      "bytes": 98478,
+      "kind": "operator-photography"
+    },
+    {
+      "id": "lioness-shadowed-golden-light",
+      "src": "/images/lioness-shadowed-golden-light.webp",
+      "alt": "A lioness moving low through shadowed grass at golden hour",
+      "width": 1024,
+      "height": 683,
+      "bytes": 176336,
+      "kind": "operator-photography"
+    },
+    {
+      "id": "lionesses-golden-grass",
+      "src": "/images/lionesses-golden-grass.webp",
+      "alt": "Two lionesses walking through tall golden grass toward a distant tree line",
+      "width": 1024,
+      "height": 684,
+      "bytes": 84004,
+      "kind": "operator-photography"
+    },
+    {
+      "id": "lionesses-in-green-grass",
+      "src": "/images/lionesses-in-green-grass.webp",
+      "alt": "Two lionesses sitting upright in tall green grass, one yawning",
+      "width": 1024,
+      "height": 683,
+      "bytes": 152354,
+      "kind": "operator-photography"
+    },
+    {
+      "id": "lions-on-rocks-warm-light",
+      "src": "/images/lions-on-rocks-warm-light.webp",
+      "alt": "Lionesses and cubs resting together on rocks in warm low sun",
+      "width": 1024,
+      "height": 683,
+      "bytes": 94690,
+      "kind": "operator-photography"
+    },
+    {
+      "id": "maasai-enkaji-house",
+      "src": "/images/maasai-enkaji-house.webp",
+      "alt": "A traditional Maasai house built from mud, ash and hides",
+      "width": 1280,
+      "height": 964,
+      "bytes": 276268,
+      "kind": "wikimedia-commons",
+      "license": "CC BY-SA 3.0",
+      "author": "Samuel Kiongo",
+      "wikimediaFile": "File:Maasai_People_Hut_(_Enkaji_).jpg"
+    },
+    {
+      "id": "maasai-manyatta-aerial",
+      "src": "/images/maasai-manyatta-aerial.webp",
+      "alt": "Aerial view of a traditional Maasai manyatta ring in the Ngorongoro highlands",
+      "width": 1600,
+      "height": 900,
+      "bytes": 352762,
+      "kind": "wikimedia-commons",
+      "license": "CC BY-SA 4.0",
+      "author": "Arnold Tibaijuka",
+      "wikimediaFile": "File:Traditional_Maasai_village_in_the_Ngorongoro_Conservation_Area.jpg"
+    },
+    {
+      "id": "mafia-island-lagoon",
+      "src": "/images/mafia-island-lagoon.webp",
+      "alt": "A clear turquoise lagoon ringed by mangroves on Mafia Island",
+      "width": 1200,
+      "height": 1600,
+      "bytes": 427920,
+      "kind": "wikimedia-commons",
+      "license": "CC BY-SA 4.0",
+      "author": "KangaMafia",
+      "wikimediaFile": "File:Natural_Lagoon_on_Mafia_Island_-_Marine_Park.jpg"
+    },
+    {
+      "id": "mahale-chimpanzee",
+      "src": "/images/mahale-chimpanzee.webp",
+      "alt": "An eastern chimpanzee on the Tanzania side of Lake Tanganyika",
+      "width": 1280,
+      "height": 857,
+      "bytes": 142684,
+      "kind": "wikimedia-commons",
+      "license": "CC BY 2.0",
+      "author": "Roland",
+      "wikimediaFile": "File:Eastern_chimpanzee.jpg"
+    },
+    {
+      "id": "male-lion-green-grass",
+      "src": "/images/male-lion-green-grass.webp",
+      "alt": "A dark-maned male lion resting in short green-golden grass, looking at the camera",
+      "width": 1024,
+      "height": 683,
+      "bytes": 147670,
+      "kind": "operator-photography"
+    },
+    {
+      "id": "male-lion-through-foliage",
+      "src": "/images/male-lion-through-foliage.webp",
+      "alt": "A mane-heavy male lion looking toward the camera through green foliage",
+      "width": 1024,
+      "height": 1534,
+      "bytes": 249318,
+      "kind": "operator-photography"
+    },
+    {
+      "id": "male-lion-yawning",
+      "src": "/images/male-lion-yawning.webp",
+      "alt": "A male lion in profile mid-yawn, backlit by grass",
+      "width": 1024,
+      "height": 1433,
+      "bytes": 253264,
+      "kind": "operator-photography"
+    },
+    {
+      "id": "manyara-lakeshore-wildlife",
+      "src": "/images/manyara-lakeshore-wildlife.webp",
+      "alt": "Giraffes and antelope on the lakeshore flats of Lake Manyara, with flamingos beyond",
+      "width": 1280,
+      "height": 960,
+      "bytes": 150902,
+      "kind": "wikimedia-commons",
+      "license": "CC BY-SA 4.0",
+      "author": "John Mackenzie Burke",
+      "wikimediaFile": "File:Lakeshore_and_wildlife,_Lake_Manyara_National_Park_(2015).jpg"
+    },
+    {
+      "id": "mara-river-crossing",
+      "src": "/images/mara-river-crossing.webp",
+      "alt": "Wildebeest of the Great Migration forcing the Mara River crossing in Serengeti National Park",
+      "width": 1600,
+      "height": 1067,
+      "bytes": 297988,
+      "kind": "wikimedia-commons",
+      "license": "CC BY-SA 4.0",
+      "author": "Charles J. Sharp",
+      "wikimediaFile": "File:Western_white-bearded_wildebeest_(Connochaetes_taurinus_mearnsi)_Mara_River_crossing_1a.jpg"
+    },
+    {
+      "id": "miale-logo",
+      "src": "/images/brand/miale-logo.webp",
+      "alt": "Miale Safaris",
+      "width": 607,
+      "height": 159,
+      "bytes": 25050,
+      "kind": "brand-mark"
+    },
+    {
+      "id": "miale-logo-on-dark",
+      "src": "/images/brand/miale-logo-on-dark.webp",
+      "alt": "Miale Safaris",
+      "width": 607,
+      "height": 159,
+      "bytes": 26226,
+      "kind": "brand-mark"
+    },
+    {
+      "id": "miale-wordmark",
+      "src": "/images/brand/miale-logo.webp",
+      "alt": "Miale Safaris",
+      "width": 607,
+      "height": 159,
+      "bytes": 25050,
+      "kind": "brand-mark"
+    },
+    {
+      "id": "ngorongoro-crater-panorama",
+      "src": "/images/ngorongoro-crater-panorama.webp",
+      "alt": "Panorama across the floor and rim of the Ngorongoro Crater",
+      "width": 1600,
+      "height": 322,
+      "bytes": 33998,
+      "kind": "wikimedia-commons",
+      "license": "CC BY-SA 3.0",
+      "author": "Thomas Huston",
+      "wikimediaFile": "File:Ngorongoro_Crater_Panorama.jpg"
+    },
+    {
+      "id": "ngorongoro-crater-rim",
+      "src": "/images/ngorongoro-crater-rim.webp",
+      "alt": "The Ngorongoro Crater floor and its soda lake seen from the rim",
+      "width": 1600,
+      "height": 1067,
+      "bytes": 175270,
+      "kind": "wikimedia-commons",
+      "license": "CC BY-SA 4.0",
+      "author": "Charles J. Sharp",
+      "wikimediaFile": "File:Ngorongoro_Crater_from_Serena_Lodge,_Tanzania.jpg"
+    },
+    {
+      "id": "nyerere-nile-crocodile",
+      "src": "/images/nyerere-nile-crocodile.webp",
+      "alt": "A Nile crocodile basking on the sandbank of the Rufiji River, Nyerere National Park",
+      "width": 1280,
+      "height": 880,
+      "bytes": 59906,
+      "kind": "wikimedia-commons",
+      "license": "CC BY-SA 4.0",
+      "author": "Erasmus Kamugisha",
+      "wikimediaFile": "File:Nyerere_National_Park_(162).jpg"
+    },
+    {
+      "id": "olduvai-gorge-rim",
+      "src": "/images/olduvai-gorge-rim.webp",
+      "alt": "Looking down the length of Olduvai Gorge from the rim",
+      "width": 1600,
+      "height": 751,
+      "bytes": 305272,
+      "kind": "wikimedia-commons",
+      "license": "CC BY 2.0",
+      "author": "Noel Feans",
+      "wikimediaFile": "File:Olduvai_Gorge_or_Oldupai_Gorge.jpg"
+    },
+    {
+      "id": "ostriches-golden-grass",
+      "src": "/images/ostriches-golden-grass.webp",
+      "alt": "Two ostriches walking through dry golden grass",
+      "width": 1024,
+      "height": 683,
+      "bytes": 56624,
+      "kind": "operator-photography"
+    },
+    {
+      "id": "rift-valley-escarpment",
+      "src": "/images/rift-valley-escarpment.webp",
+      "alt": "The Rift Valley floor, Lake Manyara and the far escarpment wall seen down from the highland rim",
+      "width": 1600,
+      "height": 1067,
+      "bytes": 204052,
+      "kind": "wikimedia-commons",
+      "license": "CC BY 2.0",
+      "author": "Richard Mortel",
+      "wikimediaFile": "File:Lake_Manyara_National_Park_seen_from_Escarpment_Lodge_(1)_(28581222315).jpg"
+    },
+    {
+      "id": "ruaha-open-savanna",
+      "src": "/images/ruaha-open-savanna.webp",
+      "alt": "Open savanna and distant hills along a game-drive road in Ruaha National Park",
+      "width": 1280,
+      "height": 853,
+      "bytes": 209330,
+      "kind": "wikimedia-commons",
+      "license": "CC BY 2.0",
+      "author": "Richard Mortel",
+      "wikimediaFile": "File:Ruaha_National_Park_landscape_(12)_(28745370620).jpg"
+    },
+    {
+      "id": "saadani-baobab",
+      "src": "/images/saadani-baobab.webp",
+      "alt": "A towering baobab tree beside the road in Saadani National Park",
+      "width": 854,
+      "height": 1280,
+      "bytes": 302604,
+      "kind": "wikimedia-commons",
+      "license": "CC BY-SA 4.0",
+      "author": "Rasheedhrasheed",
+      "wikimediaFile": "File:A_baobab_Tree_beside_the_road_in_Saadani_National_Park.jpg"
+    },
+    {
+      "id": "sable-antelope-portrait",
+      "src": "/images/sable-antelope-portrait.webp",
+      "alt": "A horned antelope standing alert in pale grassland with a single dead tree behind",
+      "width": 1024,
+      "height": 683,
+      "bytes": 77760,
+      "kind": "operator-photography"
+    },
+    {
+      "id": "sausage-tree-savanna",
+      "src": "/images/sausage-tree-savanna.webp",
+      "alt": "A thick-trunked sausage tree spreading over savanna and green shrubs",
+      "width": 1024,
+      "height": 1534,
+      "bytes": 313914,
+      "kind": "operator-photography"
+    },
+    {
+      "id": "serengeti-balloons-sunrise",
+      "src": "/images/serengeti-balloons-sunrise.webp",
+      "alt": "Hot-air balloons floating low over the savanna at sunrise with long shadows on the plains",
+      "width": 1024,
+      "height": 683,
+      "bytes": 101718,
+      "kind": "operator-photography"
+    },
+    {
+      "id": "single-acacia-green-plains",
+      "src": "/images/single-acacia-green-plains.webp",
+      "alt": "A spreading acacia over a green short-grass plain with a distant herd beneath it",
+      "width": 1024,
+      "height": 683,
+      "bytes": 162030,
+      "kind": "operator-photography"
+    },
+    {
+      "id": "tarangire-serval",
+      "src": "/images/tarangire-serval.webp",
+      "alt": "A serval working its way through short green grass in Tarangire National Park",
+      "width": 1600,
+      "height": 1600,
+      "bytes": 283966,
+      "kind": "wikimedia-commons",
+      "license": "CC BY-SA 4.0",
+      "author": "Diego Delso",
+      "wikimediaFile": "File:Serval_(Leptailurus_serval),_parque_nacional_de_Tarangire,_Tanzania,_2024-05-25,_DD_54.jpg"
+    },
+    {
+      "id": "tent-camp-detail",
+      "src": "/images/tent-camp-detail.webp",
+      "alt": "Detail of a safari tent camp: wooden support frame, canvas wall and a chair in sunlit clearing",
+      "width": 1024,
+      "height": 683,
+      "bytes": 45704,
+      "kind": "operator-photography"
+    },
+    {
+      "id": "tent-deck-bathtub-view",
+      "src": "/images/tent-deck-bathtub-view.webp",
+      "alt": "A freestanding bathtub on a tented camp deck beside a drinks tray, overlooking the plains",
+      "width": 1024,
+      "height": 683,
+      "bytes": 58094,
+      "kind": "operator-photography"
+    },
+    {
+      "id": "tented-camp-aerial-sunset",
+      "src": "/images/tented-camp-aerial-sunset.webp",
+      "alt": "Aerial view at sunset of a mobile tented camp strung along a green corridor",
+      "width": 1024,
+      "height": 768,
+      "bytes": 87856,
+      "kind": "operator-photography"
+    },
+    {
+      "id": "tented-suite-interior",
+      "src": "/images/tented-suite-interior.webp",
+      "alt": "Interior of a luxury tented suite with sofa, bed and warm lighting",
+      "width": 1024,
+      "height": 683,
+      "bytes": 68204,
+      "kind": "operator-photography"
+    },
+    {
+      "id": "three-cheetahs-on-sands",
+      "src": "/images/three-cheetahs-on-sands.webp",
+      "alt": "Three cheetahs, one standing alert and two resting, on open pale sand",
+      "width": 1024,
+      "height": 683,
+      "bytes": 91454,
+      "kind": "operator-photography"
+    },
+    {
+      "id": "topi-red-coat",
+      "src": "/images/topi-red-coat.webp",
+      "alt": "A reddish-coated antelope with a dark face standing in dry grass, head turned to camera",
+      "width": 1024,
+      "height": 1434,
+      "bytes": 208378,
+      "kind": "operator-photography"
+    },
+    {
+      "id": "two-giraffes-blue-sky",
+      "src": "/images/two-giraffes-blue-sky.webp",
+      "alt": "Two giraffes standing close together against a pale blue sky",
+      "width": 1024,
+      "height": 1433,
+      "bytes": 168034,
+      "kind": "operator-photography"
+    },
+    {
+      "id": "two-male-lions",
+      "src": "/images/two-male-lions.webp",
+      "alt": "Two male lions facing each other in shady grassland with trees behind",
+      "width": 1024,
+      "height": 683,
+      "bytes": 193604,
+      "kind": "operator-photography"
+    },
+    {
+      "id": "udzungwa-montane-forest",
+      "src": "/images/udzungwa-montane-forest.webp",
+      "alt": "A fern-covered footpath through the misty montane rainforest of the Udzungwa Scarp",
+      "width": 1600,
+      "height": 1200,
+      "bytes": 565856,
+      "kind": "wikimedia-commons",
+      "license": "CC BY 4.0",
+      "author": "Josefito123",
+      "wikimediaFile": "File:Udzungwa_Scarp_Forest_20251206_075944.jpg"
+    },
+    {
+      "id": "udzungwa-sanje-mangabey",
+      "src": "/images/udzungwa-sanje-mangabey.webp",
+      "alt": "A Sanje mangabey, a primate endemic to the Udzungwa forests, looking out from the foliage",
+      "width": 1600,
+      "height": 1067,
+      "bytes": 73716,
+      "kind": "wikimedia-commons",
+      "license": "CC BY 2.0",
+      "author": "Marc Veraart",
+      "wikimediaFile": "File:Tanzania_-Sanje_Mangabey.jpg"
+    },
+    {
+      "id": "umbrella-acacia-open-plain",
+      "src": "/images/umbrella-acacia-open-plain.webp",
+      "alt": "A solitary umbrella acacia centred on a flat plain beneath a wide sky",
+      "width": 1024,
+      "height": 683,
+      "bytes": 27380,
+      "kind": "operator-photography"
+    },
+    {
+      "id": "wildebeest-facing-camera",
+      "src": "/images/wildebeest-facing-camera.webp",
+      "alt": "A wildebeest standing in dry grass and facing the camera",
+      "width": 1024,
+      "height": 683,
+      "bytes": 115216,
+      "kind": "operator-photography"
+    },
+    {
+      "id": "wildebeest-grazing-herd",
+      "src": "/images/wildebeest-grazing-herd.webp",
+      "alt": "A herd of wildebeest grazing on a plain, one facing the camera in the foreground",
+      "width": 1024,
+      "height": 1434,
+      "bytes": 179562,
+      "kind": "operator-photography"
+    },
+    {
+      "id": "wildebeest-herd-green-plain",
+      "src": "/images/wildebeest-herd-green-plain.webp",
+      "alt": "Wildebeest scattered across a green-and-tan plain with a grazing animal in front",
+      "width": 1024,
+      "height": 1433,
+      "bytes": 153980,
+      "kind": "operator-photography"
+    },
+    {
+      "id": "wildebeest-herd-with-hyena",
+      "src": "/images/wildebeest-herd-with-hyena.webp",
+      "alt": "A hyena walking among a herd of wildebeest on a green plain",
+      "width": 1024,
+      "height": 683,
+      "bytes": 118954,
+      "kind": "operator-photography"
+    },
+    {
+      "id": "wildebeest-river-crossing",
+      "src": "/images/wildebeest-river-crossing.webp",
+      "alt": "A herd of wildebeest wading across a river between muddy banks",
+      "width": 1024,
+      "height": 684,
+      "bytes": 196892,
+      "kind": "operator-photography"
+    },
+    {
+      "id": "wildebeest-striding",
+      "src": "/images/wildebeest-striding.webp",
+      "alt": "A solitary wildebeest mid-stride in golden-green grass with trees on the horizon",
+      "width": 1024,
+      "height": 683,
+      "bytes": 68716,
+      "kind": "operator-photography"
+    },
+    {
+      "id": "wildebeest-with-bird-flock",
+      "src": "/images/wildebeest-with-bird-flock.webp",
+      "alt": "A dark wildebeest trotting across an open plain with a pale flock of birds beyond",
+      "width": 1024,
+      "height": 732,
+      "bytes": 37154,
+      "kind": "operator-photography"
+    },
+    {
+      "id": "zebra-with-wildebeest",
+      "src": "/images/zebra-with-wildebeest.webp",
+      "alt": "A zebra moving through scrub with wildebeest among scattered leafless trees",
+      "width": 1024,
+      "height": 683,
+      "bytes": 137822,
+      "kind": "operator-photography"
+    },
+    {
+      "id": "zebras-at-waterhole",
+      "src": "/images/zebras-at-waterhole.webp",
+      "alt": "Zebras grazing and drinking at a muddy waterhole from a grassy bank",
+      "width": 1024,
+      "height": 683,
+      "bytes": 123102,
+      "kind": "operator-photography"
+    }
+  ]
+}

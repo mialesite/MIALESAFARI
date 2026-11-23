@@ -227,7 +227,7 @@ export default function HeroImagesManager() {
     : [{
         title: "Miale",
         subtitle: "Move beyond the ordinary. Curated luxury expeditions to the heart of the wild.",
-        imageUrl: "https://development.orbituniverse.co.tz/uploads/Mushaz%20safaris/Destinations/tanzania-wild-sky-rcGU1VUgLos-unsplash.jpg",
+        imageUrl: "/images/serengeti-balloons-sunrise.webp",
         buttonText: "Plan My Safari",
         buttonLink: "#",
         opacity: 0.6,

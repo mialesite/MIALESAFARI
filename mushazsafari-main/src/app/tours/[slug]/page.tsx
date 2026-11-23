@@ -5,6 +5,8 @@ import React, { use } from "react";
 import { Navbar } from "@/components/Navbar";
 import { motion } from "framer-motion";
 import Image from "next/image";
+import { mediaFor } from "@/lib/media";
+import { priceLabel, hasPrice } from "@/lib/tours";
 import { Button } from "@/components/ui/button";
 import { 
   Clock, Compass, CheckCircle2, 
@@ -12,14 +14,19 @@ import {
   Loader2
 } from "lucide-react";
 import { BookingDialog } from "@/components/BookingDialog";
+import { CircuitMap } from "@/components/CircuitMap";
 import { notFound } from "next/navigation";
 import { useCollection, useFirestore } from "@/firebase";
 import { collection, query, where, limit } from "firebase/firestore";
+import { TOUR_SHAPE_KEYS } from "@/lib/destination-shapes";
+import { useLanguage } from "@/context/LanguageContext";
 
 export default function TourDetailPage(props: { params: Promise<{ slug: string }> }) {
   const params = use(props.params);
   const slug = params.slug;
   const db = useFirestore();
+  const { t } = useLanguage();
+  const mapKeys = TOUR_SHAPE_KEYS[slug];
 
   // Itinerary retrieval by slug or ID
   const itineraryQuery = query(
@@ -34,7 +41,7 @@ export default function TourDetailPage(props: { params: Promise<{ slug: string }
   if (loading) {
     return (
       <div className="h-screen flex flex-col items-center justify-center bg-safari-white gap-4">
-        <Loader2 className="w-12 h-12 animate-spin text-honey-gold" />
+        <Loader2 className="w-12 h-12 animate-spin text-secondary" />
         <p className="text-[10px] uppercase font-bold tracking-[0.4em] text-muted-foreground">Mapping the Journey...</p>
       </div>
     );
@@ -49,10 +56,11 @@ export default function TourDetailPage(props: { params: Promise<{ slug: string }
       {/* Hero Header */}
       <section className="relative h-[70vh] w-full overflow-hidden">
         <Image 
-          src={tour.featuredImage || "https://picsum.photos/seed/safari/1920/1080"} 
+          src={mediaFor(tour.featuredImage).src} 
           alt={tour.title} 
           fill 
           className="object-cover brightness-75"
+          sizes="100vw"
           priority
         />
         <div className="absolute inset-0 bg-gradient-to-t from-safari-white via-transparent to-black/20" />
@@ -80,7 +88,7 @@ export default function TourDetailPage(props: { params: Promise<{ slug: string }
               </div>
               <div className="flex items-center gap-2">
                 <DollarSign className="w-4 h-4 text-secondary" />
-                <span>Starts {tour.priceString || `$${tour.priceUSD?.toLocaleString()}`}</span>
+                <span>{priceLabel(tour)}</span>
               </div>
             </div>
           </motion.div>
@@ -173,8 +181,10 @@ export default function TourDetailPage(props: { params: Promise<{ slug: string }
               
               <span className="text-[10px] font-space font-bold uppercase tracking-[0.3em] text-secondary/60 mb-2 block">Investment</span>
               <p className="text-4xl font-serif font-bold text-secondary mb-6">
-                {tour.priceString || `$${tour.priceUSD?.toLocaleString()}`}
-                <span className="text-xs font-space font-bold text-white/40 uppercase tracking-widest ml-2">pp</span>
+                {priceLabel(tour)}
+                {hasPrice(tour) && (
+                  <span className="text-xs font-space font-bold text-white/40 uppercase tracking-widest ml-2">pp</span>
+                )}
               </p>
               
               <p className="text-sm font-light text-white/60 mb-10 leading-relaxed">
@@ -194,13 +204,21 @@ export default function TourDetailPage(props: { params: Promise<{ slug: string }
                 <ShieldCheck className="w-8 h-8 text-secondary" />
                 <div>
                   <h4 className="text-sm font-serif font-bold text-primary">Secure Planning</h4>
-                  <p className="text-[10px] text-muted-foreground uppercase font-bold font-space tracking-tighter">Bespoke Protection</p>
+                  <p className="text-[10px] text-muted-foreground uppercase font-bold font-space tracking-tighter">Planned and supported</p>
                 </div>
               </div>
               <p className="text-xs font-light text-muted-foreground leading-relaxed">
-                Every Mushaz expedition is protected by our luxury standards protocol and supported by our 24/7 Arusha logistics desk.
+                Every Miale expedition is planned against our own safety checklist and supported from the Arusha desk while you are in the country.
               </p>
             </div>
+
+            {mapKeys && (
+              <div className="p-6 md:p-8 bg-white rounded-[2.5rem] border border-muted/50">
+                <p className="text-[9px] font-space font-bold uppercase tracking-[0.3em] text-secondary mb-4">{t("td.map")}</p>
+                <CircuitMap activeKeys={mapKeys} />
+                <p className="mt-3 text-[10px] text-muted-foreground font-light">{t("ds.mapFootnote")}</p>
+              </div>
+            )}
           </div>
         </div>
       </div>

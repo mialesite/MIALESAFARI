@@ -1,4 +1,4 @@
-import { getImageById } from "@/app/lib/placeholder-images";
+import { mediaFor } from "@/lib/media";
 
 /**
  * MASTER SOURCE OF TRUTH: Signature Itineraries
@@ -12,11 +12,8 @@ export const TOUR_DATA: Record<string, any> = {
     slug: "serengeti-migration-journey",
     duration: "10 Days",
     category: "Luxury",
-    priceFrom: 6500,
-    priceString: "Starts $6,500",
-    priceUSD: 6500,
     focus: "Great Migration",
-    featuredImage: getImageById('migration').imageUrl,
+    featuredImage: mediaFor('wildebeest-herd-green-plain').src,
     overview: "Experience the apex of luxury with our Serengeti Migration Journey. Miale provides exclusive access to Tanzania's most iconic landscapes with refined logistics and elite guiding.",
     highlights: ["Witness the Mara River crossing", "Private 4x4 luxury logistics", "Elite mobile camp accommodation"],
     plan: [
@@ -33,10 +30,8 @@ export const TOUR_DATA: Record<string, any> = {
     slug: "central-serengeti-deep-dive",
     duration: "6 Days",
     category: "Luxury",
-    priceFrom: 4200,
-    priceUSD: 4200,
     focus: "Big Cat Discovery",
-    featuredImage: getImageById('ngorongoro-hero').imageUrl,
+    featuredImage: mediaFor('ngorongoro-crater-rim').src,
     overview: "Explore the heart of the Serengeti, world-renowned for its high density of predators and iconic kopjes. This expedition focuses on the Seronera Valley and its rich biodiversity.",
     highlights: ["Daily big cat tracking", "Luxury tented camp experience", "Seronera valley exploration"],
     plan: [
@@ -51,10 +46,8 @@ export const TOUR_DATA: Record<string, any> = {
     slug: "ndutu-calving-season",
     duration: "7 Days",
     category: "Migration",
-    priceFrom: 3200,
-    priceUSD: 3200,
     focus: "Birthing Season",
-    featuredImage: getImageById('migration').imageUrl,
+    featuredImage: mediaFor('wildebeest-herd-green-plain').src,
     overview: "Witness the miracle of life as hundreds of thousands of wildebeest give birth on the southern plains of the Serengeti ecosystem.",
     highlights: ["Unrivaled predator action", "Off-road driving permitted in Ndutu", "Mobile migration camp"],
     plan: [
@@ -69,11 +62,8 @@ export const TOUR_DATA: Record<string, any> = {
     slug: "kilimanjaro-lemosho-route",
     duration: "8 Days",
     category: "Mountain",
-    priceFrom: 2300,
-    priceString: "Starts $2,300",
-    priceUSD: 2300,
     focus: "Summit Success",
-    featuredImage: getImageById('kilimanjaro-trek').imageUrl,
+    featuredImage: mediaFor('kilimanjaro-summit-clear').src,
     overview: "The Lemosho route is widely considered the most scenic path up Mount Kilimanjaro, offering high summit success rates due to excellent acclimatization.",
     highlights: ["Highest success rate on the mountain", "Traverse five distinct eco-zones", "Premium mountain equipment and crew"],
     plan: [
@@ -90,11 +80,8 @@ export const TOUR_DATA: Record<string, any> = {
     slug: "tarangire-elephant-heritage",
     duration: "4 Days",
     category: "Migration",
-    priceFrom: 850,
-    priceString: "Starts $850",
-    priceUSD: 850,
     focus: "Land of Giants",
-    featuredImage: getImageById('elephant-herd').imageUrl,
+    featuredImage: mediaFor('elephant-family-crossing').src,
     overview: "Discover the hidden gem of the Northern Circuit. Tarangire is famous for its massive elephant herds and ancient baobab trees.",
     highlights: ["Highest density of elephants in Tanzania", "Ancient baobab tree forests", "Dry season river wildlife viewing"],
     plan: [
@@ -109,11 +96,8 @@ export const TOUR_DATA: Record<string, any> = {
     slug: "zanzibar-stone-town-beach",
     duration: "7 Days",
     category: "Zanzibar",
-    priceFrom: 1400,
-    priceString: "Starts $1,400",
-    priceUSD: 1400,
     focus: "Island Paradise",
-    featuredImage: getImageById('zanzibar-beach').imageUrl,
+    featuredImage: mediaFor('mafia-island-lagoon').src,
     overview: "A perfect blend of culture and relaxation. Explore historic Stone Town before retreating to white sand beaches.",
     highlights: ["UNESCO Stone Town tour", "Spice plantation visit", "Pristine white sand beaches"],
     plan: [
@@ -128,11 +112,8 @@ export const TOUR_DATA: Record<string, any> = {
     slug: "nyerere-river-boat-safari",
     duration: "4 Days",
     category: "Bespoke",
-    priceFrom: 1500,
-    priceString: "Starts $1,500",
-    priceUSD: 1500,
     focus: "Southern Circuit",
-    featuredImage: getImageById('nyerere-river').imageUrl,
+    featuredImage: mediaFor('hippo-pool').src,
     overview: "Explore the untamed wilderness of Africa's largest park via unique boat safaris on the Rufiji River.",
     highlights: ["Rufiji River boat safaris", "Walking wilderness tours", "High density of wild dogs"],
     plan: [
@@ -147,10 +128,8 @@ export const TOUR_DATA: Record<string, any> = {
     slug: "ruaha-wilderness-expedition",
     duration: "6 Days",
     category: "Luxury",
-    priceFrom: 1680,
-    priceUSD: 1680,
     focus: "Remote Safari",
-    featuredImage: getImageById('ruaha-wilderness').imageUrl,
+    featuredImage: mediaFor('ruaha-open-savanna').src,
     overview: "Venture into the rugged, baobab-studded landscapes of Ruaha for a truly wild experience far from the crowds.",
     highlights: ["High predator density", "Exclusive lodge experience", "Ancient baobab landscapes"],
     plan: [
@@ -165,10 +144,8 @@ export const TOUR_DATA: Record<string, any> = {
     slug: "mikumi-savanna-escape",
     duration: "3 Days",
     category: "Classic",
-    priceFrom: 480,
-    priceUSD: 480,
     focus: "Savanna Quick-look",
-    featuredImage: getImageById('mikumi-savanna').imageUrl,
+    featuredImage: mediaFor('zebras-at-waterhole').src,
     overview: "A perfect short break to the 'Little Serengeti' of the South, offering excellent game viewing in a compact timeframe.",
     highlights: ["Open savanna game viewing", "Easy access from Dar es Salaam", "Mkata Floodplain herds"],
     plan: [
@@ -183,11 +160,8 @@ export const TOUR_DATA: Record<string, any> = {
     slug: "gombe-chimpanzee-trek",
     duration: "5 Days",
     category: "Bespoke",
-    priceFrom: 2100,
-    priceString: "Starts $2,100",
-    priceUSD: 2100,
     focus: "Primate Discovery",
-    featuredImage: getImageById('gombe-stream').imageUrl,
+    featuredImage: mediaFor('gombe-chimpanzee').src,
     overview: "A rare opportunity to walk in the footsteps of Jane Goodall. This expedition takes you deep into the Gombe Stream National Park.",
     highlights: ["Daily chimpanzee trekking", "Lake Tanganyika boat expeditions", "Exclusive forest lodge stay"],
     plan: [
@@ -202,10 +176,8 @@ export const TOUR_DATA: Record<string, any> = {
     slug: "mahale-mountains-luxury",
     duration: "6 Days",
     category: "Bespoke",
-    priceFrom: 3000,
-    priceUSD: 3000,
     focus: "Primate & Lake",
-    featuredImage: getImageById('mahale-mountains').imageUrl,
+    featuredImage: mediaFor('mahale-chimpanzee').src,
     overview: "One of the most remote and exclusive destinations in Africa, where the forest meets the crystal waters of Lake Tanganyika.",
     highlights: ["Chimpanzee trekking", "Lake Tanganyika sunset cruises", "Bespoke beach dining"],
     plan: [
@@ -218,3 +190,26 @@ export const TOUR_DATA: Record<string, any> = {
 };
 
 export const TOURS = Object.values(TOUR_DATA);
+
+/**
+ * A price is only shown once the desk has entered one. The static itinerary list deliberately
+ * carries none, so the public pages read "Priced to order" until a real figure lands in
+ * Admin → Expeditions.
+ */
+export function priceLabel(tour?: { priceFrom?: number; priceUSD?: number; priceString?: string } | null) {
+  const value = Number(tour?.priceFrom ?? tour?.priceUSD);
+  if (Number.isFinite(value) && value > 0) return `$${value.toLocaleString()}`;
+  const raw = tour?.priceString?.trim();
+  if (!raw) return "Priced to order";
+  const isNumeric = (s: string) => /^\$?\d[\d,]*$/.test(s.trim());
+  const withDollar = (s: string) => `$${s.trim().replace(/\$/g, "")}`;
+  const parts = raw.split("-").map((p) => p.trim());
+  if (parts.length === 2 && parts.every(isNumeric)) return `${withDollar(parts[0])} - ${withDollar(parts[1])}`;
+  if (isNumeric(raw)) return withDollar(raw);
+  return raw;
+}
+
+export function hasPrice(tour?: { priceFrom?: number; priceUSD?: number } | null) {
+  const value = Number(tour?.priceFrom ?? tour?.priceUSD);
+  return Number.isFinite(value) && value > 0;
+}

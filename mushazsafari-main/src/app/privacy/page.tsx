@@ -20,35 +20,39 @@ export default function PrivacyPolicy() {
             <section className="space-y-4">
               <h2 className="text-2xl font-serif text-primary font-bold">1. Our Commitment</h2>
               <p>
-                At Mushaz Safari, we treat your personal data with the same discretion and care as we do your private safari. Your privacy is paramount to our standard of service.
+                At Miale Safaris we treat your personal data with the same care as the rest of your trip. This page sets out what we collect, why we collect it and who sees it.
               </p>
             </section>
 
             <section className="space-y-4">
               <h2 className="text-2xl font-serif text-primary font-bold">2. Information Collection</h2>
               <p>
-                We collect information essential to crafting your bespoke itinerary, including dietary preferences, health requirements, and passport details for permit acquisition.
+                We collect the information needed to plan and run your trip: contact details, party size, dietary and
+                health requirements, and passport details where park permits or visas require them.
               </p>
             </section>
 
             <section className="space-y-4">
               <h2 className="text-2xl font-serif text-primary font-bold">3. Data Usage</h2>
               <p>
-                Your information is used exclusively to facilitate your Tanzanian expedition. We do not sell your data to third-party marketing entities; it remains within our secure elite network.
+                Your information is used to prepare and operate your itinerary, and to meet the requirements of the
+                parks, camps and insurers involved. We do not sell it to third parties.
               </p>
             </section>
 
             <section className="space-y-4">
               <h2 className="text-2xl font-serif text-primary font-bold">4. Security Protocols</h2>
               <p>
-                We employ high-end digital encryption and internal access controls to protect your data from unauthorized intrusion, ensuring your personal history remains private.
+                Data is held in access-controlled systems and sent over encrypted connections. No method of transmission
+                over the internet is completely secure, so we cannot guarantee absolute security, but access is limited
+                to the staff who need your details to run the trip.
               </p>
             </section>
 
             <section className="space-y-4">
               <h2 className="text-2xl font-serif text-primary font-bold">5. Cookies & Analytics</h2>
               <p>
-                Our digital platform uses subtle cookies to enhance your browsing experience and analyze our market performance, ensuring Mushaz Safari remains the benchmark of luxury.
+                This site uses cookies and local storage to remember your preferences and to understand which pages are read. That information stays with us and is not sold.
               </p>
             </section>
 

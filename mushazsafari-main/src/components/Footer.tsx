@@ -10,6 +10,7 @@ import { useState, useEffect } from "react";
 import { useFirestore } from "@/firebase";
 import { collection, addDoc, serverTimestamp } from "firebase/firestore";
 import { useToast } from "@/hooks/use-toast";
+import { mediaFor } from "@/lib/media";
 
 const SOCIAL_LINKS = [
   { Icon: Facebook, href: "#" },
@@ -26,7 +27,7 @@ export const Footer = () => {
 
   const db = useFirestore();
   const { toast } = useToast();
-  const logoUrl = "https://uploads.mushazsafari.com/Miale.png";
+  const logo = mediaFor("miale-logo");
 
   useEffect(() => {
     setMounted(true);
@@ -74,17 +75,20 @@ export const Footer = () => {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
           <div className="space-y-6 text-center sm:text-left">
             <Link href="/" className="flex justify-center sm:justify-start">
-              <div className="relative w-48 h-24 transition-transform hover:scale-105">
+              <div className="relative h-14 transition-transform hover:scale-105">
                 <Image
-                  src={logoUrl}
-                  alt="Miale Logo"
-                  fill
-                  className="object-contain"
+                  src={logo.src}
+                  alt={logo.alt}
+                  width={logo.width}
+                  height={logo.height}
+                  className="h-14 w-auto object-contain"
+                  sizes="160px"
                 />
               </div>
             </Link>
             <p className="text-muted-foreground font-light leading-relaxed text-sm md:text-base">
-              The benchmark for luxury Tanzanian travel. Crafting unparalleled wildlife encounters and bespoke expeditions across the continent's most iconic landscapes.
+              Safari planning from a desk in Arusha. Miale writes Tanzania itineraries around your dates, your party and
+              the season, across the northern, southern and western circuits, the peaks and Zanzibar.
             </p>
             <div className="flex gap-4 justify-center sm:justify-start">
               {SOCIAL_LINKS.map(({ Icon, href }, i) => (
@@ -149,12 +153,12 @@ export const Footer = () => {
 
           <div className="text-center sm:text-left">
             <h4 className="font-headline text-lg md:text-xl font-bold mb-6 text-foreground">The Dispatch</h4>
-            <p className="text-muted-foreground mb-4 text-xs md:text-sm font-light">Join our inner circle for exclusive seasonal insights and conservation updates.</p>
+            <p className="text-muted-foreground mb-4 text-xs md:text-sm font-light">Occasional notes from the Arusha desk: season windows, route changes and what the herds are doing.</p>
 
             {success ? (
               <div className="flex items-center gap-2 text-secondary font-bold text-sm bg-secondary/5 p-4 rounded-xl border border-secondary/20">
                 <CheckCircle2 className="w-5 h-5" />
-                Welcome to the expedition.
+                You are on the list.
               </div>
             ) : (
               <form onSubmit={handleSubscribe} className="flex flex-col gap-3">

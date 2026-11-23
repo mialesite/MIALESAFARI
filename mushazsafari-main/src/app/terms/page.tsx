@@ -20,14 +20,14 @@ export default function TermsOfService() {
             <section className="space-y-4">
               <h2 className="text-2xl font-serif text-primary font-bold">1. Introduction</h2>
               <p>
-                Welcome to Mushaz Safari. These Terms of Service govern your use of our website and our professional safari services. By engaging with our brand, you agree to comply with these refined standards of luxury and conduct.
+                Welcome to Miale Safaris. These Terms of Service govern your use of this website and the safari planning we provide from Arusha. By booking with us, you agree to the standards set out below.
               </p>
             </section>
 
             <section className="space-y-4">
               <h2 className="text-2xl font-serif text-primary font-bold">2. Bespoke Bookings</h2>
               <p>
-                All itineraries crafted by Mushaz Safari are custom-engineered. A booking is confirmed only upon receipt of the specified luxury deposit and our formal issuance of an expedition voucher.
+                All itineraries planned by Miale Safaris are made to order. A booking is confirmed only on receipt of the deposit stated in your plan and our issue of a written expedition voucher.
               </p>
             </section>
 
@@ -48,7 +48,7 @@ export default function TermsOfService() {
             <section className="space-y-4">
               <h2 className="text-2xl font-serif text-primary font-bold">5. Liability & Insurance</h2>
               <p>
-                While Mushaz Safari maintains the highest safety protocols, travel in the African wilderness carries inherent risks. Comprehensive travel and medical insurance are mandatory requirements for all guests.
+                While Miale Safaris plans to its own safety checklist, travel in the African wilderness carries inherent risks. Comprehensive travel and medical insurance are required for all guests.
               </p>
             </section>
 

@@ -15,7 +15,7 @@ import { MediaLibraryDialog } from "@/components/admin/MediaLibraryDialog";
 import { useToast } from "@/hooks/use-toast";
 import { format } from "date-fns";
 import { Button } from "@/components/ui/button";
-import { PlaceHolderImages } from "@/app/lib/placeholder-images";
+import { MEDIA } from "@/lib/media";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from "@/components/ui/dialog";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
@@ -50,15 +50,15 @@ export default function GalleryManagement() {
     let imported = 0;
     
     try {
-      for (const img of PlaceHolderImages) {
-        const existingQuery = query(collection(db, "media"), where("url", "==", img.imageUrl));
+      for (const img of MEDIA) {
+        const existingQuery = query(collection(db, "media"), where("url", "==", img.src));
         const existingSnap = await getDocs(existingQuery);
         
         if (existingSnap.empty) {
           const mediaRef = doc(collection(db, "media"));
           batch.set(mediaRef, {
-            name: img.description,
-            url: img.imageUrl,
+            name: img.alt,
+            url: img.src,
             folder: "cms/master",
             status: "public",
             createdAt: serverTimestamp(),

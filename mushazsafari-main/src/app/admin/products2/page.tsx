@@ -27,7 +27,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { MediaLibraryDialog } from "@/components/admin/MediaLibraryDialog";
 import { MASTER_DESTINATIONS } from "@/lib/master-destinations";
-import { getImageById } from "@/app/lib/placeholder-images";
+import { mediaFor } from "@/lib/media";
 import { cn } from "@/lib/utils";
 import { ScrollArea } from "@/components/ui/scroll-area";
 
@@ -172,12 +172,12 @@ export default function DestinationCMS() {
     try {
       for (const master of MASTER_DESTINATIONS) {
         const existing = destinations?.find(d => d.name === master.name);
-        const imgData = getImageById(master.imageId);
+        const imgData = mediaFor(master.imageId);
         const docRef = existing ? doc(db, "destinations", existing.id) : doc(collection(db, "destinations"));
         
         batch.set(docRef, {
           ...master,
-          featuredImage: imgData.imageUrl,
+          featuredImage: imgData.src,
           status: "active",
           createdAt: existing?.createdAt || serverTimestamp(),
           updatedAt: serverTimestamp()
