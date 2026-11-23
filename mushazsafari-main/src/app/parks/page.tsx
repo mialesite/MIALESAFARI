@@ -154,13 +154,16 @@ export default function ParksPage() {
 
                   {(() => {
                     const n = group.items.length;
+                    // Three cards per row at desktop; the lone and pair groups
+                    // stay on a narrow centred measure instead of stretching
+                    // to half-container monsters.
                     const cols = n === 1
                       ? "grid-cols-1 max-w-md mx-auto"
-                      : n === 2 || n === 4
-                        ? "grid-cols-1 md:grid-cols-2"
+                      : n === 2
+                        ? "grid-cols-1 md:grid-cols-2 max-w-3xl mx-auto"
                         : "grid-cols-1 md:grid-cols-2 lg:grid-cols-3";
                     return (
-                      <div className={`grid gap-8 ${cols}`}>
+                      <div className={`grid gap-6 md:gap-8 ${cols}`}>
                         {group.items.map((park: any, i) => (
                           <ParkCard key={park.id} park={park} index={i} />
                         ))}

@@ -89,7 +89,7 @@ export const InteractiveExplorer = () => {
   return (
     <section className="py-24 md:py-28 px-6 md:px-12 bg-safari-white" id="destinations">
       <div className="max-w-[1800px] mx-auto">
-        <div className="flex flex-col lg:flex-row items-end justify-between mb-12 gap-8">
+        <div className="flex flex-col lg:flex-row lg:items-end justify-between mb-12 gap-8">
           <div className="max-w-2xl">
             <span className="text-[10px] uppercase tracking-[0.4em] font-bold text-secondary mb-4 block">{t("ex.eyebrow")}</span>
             <h2 className="text-5xl md:text-7xl lg:text-8xl font-serif text-primary leading-none">
@@ -102,7 +102,7 @@ export const InteractiveExplorer = () => {
           </p>
         </div>
 
-        <div className="mb-12 flex flex-wrap gap-3 justify-center lg:justify-start">
+        <div className="mb-12 flex flex-wrap gap-3 justify-start">
           {CIRCUITS.map((circuit) => (
             <button
               key={circuit}

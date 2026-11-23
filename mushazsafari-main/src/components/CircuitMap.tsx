@@ -101,6 +101,12 @@ export function CircuitMap({
   const zoomed = unit < 0.92;
   const textScale = zoomed ? unit * 2.4 : 1;
 
+  // Labels are painted in viewBox units while tight crops clip at the frame
+  // edge, so their anchors are pulled back inside the crop when one sits on
+  // the boundary (the Arusha tag clipped on the Serengeti detail page).
+  const frame =
+    focus && zoomed ? { left: focus.x, right: focus.x + focus.w, width: focus.w } : null;
+
   const countryPath = proj.pathFor("tanzania");
   const arusha = proj.pointAt(REF_POINTS.arusha.lon, REF_POINTS.arusha.lat);
 
@@ -196,10 +202,16 @@ export function CircuitMap({
         const label = SHAPE_LABEL[key];
         if (!label) return null;
         const [cx, cy] = proj.centroidFor(key);
+        const fontSize = 13 * textScale;
+        const halfW = (label.text.length * 0.55 * fontSize + 3.5 * textScale) / 2;
+        let lx = cx + (label.dx || 0) * unit;
+        if (frame && frame.width > 2 * halfW + 4) {
+          lx = Math.min(Math.max(lx, frame.left + halfW + 1), frame.right - halfW - 1);
+        }
         return (
           <text
             key={key}
-            x={cx + (label.dx || 0) * unit}
+            x={lx}
             y={cy + (label.dy || 0) * unit}
             textAnchor="middle"
             fontSize={13 * textScale}
@@ -216,20 +228,36 @@ export function CircuitMap({
       })}
 
       <circle cx={arusha[0]} cy={arusha[1]} r={4 * textScale} fill={glass ? "#E2633C" : "#B04A2A"} />
-      <text
-        x={arusha[0] + 10 * unit}
-        y={arusha[1] + 4 * unit}
-        fontSize={12.5 * textScale}
-        fontWeight={600}
-        fontStyle="italic"
-        fill={glass ? "#E8905E" : "#B04A2A"}
-        stroke={glass ? "#17301F" : "#FFF9EE"}
-        strokeWidth={3.5 * textScale}
-        paintOrder="stroke"
-        style={{ pointerEvents: "none" }}
-      >
-        Arusha
-      </text>
+      {(() => {
+        const fs = 12.5 * textScale;
+        let ax = arusha[0] + 10 * unit;
+        let anchor: "start" | "end" = "start";
+        if (frame && ax + fs * 3.3 > frame.right) {
+          anchor = "end";
+          ax = arusha[0] - 12 * unit;
+          if (ax - fs * 3.3 < frame.left) {
+            anchor = "start";
+            ax = frame.left + 2;
+          }
+        }
+        return (
+          <text
+            x={ax}
+            y={arusha[1] + 4 * unit}
+            textAnchor={anchor}
+            fontSize={12.5 * textScale}
+            fontWeight={600}
+            fontStyle="italic"
+            fill={glass ? "#E8905E" : "#B04A2A"}
+            stroke={glass ? "#17301F" : "#FFF9EE"}
+            strokeWidth={3.5 * textScale}
+            paintOrder="stroke"
+            style={{ pointerEvents: "none" }}
+          >
+            Arusha
+          </text>
+        );
+      })()}
     </svg>
   );
 }

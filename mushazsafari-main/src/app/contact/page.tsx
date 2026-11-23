@@ -23,7 +23,8 @@ export default function ContactPage() {
           sizes="100vw"
           className="object-cover object-center"
         />
-        <div className="absolute inset-0 bg-[linear-gradient(100deg,rgba(13,26,18,0.94)_0%,rgba(13,26,18,0.72)_45%,rgba(13,26,18,0.30)_100%)]" />
+        {/* Phone gets a steeper vertical wash so the copy stays legible over the busy city skyline. */}
+        <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(13,26,18,0.55)_0%,rgba(13,26,18,0.80)_100%)] md:bg-[linear-gradient(100deg,rgba(13,26,18,0.94)_0%,rgba(13,26,18,0.72)_45%,rgba(13,26,18,0.30)_100%)]" />
         <div className="absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-[#0D1A12] to-transparent" />
 
         <div className="relative z-10 max-w-[1400px] mx-auto px-6 md:px-12 lg:px-24 pt-32 md:pt-44 pb-14 md:pb-20">
