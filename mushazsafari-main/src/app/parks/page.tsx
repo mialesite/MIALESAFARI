@@ -9,6 +9,7 @@ import Link from "next/link";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Compass, Loader2, RefreshCw } from "lucide-react";
+import Image from "next/image";
 import { useCollection, useFirestore, useMemoFirebase, useUser } from "@/firebase";
 import { collection, query, writeBatch, doc, serverTimestamp, getDocs, where } from "firebase/firestore";
 import { useToast } from "@/hooks/use-toast";
@@ -198,8 +199,17 @@ export default function ParksPage() {
         </div>
       </section>
 
-      <section className="py-24 bg-primary text-white text-center px-6">
-        <div className="max-w-4xl mx-auto">
+      <section className="relative py-24 bg-primary text-white text-center px-6 overflow-hidden">
+        <Image
+          src={mediaFor("giraffes-open-grassland").src}
+          alt={mediaFor("giraffes-open-grassland").alt}
+          fill
+          quality={60}
+          sizes="100vw"
+          className="object-cover"
+        />
+        <div className="absolute inset-0 bg-primary/85" />
+        <div className="relative max-w-4xl mx-auto">
           <span className="text-secondary font-space font-bold uppercase tracking-[0.4em] text-[10px] mb-8 block">Plan With The Desk</span>
           <h2 className="text-4xl md:text-6xl font-serif italic text-white mb-12 leading-tight">"Pick the park. The route is built around it."</h2>
           <div className="flex flex-col sm:flex-row justify-center gap-6">

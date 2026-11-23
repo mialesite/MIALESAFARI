@@ -288,8 +288,17 @@ export function DestinationsView({ circuit }: { circuit: "All" | DestinationsCir
       </section>
 
       {/* Explore Itineraries CTA */}
-      <section className="py-24 bg-primary text-white text-center px-6">
-        <div className="max-w-4xl mx-auto">
+      <section className="relative py-24 bg-primary text-white text-center px-6 overflow-hidden">
+        <Image
+          src={mediaFor("single-acacia-green-plains").src}
+          alt={mediaFor("single-acacia-green-plains").alt}
+          fill
+          quality={60}
+          sizes="100vw"
+          className="object-cover"
+        />
+        <div className="absolute inset-0 bg-primary/85" />
+        <div className="relative max-w-4xl mx-auto">
           <span className="text-secondary font-space font-bold uppercase tracking-[0.4em] text-[10px] mb-8 block">
             {t("ds.ctaEyebrow")}
           </span>

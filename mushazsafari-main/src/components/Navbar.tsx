@@ -93,27 +93,12 @@ const NAV_GROUPS: NavGroup[] = [
       },
     ],
   },
-  {
-    name: "The Desk",
-    href: { label: "About the desk", pathname: "/about" },
-    image: "afcon-arusha-city",
-    columns: [
-      {
-        title: "The company",
-        items: [
-          { label: "About Miale", pathname: "/about", note: "Arusha, Tanzania" },
-          { label: "Contact", pathname: "/contact", note: "Talk to a planner" },
-        ],
-      },
-      {
-        title: "Fine print",
-        items: [
-          { label: "Privacy", pathname: "/privacy" },
-          { label: "Terms", pathname: "/terms" },
-        ],
-      },
-    ],
-  },
+];
+
+const NAV_LINKS: { label: string; href: string }[] = [
+  { label: "Parks", href: "/parks" },
+  { label: "The Base", href: "/about" },
+  { label: "Contact", href: "/contact" },
 ];
 
 function hrefOf(item: NavItem) {
@@ -179,9 +164,11 @@ export const Navbar = () => {
 
   const activeGroup = (() => {
     const p = pathname || "/";
-    if (p.startsWith("/destinations") || p.startsWith("/parks")) return "Destinations";
+    if (p.startsWith("/destinations")) return "Destinations";
+    if (p.startsWith("/parks")) return "Parks";
     if (p.startsWith("/itineraries")) return "Expeditions";
-    if (["/about", "/contact", "/privacy", "/terms"].some((r) => p.startsWith(r))) return "The Desk";
+    if (p.startsWith("/about") || p.startsWith("/privacy") || p.startsWith("/terms")) return "The Base";
+    if (p.startsWith("/contact")) return "Contact";
     return null;
   })();
 
@@ -329,6 +316,16 @@ export const Navbar = () => {
                 </div>
               );
             })}
+
+            {NAV_LINKS.map((link) => {
+              const p = pathname || "/";
+              const isActive = p === link.href || p.startsWith(`${link.href}/`);
+              return (
+                <Link key={link.label} href={link.href} className={cn(triggerClass, isActive && "text-secondary")}>
+                  {nav(link.label)}
+                </Link>
+              );
+            })}
           </div>
         </div>
 
@@ -474,6 +471,18 @@ export const Navbar = () => {
                   </div>
                 );
               })}
+
+              {NAV_LINKS.map((link) => (
+                <div key={link.label} className="border-b border-white/10">
+                  <Link
+                    href={link.href}
+                    onClick={() => setMobileMenuOpen(false)}
+                    className="block py-4 text-2xl md:text-4xl font-serif text-white hover:text-secondary transition-colors"
+                  >
+                    {nav(link.label)}
+                  </Link>
+                </div>
+              ))}
             </div>
 
             <div className="mt-auto pt-10 border-t border-white/10 space-y-8">

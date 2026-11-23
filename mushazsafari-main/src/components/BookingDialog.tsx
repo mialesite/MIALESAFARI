@@ -17,10 +17,10 @@ import {
   Compass, 
   Calendar as CalendarIcon, 
   Users, 
-  Crown, 
-  Wallet, 
-  Sparkles, 
-  ArrowRight, 
+  Crown,
+  Wallet,
+  ClipboardCheck,
+  ArrowRight,
   ArrowLeft,
   CheckCircle2,
   Check,
@@ -47,7 +47,7 @@ const STEPS = [
   { id: 1, icon: CalendarIcon, label: "bk.step1" },
   { id: 2, icon: Users, label: "bk.step2" },
   { id: 3, icon: Crown, label: "bk.step3" },
-  { id: 4, icon: Sparkles, label: "bk.step4" },
+  { id: 4, icon: ClipboardCheck, label: "bk.step4" },
 ];
 
 const fieldCls = "h-12 rounded-xl bg-muted/40 border-muted/80 hover:border-secondary/50 focus-visible:ring-secondary focus-visible:border-secondary transition-colors";

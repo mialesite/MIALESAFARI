@@ -565,7 +565,8 @@ export const labelFor = (
 export const NAV_TRANSLATIONS: Record<string, string> = {
   "Destinations": "Maeneo",
   "Expeditions": "Safari",
-  "The Desk": "Dawati",
+  "Parks": "Hifadhi",
+  "The Base": "Makao",
   "All destinations": "Maeneo yote",
   "All expeditions": "Safari zote",
   "About the desk": "Kuhusu dawati",
