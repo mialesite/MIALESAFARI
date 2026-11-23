@@ -201,12 +201,12 @@ export function DestinationsView({ circuit }: { circuit: "All" | DestinationsCir
               transition={{ duration: 0.7, delay: 0.15 }}
               className="lg:col-span-5"
             >
-              <div className="bg-white rounded-[2rem] p-5 md:p-7 shadow-2xl shadow-black/30 max-w-md w-full mx-auto lg:max-w-none">
-                <p className="text-secondary font-space font-bold uppercase tracking-[0.4em] text-[10px] mb-3">
+              <div className="p-5 md:p-7 max-w-md w-full mx-auto lg:max-w-none">
+                <p className="text-accent font-space font-bold uppercase tracking-[0.4em] text-[10px] mb-3">
                   {circuit === "All" ? t("ds.mapAll") : t("ds.mapCircuit")}
                 </p>
-                <CircuitMap activeNames={scoped.map((d: any) => d.name)} />
-                <p className="mt-4 text-[9px] font-space uppercase tracking-[0.2em] text-muted-foreground/70">
+                <CircuitMap activeNames={scoped.map((d: any) => d.name)} glass />
+                <p className="mt-4 text-[9px] font-space uppercase tracking-[0.2em] text-white/70">
                   {t("ds.mapFootnote")}
                 </p>
               </div>

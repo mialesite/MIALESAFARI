@@ -5,12 +5,14 @@ import Link from "next/link";
 import { MapPin } from "lucide-react";
 import { buildParksProjection } from "@/lib/parks-projection";
 import { PARK_SHAPES, REF_POINTS } from "@/lib/parks-geo";
+import { REGION_SHAPES } from "@/lib/regions-geo";
 import { SHAPE_LABEL } from "@/lib/destination-shapes";
 
 /**
- * @fileOverview To-scale Tanzania parks map for the /parks page.
- * Shaded shapes are the places the desk plans; pale shapes are the parks
- * left for another trip. Boundaries come from public OSM/Natural Earth data.
+ * @fileOverview To-scale Tanzania parks map for the /parks page, drawn in the
+ * same quiet outline language as the circuit maps: transparent plate, faint
+ * country and region borders, gold outlines marking the places the desk plans.
+ * Boundaries come from public OSM/Natural Earth data.
  */
 
 const LINK_ORDER: { key: string; name: string }[] = [
@@ -37,7 +39,7 @@ export function TanzaniaParksMap({ destinations }: { destinations: { id: string;
     <section id="map" className="pb-4 md:pb-8">
       <div className="w-full bg-white">
         <div className="max-w-[1600px] mx-auto grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 p-6 md:p-10 lg:p-14">
-        <div className="rounded-[2rem] bg-safari-white border border-muted overflow-hidden">
+        <div>
           <svg viewBox={`0 0 ${proj.VW} ${proj.VH}`} className="w-full h-auto" role="img" aria-label="Tanzania parks drawn to scale">
             <defs>
               <clipPath id="tz-clip">
@@ -45,18 +47,29 @@ export function TanzaniaParksMap({ destinations }: { destinations: { id: string;
               </clipPath>
             </defs>
 
-            <path d={countryPath} fill="#EFE8D8" stroke="#C9B992" strokeWidth={1.5} />
+            <path d={countryPath} fill="none" stroke="#C9B992" strokeWidth={1.5} />
 
             <g clipPath="url(#tz-clip)">
-              <path d={proj.pathFor("victoria")} fill="#D7E3E8" stroke="#B9CBD4" strokeWidth={1} />
+              <path d={proj.pathFor("victoria")} fill="none" stroke="#C6D6DD" strokeWidth={1} />
             </g>
+
+            {REGION_SHAPES.map((r) => (
+              <path
+                key={r.key}
+                d={proj.pathFor(r.key)}
+                fill="none"
+                stroke="#D8CCB2"
+                strokeWidth={1}
+                strokeDasharray="3.2 2.4"
+              />
+            ))}
 
             {PARK_SHAPES.filter((s) => s.kind === "context").map((s) => (
               <path
                 key={s.key}
                 d={proj.pathFor(s.key)}
-                fill="#E4DCC9"
-                stroke="#CFC4A9"
+                fill="none"
+                stroke="#D6CBB0"
                 strokeWidth={1.2}
               />
             ))}
@@ -69,7 +82,7 @@ export function TanzaniaParksMap({ destinations }: { destinations: { id: string;
                 <path
                   key={l.key}
                   d={d}
-                  fill={active ? "#F0D282" : "#F6E3A6"}
+                  fill="transparent"
                   stroke="#B68D40"
                   strokeWidth={active ? 2.6 : 2}
                   className="transition-all duration-300 cursor-pointer"
@@ -127,10 +140,11 @@ export function TanzaniaParksMap({ destinations }: { destinations: { id: string;
             Ground, to scale
           </h2>
           <p className="text-base md:text-lg text-muted-foreground font-light leading-relaxed mb-8">
-            The shaded shapes are the places the desk plans, traced from public boundary data and drawn at
-            their real size against the rest of the country. The pale shapes are parks left for another trip,
-            and they show how close everything really is. The gaps between the shaded ones are the transfer
-            days, which is why a route is built around where the animals are standing rather than around distance.
+            The gold outlines are the places the desk plans, traced from public boundary data and drawn at
+            their real size against the rest of the country. The pale outlines are parks left for another
+            trip, and they show how close everything really is. The gaps between the gold ones are the
+            transfer days, which is why a route is built around where the animals are standing rather than
+            around distance.
           </p>
 
           <div className="h-px bg-muted mb-8" />

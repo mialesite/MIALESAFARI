@@ -18,9 +18,13 @@ const DEST_NAMES = Object.keys(SHAPE_KEYS_BY_DEST);
 export function CircuitMap({
   activeNames,
   activeKeys: rawKeys,
+  glass = false,
 }: {
   activeNames?: string[];
   activeKeys?: string[];
+  /** Glass mode paints strokes and labels only: no country, lake or park
+   * fills, so the hero photograph reads through the map. */
+  glass?: boolean;
 }) {
   const proj = useMemo(() => buildParksProjection(560, 16), []);
   const active = useMemo(() => new Set(activeNames || []), [activeNames]);
@@ -122,16 +126,16 @@ export function CircuitMap({
           widths are floored so tight crops keep the lines visible. */}
       <path
         d={countryPath}
-        fill={zoomed ? "none" : "#EFE8D8"}
-        stroke="#C9B992"
-        strokeWidth={Math.max((zoomed ? 1.2 : 1.5) * unit, 0.55)}
+        fill={glass || zoomed ? "none" : "#EFE8D8"}
+        stroke={glass ? "#DFCFA6" : "#C9B992"}
+        strokeWidth={Math.max((glass ? 1.8 : zoomed ? 1.2 : 1.5) * unit, 0.55)}
       />
 
       <g clipPath="url(#circuit-map-clip)">
         <path
           d={proj.pathFor("victoria")}
-          fill={zoomed ? "none" : "#D7E3E8"}
-          stroke={zoomed ? "#C6D6DD" : "#B9CBD4"}
+          fill="none"
+          stroke={glass ? "#A9C2CF" : zoomed ? "#C6D6DD" : "#B9CBD4"}
           strokeWidth={Math.max(1 * unit, 0.45)}
         />
       </g>
@@ -142,8 +146,8 @@ export function CircuitMap({
             key={r.key}
             d={proj.pathFor(r.key)}
             fill="none"
-            stroke="#D8CCB2"
-            strokeWidth={Math.max(1 * unit, 0.45)}
+            stroke={glass ? "#C7B98F" : "#D8CCB2"}
+            strokeWidth={Math.max(1.1 * unit, 0.45)}
             strokeDasharray={`${Math.max(3.2 * unit, 1.6)} ${Math.max(2.4 * unit, 1.3)}`}
           />
         ))}
@@ -154,9 +158,19 @@ export function CircuitMap({
           <path
             key={s.key}
             d={proj.pathFor(s.key)}
-            fill={zoomed ? "none" : isActive ? "#F6E3A6" : "#E4DCC9"}
-            stroke={zoomed ? (isActive ? "#B68D40" : "#D6CBB0") : isActive ? "#B68D40" : "#CFC4A9"}
-            strokeWidth={Math.max((isActive ? 2 : 1.2) * unit, isActive ? 0.6 : 0.45)}
+            fill={glass || zoomed ? "none" : isActive ? "#F6E3A6" : "#E4DCC9"}
+            stroke={
+              isActive
+                ? glass || zoomed
+                  ? "#E5C37D"
+                  : "#B68D40"
+                : glass
+                  ? "#BFB18B"
+                  : zoomed
+                    ? "#D6CBB0"
+                    : "#CFC4A9"
+            }
+            strokeWidth={Math.max((isActive ? 2.2 : 1.2) * unit, isActive ? 0.6 : 0.45)}
             className="transition-all duration-300"
           />
         );
@@ -170,9 +184,9 @@ export function CircuitMap({
           <path
             key={key}
             d={d}
-            fill={zoomed ? "none" : isActive ? "#F6E3A6" : "#E9E1CF"}
-            stroke={isActive ? "#B68D40" : "#D6CBB0"}
-            strokeWidth={Math.max((isActive ? 2 : 1.2) * unit, isActive ? 0.6 : 0.45)}
+            fill={glass || zoomed ? "none" : isActive ? "#F6E3A6" : "#E9E1CF"}
+            stroke={isActive ? (glass ? "#E5C37D" : "#B68D40") : glass ? "#BFB18B" : "#D6CBB0"}
+            strokeWidth={Math.max((isActive ? 2.2 : 1.2) * unit, isActive ? 0.6 : 0.45)}
             className="transition-all duration-300"
           />
         );
@@ -190,8 +204,8 @@ export function CircuitMap({
             textAnchor="middle"
             fontSize={13 * textScale}
             fontWeight={700}
-            fill="#3D3223"
-            stroke="#FFF9EE"
+            fill={glass ? "#FFFFFF" : "#3D3223"}
+            stroke={glass ? "#17301F" : "#FFF9EE"}
             strokeWidth={3.5 * textScale}
             paintOrder="stroke"
             style={{ pointerEvents: "none" }}
@@ -201,15 +215,15 @@ export function CircuitMap({
         );
       })}
 
-      <circle cx={arusha[0]} cy={arusha[1]} r={4 * textScale} fill="#B04A2A" />
+      <circle cx={arusha[0]} cy={arusha[1]} r={4 * textScale} fill={glass ? "#E2633C" : "#B04A2A"} />
       <text
         x={arusha[0] + 10 * unit}
         y={arusha[1] + 4 * unit}
         fontSize={12.5 * textScale}
         fontWeight={600}
         fontStyle="italic"
-        fill="#B04A2A"
-        stroke="#FFF9EE"
+        fill={glass ? "#E8905E" : "#B04A2A"}
+        stroke={glass ? "#17301F" : "#FFF9EE"}
         strokeWidth={3.5 * textScale}
         paintOrder="stroke"
         style={{ pointerEvents: "none" }}

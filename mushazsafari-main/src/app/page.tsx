@@ -8,6 +8,7 @@ import { MigrationTracker } from "@/components/MigrationTracker";
 import { TrustBadges } from "@/components/TrustBadges";
 import { ContactSection } from "@/components/ContactSection";
 import { motion } from "framer-motion";
+import { ArrowRight } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { mediaFor } from "@/lib/media";
@@ -35,16 +36,22 @@ export default function Home() {
             whileInView={{ opacity: 1, x: 0 }}
             transition={{ duration: 1.2 }}
             viewport={{ once: true, margin: "-100px" }}
-            className="relative h-[380px] sm:h-[480px] lg:h-[600px] rounded-[2.5rem] md:rounded-[3.5rem] overflow-hidden shadow-2xl accelerate"
+            className="relative h-[380px] sm:h-[480px] lg:h-[600px] accelerate"
           >
-            <Image
-              src={editorialImage.src}
-              alt={editorialImage.alt}
-              fill
-              quality={70}
-              className="object-cover"
-              sizes="(min-width: 1024px) 556px, 70vw"
+            <div
+              aria-hidden="true"
+              className="absolute inset-0 translate-x-3 translate-y-3 md:translate-x-5 md:translate-y-5 rounded-[2.5rem] md:rounded-[3.5rem] border border-secondary/35 bg-safari-sand/60"
             />
+            <div className="relative h-full w-full rounded-[2.5rem] md:rounded-[3.5rem] overflow-hidden shadow-2xl ring-1 ring-primary/10">
+              <Image
+                src={editorialImage.src}
+                alt={editorialImage.alt}
+                fill
+                quality={70}
+                className="object-cover"
+                sizes="(min-width: 1024px) 556px, 70vw"
+              />
+            </div>
           </motion.div>
 
           <motion.div
@@ -60,17 +67,17 @@ export default function Home() {
               <span className="font-light italic text-muted-foreground/60">{t("ed.titleAccent")}</span> <br className="hidden md:block" />
               {t("ed.titleTail")}
             </h2>
-            <div className="space-y-6 md:space-y-8 text-lg md:text-xl text-muted-foreground font-light leading-relaxed italic border-l-4 border-secondary/20 pl-6 md:pl-10">
+            <div className="space-y-6 md:space-y-8 text-lg md:text-xl text-primary/80 font-light leading-relaxed italic border-l-4 border-secondary pl-6 md:pl-10">
               <p>
                 {t("ed.quote")}
               </p>
-              <div className="grid grid-cols-3 gap-4 md:gap-8 pt-4 md:pt-8 not-italic items-start">
+              <div className="grid grid-cols-3 gap-4 md:gap-8 pt-2 md:pt-4 not-italic items-start">
                 {[
                   { value: t("ed.fact1.value"), label: t("ed.fact1.label") },
                   { value: t("ed.fact2.value"), label: t("ed.fact2.label") },
                   { value: t("ed.fact3.value"), label: t("ed.fact3.label") },
                 ].map((fact) => (
-                  <div key={fact.value} className="border-l border-safari-sand pl-4 md:pl-8 first:border-l-0 first:pl-0">
+                  <div key={fact.value} className="border-t border-secondary/30 pt-3 md:pt-4">
                     <p className="text-lg md:text-2xl font-serif font-bold text-primary leading-tight min-h-[2.6rem] md:min-h-[3rem]">{fact.value}</p>
                     <p className="text-[9px] md:text-[10px] uppercase tracking-[0.16em] text-muted-foreground font-bold font-space mt-2">{fact.label}</p>
                   </div>
@@ -79,9 +86,10 @@ export default function Home() {
             </div>
             <Link
               href="/about"
-              className="inline-block text-[10px] md:text-[11px] font-space font-bold uppercase tracking-[0.3em] text-secondary hover:text-primary transition-colors not-italic"
+              className="group inline-flex items-center gap-2.5 text-[10px] md:text-[11px] font-space font-bold uppercase tracking-[0.3em] text-secondary hover:text-primary transition-colors not-italic"
             >
-              {t("ed.cta")} →
+              {t("ed.cta")}
+              <ArrowRight className="h-3.5 w-3.5 transition-transform duration-300 group-hover:translate-x-1.5" />
             </Link>
           </motion.div>
         </div>
