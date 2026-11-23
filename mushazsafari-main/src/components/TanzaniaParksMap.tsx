@@ -34,8 +34,9 @@ export function TanzaniaParksMap({ destinations }: { destinations: { id: string;
   const linkFor = (name: string) => destinations.find((d) => d.name === name);
 
   return (
-    <section id="map" className="px-6 md:px-12 lg:px-24 pb-4 md:pb-8">
-      <div className="max-w-[1400px] mx-auto grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 bg-white rounded-[2.5rem] border border-muted p-6 md:p-10 lg:p-14">
+    <section id="map" className="pb-4 md:pb-8">
+      <div className="w-full bg-white">
+        <div className="max-w-[1600px] mx-auto grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 p-6 md:p-10 lg:p-14">
         <div className="rounded-[2rem] bg-safari-white border border-muted overflow-hidden">
           <svg viewBox={`0 0 ${proj.VW} ${proj.VH}`} className="w-full h-auto" role="img" aria-label="Tanzania parks drawn to scale">
             <defs>
@@ -163,6 +164,7 @@ export function TanzaniaParksMap({ destinations }: { destinations: { id: string;
           <p className="mt-10 text-[9px] font-space uppercase tracking-[0.2em] text-muted-foreground/70">
             Boundaries traced from OpenStreetMap and Natural Earth public data
           </p>
+        </div>
         </div>
       </div>
     </section>

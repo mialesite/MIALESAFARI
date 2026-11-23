@@ -3,6 +3,7 @@
 import { useMemo } from "react";
 import { buildParksProjection } from "@/lib/parks-projection";
 import { PARK_SHAPES, REF_POINTS } from "@/lib/parks-geo";
+import { REGION_SHAPES } from "@/lib/regions-geo";
 import { SHAPE_KEYS_BY_DEST, SHAPE_LABEL } from "@/lib/destination-shapes";
 
 /**
@@ -63,7 +64,7 @@ export function CircuitMap({
     if (!Number.isFinite(minX)) return null;
     const spanX = maxX - minX;
     const spanY = maxY - minY;
-    const pad = Math.max(Math.max(spanX, spanY) * 0.42, 14);
+    const pad = Math.max(Math.max(spanX, spanY) * 0.42, 16);
     let w = Math.min(Math.max(spanX + pad * 2, 130), proj.VW);
     const h = Math.min(Math.max(spanY + pad * 2, 130), proj.VH);
     const cx = (minX + maxX) / 2;
@@ -117,12 +118,13 @@ export function CircuitMap({
       </defs>
 
       {/* Focused views keep only faint borders: transparent background, the
-          country edge and region outlines traced rather than filled. */}
+          country edge and region outlines traced rather than filled. Stroke
+          widths are floored so tight crops keep the lines visible. */}
       <path
         d={countryPath}
         fill={zoomed ? "none" : "#EFE8D8"}
-        stroke={zoomed ? "#D3C8AC" : "#C9B992"}
-        strokeWidth={(zoomed ? 1.2 : 1.5) * unit}
+        stroke="#C9B992"
+        strokeWidth={Math.max((zoomed ? 1.2 : 1.5) * unit, 0.55)}
       />
 
       <g clipPath="url(#circuit-map-clip)">
@@ -130,9 +132,21 @@ export function CircuitMap({
           d={proj.pathFor("victoria")}
           fill={zoomed ? "none" : "#D7E3E8"}
           stroke={zoomed ? "#C6D6DD" : "#B9CBD4"}
-          strokeWidth={1 * unit}
+          strokeWidth={Math.max(1 * unit, 0.45)}
         />
       </g>
+
+      {zoomed &&
+        REGION_SHAPES.map((r) => (
+          <path
+            key={r.key}
+            d={proj.pathFor(r.key)}
+            fill="none"
+            stroke="#D8CCB2"
+            strokeWidth={Math.max(1 * unit, 0.45)}
+            strokeDasharray={`${Math.max(3.2 * unit, 1.6)} ${Math.max(2.4 * unit, 1.3)}`}
+          />
+        ))}
 
       {PARK_SHAPES.filter((s) => s.kind === "context").map((s) => {
         const isActive = activeKeys.has(s.key);
@@ -142,7 +156,7 @@ export function CircuitMap({
             d={proj.pathFor(s.key)}
             fill={zoomed ? "none" : isActive ? "#F6E3A6" : "#E4DCC9"}
             stroke={zoomed ? (isActive ? "#B68D40" : "#D6CBB0") : isActive ? "#B68D40" : "#CFC4A9"}
-            strokeWidth={(isActive ? 2 : 1.2) * unit}
+            strokeWidth={Math.max((isActive ? 2 : 1.2) * unit, isActive ? 0.6 : 0.45)}
             className="transition-all duration-300"
           />
         );
@@ -158,7 +172,7 @@ export function CircuitMap({
             d={d}
             fill={zoomed ? "none" : isActive ? "#F6E3A6" : "#E9E1CF"}
             stroke={isActive ? "#B68D40" : "#D6CBB0"}
-            strokeWidth={(isActive ? 2 : 1.2) * unit}
+            strokeWidth={Math.max((isActive ? 2 : 1.2) * unit, isActive ? 0.6 : 0.45)}
             className="transition-all duration-300"
           />
         );

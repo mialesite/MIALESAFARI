@@ -152,49 +152,51 @@ export const ContactSection = () => {
               {t("ct.body")}
             </p>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <a href="tel:+255769333331" className="rounded-2xl bg-white border border-muted p-5 flex items-center gap-4 group hover:border-secondary/50 transition-colors">
-                <div className="w-11 h-11 rounded-xl bg-safari-white border border-muted flex items-center justify-center text-secondary group-hover:bg-primary group-hover:text-white group-hover:border-primary transition-all duration-500 shrink-0">
-                  <Phone className="w-5 h-5" />
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
+              <a href="tel:+255769333331" className="group rounded-2xl bg-white border border-muted/70 p-5 flex items-start gap-4 hover:border-secondary/60 hover:shadow-lg hover:shadow-secondary/10 hover:-translate-y-0.5 transition-all duration-500">
+                <div className="w-11 h-11 rounded-full bg-secondary/10 ring-1 ring-secondary/25 flex items-center justify-center text-secondary group-hover:bg-secondary group-hover:text-white group-hover:ring-secondary transition-all duration-500 shrink-0">
+                  <Phone className="w-[18px] h-[18px]" />
                 </div>
-                <div>
+                <div className="min-w-0">
                   <h4 className="text-[9px] text-muted-foreground uppercase tracking-widest font-bold font-space mb-1">{t("ct.directLines")}</h4>
-                  <p className="text-base font-serif font-bold text-primary group-hover:text-secondary transition-colors">+255 769 333 331</p>
-                  <p className="text-xs font-serif font-bold text-secondary">
-                    <span>+44 7769 202031</span>
-                  </p>
+                  <p className="text-base font-serif font-bold text-primary leading-snug">+255 769 333 331</p>
+                  <p className="text-xs font-serif font-bold text-secondary leading-snug">+44 7769 202031</p>
                 </div>
+                <ArrowUpRight className="ml-auto w-4 h-4 text-secondary opacity-0 -translate-x-1 translate-y-1 group-hover:opacity-100 group-hover:translate-x-0 group-hover:translate-y-0 transition-all duration-500" />
               </a>
 
-              <a href={WHATSAPP_HREF} target="_blank" rel="noopener noreferrer" className="rounded-2xl bg-white border border-muted p-5 flex items-center gap-4 group hover:border-secondary/50 transition-colors">
-                <div className="w-11 h-11 rounded-xl bg-safari-white border border-muted flex items-center justify-center text-secondary group-hover:bg-primary group-hover:text-white group-hover:border-primary transition-all duration-500 shrink-0">
-                  <MessageCircle className="w-5 h-5" />
+              <a href={WHATSAPP_HREF} target="_blank" rel="noopener noreferrer" className="group rounded-2xl bg-white border border-muted/70 p-5 flex items-start gap-4 hover:border-secondary/60 hover:shadow-lg hover:shadow-secondary/10 hover:-translate-y-0.5 transition-all duration-500">
+                <div className="w-11 h-11 rounded-full bg-secondary/10 ring-1 ring-secondary/25 flex items-center justify-center text-secondary group-hover:bg-secondary group-hover:text-white group-hover:ring-secondary transition-all duration-500 shrink-0">
+                  <MessageCircle className="w-[18px] h-[18px]" />
                 </div>
-                <div>
+                <div className="min-w-0">
                   <h4 className="text-[9px] text-muted-foreground uppercase tracking-widest font-bold font-space mb-1">{t("ct.whatsapp")}</h4>
-                  <p className="text-base font-serif font-bold text-primary group-hover:text-secondary transition-colors">+255 769 333 331</p>
+                  <p className="text-base font-serif font-bold text-primary leading-snug">+255 769 333 331</p>
                 </div>
+                <ArrowUpRight className="ml-auto w-4 h-4 text-secondary opacity-0 -translate-x-1 translate-y-1 group-hover:opacity-100 group-hover:translate-x-0 group-hover:translate-y-0 transition-all duration-500" />
               </a>
 
-              <a href="mailto:info@mialesafari.com" className="rounded-2xl bg-white border border-muted p-5 flex items-center gap-4 group hover:border-secondary/50 transition-colors">
-                <div className="w-11 h-11 rounded-xl bg-safari-white border border-muted flex items-center justify-center text-secondary group-hover:bg-primary group-hover:text-white group-hover:border-primary transition-all duration-500 shrink-0">
-                  <Mail className="w-5 h-5" />
+              <a href="mailto:info@mialesafari.com" className="group rounded-2xl bg-white border border-muted/70 p-5 flex items-start gap-4 hover:border-secondary/60 hover:shadow-lg hover:shadow-secondary/10 hover:-translate-y-0.5 transition-all duration-500">
+                <div className="w-11 h-11 rounded-full bg-secondary/10 ring-1 ring-secondary/25 flex items-center justify-center text-secondary group-hover:bg-secondary group-hover:text-white group-hover:ring-secondary transition-all duration-500 shrink-0">
+                  <Mail className="w-[18px] h-[18px]" />
                 </div>
-                <div>
+                <div className="min-w-0">
                   <h4 className="text-[9px] text-muted-foreground uppercase tracking-widest font-bold font-space mb-1">{t("ct.emailInquiries")}</h4>
-                  <p className="text-base font-serif font-bold text-primary group-hover:text-secondary transition-colors break-all">info@mialesafari.com</p>
+                  <p className="text-base font-serif font-bold text-primary group-hover:text-secondary transition-colors break-all leading-snug">info@mialesafari.com</p>
                 </div>
+                <ArrowUpRight className="ml-auto w-4 h-4 text-secondary opacity-0 -translate-x-1 translate-y-1 group-hover:opacity-100 group-hover:translate-x-0 group-hover:translate-y-0 transition-all duration-500 shrink-0" />
               </a>
 
-              <div className="rounded-2xl bg-white border border-muted p-5 flex items-center gap-4">
-                <div className="w-11 h-11 rounded-xl bg-safari-white border border-muted flex items-center justify-center text-secondary shrink-0">
-                  <MapPin className="w-5 h-5" />
+              <a href={MAPS_DIRECTIONS_HREF} target="_blank" rel="noopener noreferrer" className="group rounded-2xl bg-white border border-muted/70 p-5 flex items-start gap-4 hover:border-secondary/60 hover:shadow-lg hover:shadow-secondary/10 hover:-translate-y-0.5 transition-all duration-500">
+                <div className="w-11 h-11 rounded-full bg-secondary/10 ring-1 ring-secondary/25 flex items-center justify-center text-secondary group-hover:bg-secondary group-hover:text-white group-hover:ring-secondary transition-all duration-500 shrink-0">
+                  <MapPin className="w-[18px] h-[18px]" />
                 </div>
-                <div>
+                <div className="min-w-0">
                   <h4 className="text-[9px] text-muted-foreground uppercase tracking-widest font-bold font-space mb-1">{t("ct.arushaBase")}</h4>
-                  <p className="text-base font-serif font-bold text-primary">Sombetini JR, Arusha</p>
+                  <p className="text-base font-serif font-bold text-primary leading-snug">Sombetini JR, Arusha</p>
                 </div>
-              </div>
+                <ArrowUpRight className="ml-auto w-4 h-4 text-secondary opacity-0 -translate-x-1 translate-y-1 group-hover:opacity-100 group-hover:translate-x-0 group-hover:translate-y-0 transition-all duration-500" />
+              </a>
             </div>
           </motion.div>
 
@@ -204,13 +206,12 @@ export const ContactSection = () => {
             viewport={{ once: true }}
             transition={{ duration: 0.8 }}
           >
-            <div className="bg-white p-6 md:p-10 rounded-[2rem] md:rounded-[3rem] border border-muted shadow-2xl relative overflow-hidden">
-              <div className="absolute top-0 right-0 w-24 h-24 md:w-32 md:h-32 bg-secondary/5 blur-[40px] md:blur-[50px] rounded-full" />
-
-              <h3 className="text-xl md:text-2xl font-bold font-serif mb-6 md:mb-8 flex items-center gap-3">
-                <MessageSquare className="w-5 h-5 md:w-6 md:h-6 text-secondary" />
-                {t("ct.formTitle")}
-              </h3>
+            <div className="bg-white p-6 md:p-10 rounded-[2rem] md:rounded-[3rem] border border-muted/70 shadow-2xl shadow-primary/5 relative overflow-hidden">
+              <div className="flex items-center gap-3 mb-6 md:mb-8">
+                <MessageSquare className="w-5 h-5 md:w-6 md:h-6 text-secondary shrink-0" />
+                <h3 className="text-xl md:text-2xl font-bold font-serif whitespace-nowrap">{t("ct.formTitle")}</h3>
+                <span className="flex-1 h-px bg-gradient-to-r from-secondary/40 to-transparent ml-1" aria-hidden="true" />
+              </div>
 
               {submitted ? (
                 <motion.div
@@ -277,11 +278,11 @@ export const ContactSection = () => {
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
                     <div className="space-y-2">
                       <label className="text-[9px] md:text-[10px] uppercase tracking-widest font-bold text-muted-foreground px-1 font-space">{t("ct.fullName")}</label>
-                      <Input name="fullName" required placeholder={t("ct.namePlaceholder")} className="bg-muted/30 border-muted h-11 md:h-12 rounded-xl focus:ring-secondary" />
+                      <Input name="fullName" required placeholder={t("ct.namePlaceholder")} className="bg-muted/40 border-muted/80 hover:border-secondary/50 h-11 md:h-12 rounded-xl focus:ring-secondary focus:border-secondary transition-colors" />
                     </div>
                     <div className="space-y-2">
                       <label className="text-[9px] md:text-[10px] uppercase tracking-widest font-bold text-muted-foreground px-1 font-space">{t("ct.emailAddress")}</label>
-                      <Input name="email" required placeholder="you@example.com" type="email" className="bg-muted/30 border-muted h-11 md:h-12 rounded-xl focus:ring-secondary" />
+                      <Input name="email" required placeholder="you@example.com" type="email" className="bg-muted/40 border-muted/80 hover:border-secondary/50 h-11 md:h-12 rounded-xl focus:ring-secondary focus:border-secondary transition-colors" />
                     </div>
                   </div>
 
@@ -291,7 +292,7 @@ export const ContactSection = () => {
                       <div className="relative">
                         <select
                           name="travelWindow"
-                          className="w-full h-11 md:h-12 rounded-xl border border-muted bg-muted/30 pl-3 pr-10 text-sm appearance-none focus:ring-secondary focus:outline-none"
+                          className="w-full h-11 md:h-12 rounded-xl border border-muted/80 bg-muted/40 hover:border-secondary/50 pl-3 pr-10 text-sm appearance-none focus:ring-secondary focus:border-secondary focus:outline-none transition-colors"
                         >
                           <option value="">{t("ct.chooseMonth")}</option>
                           {monthOptions.map((m) => (
@@ -306,7 +307,7 @@ export const ContactSection = () => {
                       <div className="relative">
                         <select
                           name="partySize"
-                          className="w-full h-11 md:h-12 rounded-xl border border-muted bg-muted/30 pl-3 pr-10 text-sm appearance-none focus:ring-secondary focus:outline-none"
+                          className="w-full h-11 md:h-12 rounded-xl border border-muted/80 bg-muted/40 hover:border-secondary/50 pl-3 pr-10 text-sm appearance-none focus:ring-secondary focus:border-secondary focus:outline-none transition-colors"
                         >
                           <option value="">{t("ct.howMany")}</option>
                           <option value="1 traveller">{t("ct.party1")}</option>
@@ -322,18 +323,18 @@ export const ContactSection = () => {
 
                   <div className="space-y-2">
                     <label className="text-[9px] md:text-[10px] uppercase tracking-widest font-bold text-muted-foreground px-1 font-space">{t("ct.phone")}</label>
-                    <Input name="phone" placeholder="+255 7XX XXX XXX" className="bg-muted/30 border-muted h-11 md:h-12 rounded-xl focus:ring-secondary" />
+                    <Input name="phone" placeholder="+255 7XX XXX XXX" className="bg-muted/40 border-muted/80 hover:border-secondary/50 h-11 md:h-12 rounded-xl focus:ring-secondary focus:border-secondary transition-colors" />
                   </div>
 
                   <div className="space-y-2">
                     <label className="text-[9px] md:text-[10px] uppercase tracking-widest font-bold text-muted-foreground px-1 font-space">{t("ct.inquiry")}</label>
-                    <Textarea name="message" required placeholder={t("ct.inquiryPlaceholder")} className="bg-muted/30 border-muted min-h-[120px] md:min-h-[150px] rounded-xl focus:ring-secondary" />
+                    <Textarea name="message" required placeholder={t("ct.inquiryPlaceholder")} className="bg-muted/40 border-muted/80 hover:border-secondary/50 min-h-[120px] md:min-h-[150px] rounded-xl focus:ring-secondary focus:border-secondary transition-colors" />
                   </div>
 
                   <Button
                     disabled={loading}
                     type="submit"
-                    className="w-full bg-primary text-white hover:bg-primary/90 h-12 md:h-14 rounded-full font-bold text-[10px] md:text-xs uppercase tracking-widest shadow-xl shadow-primary/15 group font-space mt-2"
+                    className="w-full bg-secondary text-white hover:bg-primary h-12 md:h-14 rounded-full font-bold text-[10px] md:text-xs uppercase tracking-widest shadow-xl shadow-secondary/25 group font-space mt-2 transition-colors duration-500"
                   >
                     {loading ? (
                       <Loader2 className="w-5 h-5 animate-spin" />

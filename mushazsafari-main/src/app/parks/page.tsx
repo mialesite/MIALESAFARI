@@ -130,9 +130,13 @@ export default function ParksPage() {
             </motion.div>
             <HeroFigure assetRef="elephant-family-crossing" caption="Elephant family · Tarangire" className="lg:col-span-5" />
           </div>
+        </div>
+      </section>
 
-          <TanzaniaParksMap destinations={(parks as any[]).map((p) => ({ id: p.id, name: p.name }))} />
+      <TanzaniaParksMap destinations={(parks as any[]).map((p) => ({ id: p.id, name: p.name }))} />
 
+      <section className="pb-16 md:pb-24 px-6 md:px-12 lg:px-24">
+        <div className="max-w-[1400px] mx-auto">
           {loading ? (
             <div className="py-40 flex flex-col items-center justify-center gap-4 text-muted-foreground">
               <Loader2 className="w-10 h-10 animate-spin text-secondary" />
@@ -172,11 +176,21 @@ export default function ParksPage() {
                     </span>
                   </div>
 
-                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                    {group.items.map((park: any, i) => (
-                      <ParkCard key={park.id} park={park} index={i} />
-                    ))}
-                  </div>
+                  {(() => {
+                    const n = group.items.length;
+                    const cols = n === 1
+                      ? "grid-cols-1 max-w-md mx-auto"
+                      : n === 2 || n === 4
+                        ? "grid-cols-1 md:grid-cols-2"
+                        : "grid-cols-1 md:grid-cols-2 lg:grid-cols-3";
+                    return (
+                      <div className={`grid gap-8 ${cols}`}>
+                        {group.items.map((park: any, i) => (
+                          <ParkCard key={park.id} park={park} index={i} />
+                        ))}
+                      </div>
+                    );
+                  })()}
                 </div>
               ))}
             </div>

@@ -6,6 +6,9 @@
  */
 
 import { PARK_SHAPES, type ParkShape } from "./parks-geo";
+import { REGION_SHAPES } from "./regions-geo";
+
+const ALL_SHAPES: ParkShape[] = [...PARK_SHAPES, ...REGION_SHAPES];
 
 export type GeoPoint = [number, number];
 
@@ -103,18 +106,18 @@ export function buildParksProjection(viewW = 760, pad = 18): ParksProjection {
     VW: proj.VW,
     VH: proj.VH,
     shape(key) {
-      return PARK_SHAPES.find((x) => x.key === key);
+      return ALL_SHAPES.find((x) => x.key === key);
     },
     pathFor(key) {
       const cached = pathCache.get(key);
       if (cached) return cached;
-      const sh = PARK_SHAPES.find((x) => x.key === key);
+      const sh = ALL_SHAPES.find((x) => x.key === key);
       const d = sh ? proj.shape(sh.rings) : "";
       pathCache.set(key, d);
       return d;
     },
     centroidFor(key) {
-      const sh = PARK_SHAPES.find((x) => x.key === key);
+      const sh = ALL_SHAPES.find((x) => x.key === key);
       if (!sh || sh.rings.length === 0) return [0, 0];
       return proj.centroid(sh.rings[0]);
     },

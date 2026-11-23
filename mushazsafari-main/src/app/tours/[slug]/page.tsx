@@ -54,16 +54,16 @@ export default function TourDetailPage(props: { params: Promise<{ slug: string }
       <Navbar />
       
       {/* Hero Header */}
-      <section className="relative h-[70vh] w-full overflow-hidden">
-        <Image 
-          src={mediaFor(tour.featuredImage).src} 
-          alt={tour.title} 
-          fill 
-          className="object-cover brightness-75"
+      <section className="relative h-[70vh] min-h-[540px] w-full overflow-hidden">
+        <Image
+          src={mediaFor(tour.featuredImage).src}
+          alt={tour.title}
+          fill
+          className="object-cover"
           sizes="100vw"
           priority
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-safari-white via-transparent to-black/20" />
+        <div className="absolute inset-0 bg-gradient-to-t from-safari-white via-safari-white/40 via-40% to-black/15" />
         <div className="absolute bottom-0 left-0 right-0 p-6 md:p-12 lg:p-24">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -77,7 +77,7 @@ export default function TourDetailPage(props: { params: Promise<{ slug: string }
             <h1 className="text-5xl md:text-8xl font-serif text-primary leading-none tracking-tighter mb-6">
               {tour.title}
             </h1>
-            <div className="flex flex-wrap items-center gap-8 text-primary/60 font-space font-bold uppercase tracking-widest text-[10px]">
+            <div className="flex flex-wrap items-center gap-x-8 gap-y-2 text-primary/70 font-space font-bold uppercase tracking-widest text-[10px]">
               <div className="flex items-center gap-2">
                 <Clock className="w-4 h-4 text-secondary" />
                 <span>{tour.duration}</span>
@@ -104,7 +104,7 @@ export default function TourDetailPage(props: { params: Promise<{ slug: string }
           {tour.overview && (
             <section>
               <h2 className="text-3xl font-serif text-primary mb-6">Expedition <span className="italic">Overview</span></h2>
-              <div className="text-lg text-muted-foreground font-light leading-relaxed p-8 bg-white rounded-3xl border border-muted/30 whitespace-pre-wrap">
+              <div className="text-lg text-muted-foreground font-light leading-relaxed p-8 bg-white rounded-[2rem] border border-muted/40 whitespace-pre-wrap">
                 {tour.overview}
               </div>
             </section>
@@ -116,8 +116,8 @@ export default function TourDetailPage(props: { params: Promise<{ slug: string }
               <h2 className="text-3xl font-serif text-primary mb-10">Expedition <span className="italic">Highlights</span></h2>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 {tour.highlights.map((h: string, i: number) => (
-                  <div key={i} className="flex gap-4 p-6 bg-white rounded-3xl border border-muted/30">
-                    <CheckCircle2 className="w-6 h-6 text-secondary shrink-0" />
+                  <div key={i} className={`flex gap-4 items-start p-6 bg-white rounded-[2rem] border border-muted/40 ${tour.highlights.length % 2 === 1 && i === tour.highlights.length - 1 ? "md:col-span-2" : ""}`}>
+                    <CheckCircle2 className="w-6 h-6 text-secondary shrink-0 mt-0.5" />
                     <p className="text-sm font-light text-muted-foreground leading-relaxed">{h}</p>
                   </div>
                 ))}
@@ -132,7 +132,7 @@ export default function TourDetailPage(props: { params: Promise<{ slug: string }
               <div className="space-y-12">
                 {tour.plan.map((item: any, i: number) => (
                   <div key={i} className="relative pl-16">
-                    <div className="absolute left-0 top-0 w-10 h-10 rounded-full bg-primary text-white flex items-center justify-center font-space font-bold text-xs">
+                    <div className="absolute left-0 top-0 min-w-[2.5rem] h-10 px-2 rounded-full bg-primary text-white flex items-center justify-center font-space font-bold text-[11px]">
                       {item.day || i + 1}
                     </div>
                     {i < tour.plan.length - 1 && (
@@ -147,30 +147,36 @@ export default function TourDetailPage(props: { params: Promise<{ slug: string }
           )}
 
           {/* Fine Print */}
-          <section className="grid grid-cols-1 md:grid-cols-2 gap-12 pt-12 border-t border-muted">
-            <div>
-              <h4 className="text-[10px] font-space font-bold uppercase tracking-[0.3em] text-secondary mb-6">What's Included</h4>
-              <ul className="space-y-3">
-                {(tour.inclusions || ['Professional Guide', 'Park Fees', 'Refined Stays']).map((item: string, i: number) => (
-                  <li key={i} className="text-xs font-light text-muted-foreground flex items-center gap-3">
-                    <div className="w-1 h-1 rounded-full bg-secondary" />
-                    {item}
-                  </li>
-                ))}
-              </ul>
-            </div>
-            <div>
-              <h4 className="text-[10px] font-space font-bold uppercase tracking-[0.3em] text-muted-foreground mb-6">Exclusions</h4>
-              <ul className="space-y-3">
-                {(tour.exclusions || ['International Flights', 'Travel Insurance', 'Premium Alcohol']).map((item: string, i: number) => (
-                  <li key={i} className="text-xs font-light text-muted-foreground/60 flex items-center gap-3 italic">
-                    <div className="w-1 h-1 rounded-full bg-muted" />
-                    {item}
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </section>
+          {((tour.inclusions && tour.inclusions.length > 0) || (tour.exclusions && tour.exclusions.length > 0)) && (
+            <section className="grid grid-cols-1 md:grid-cols-2 gap-12 pt-12 border-t border-muted">
+              {tour.inclusions && tour.inclusions.length > 0 && (
+                <div>
+                  <h4 className="text-[10px] font-space font-bold uppercase tracking-[0.3em] text-secondary mb-6">What's Included</h4>
+                  <ul className="space-y-3">
+                    {tour.inclusions.map((item: string, i: number) => (
+                      <li key={i} className="text-xs font-light text-muted-foreground flex items-center gap-3">
+                        <div className="w-1 h-1 rounded-full bg-secondary" />
+                        {item}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+              {tour.exclusions && tour.exclusions.length > 0 && (
+                <div>
+                  <h4 className="text-[10px] font-space font-bold uppercase tracking-[0.3em] text-muted-foreground mb-6">Exclusions</h4>
+                  <ul className="space-y-3">
+                    {tour.exclusions.map((item: string, i: number) => (
+                      <li key={i} className="text-xs font-light text-muted-foreground/60 flex items-center gap-3 italic">
+                        <div className="w-1 h-1 rounded-full bg-muted" />
+                        {item}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+            </section>
+          )}
         </div>
 
         {/* Sidebar / CTA */}

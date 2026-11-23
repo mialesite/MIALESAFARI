@@ -163,9 +163,9 @@ export function MigrationMap({
       <g clipPath="url(#migration-frame)">
         <path d={geo.victoria} fill="#93B3D3" stroke="#6E93B8" strokeWidth="1.5" />
 
-        <path d={geo.serengeti} fill="#D8E4CB" stroke="#7E9A78" strokeWidth="1.6" />
-        <path d={geo.ngorongoro} fill="#E2EAD5" stroke="#8FA98C" strokeWidth="1.6" />
-        <path d={geo.maraReserve} fill="#E9DCB4" stroke="#B79E62" strokeWidth="1.6" />
+        <path d={geo.serengeti} fill="#CFDFBF" stroke="#6F8B6B" strokeWidth="1.8" />
+        <path d={geo.ngorongoro} fill="#DBE4C8" stroke="#879F84" strokeWidth="1.8" />
+        <path d={geo.maraReserve} fill="#E6D3A0" stroke="#A98F55" strokeWidth="1.8" />
 
         <path
           d={geo.border}
@@ -191,8 +191,9 @@ export function MigrationMap({
         />
         <circle cx={geo.crater.x} cy={geo.crater.y} r={geo.crater.r * 0.4} fill="none" stroke="#8FA98C" strokeWidth="1.2" />
 
-        <path d={geo.homeward} fill="none" stroke="#A8A190" strokeWidth="2.5" strokeDasharray="8 6" strokeLinecap="round" opacity="0.8" />
-        <path d={geo.northbound} fill="none" stroke="#B68D40" strokeWidth="3.5" strokeLinecap="round" strokeLinejoin="round" />
+        <path d={geo.homeward} fill="none" stroke="#A8A190" strokeWidth="2.8" strokeDasharray="7 6" strokeLinecap="round" opacity="0.9" />
+        <path d={geo.northbound} fill="none" stroke="#F6F0E1" strokeWidth="8" strokeLinecap="round" strokeLinejoin="round" opacity="0.9" />
+        <path d={geo.northbound} fill="none" stroke="#B68D40" strokeWidth="4.2" strokeLinecap="round" strokeLinejoin="round" />
 
         {geo.crossings.map((c) => (
           <CrossingIcon key={c.key} x={c.x} y={c.y} />
@@ -246,12 +247,12 @@ export function MigrationMap({
             >
               <circle cx={x} cy={y} r="24" fill="transparent" />
               {active && (
-                <circle cx={x} cy={y} r="16" fill="none" stroke={colour} strokeWidth="3.5" opacity="0.35" />
+                <circle cx={x} cy={y} r="18" fill="none" stroke={colour} strokeWidth="3" opacity="0.4" />
               )}
               <circle
                 cx={x}
                 cy={y}
-                r={active ? 10.5 : 8.5}
+                r={active ? 11.5 : 9}
                 fill={active ? colour : "#F6F0E1"}
                 stroke={active ? "#57503F" : colour}
                 strokeWidth={active ? 1.4 : 2.6}

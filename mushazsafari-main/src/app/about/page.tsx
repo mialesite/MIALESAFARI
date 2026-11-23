@@ -152,8 +152,8 @@ export default function AboutPage() {
           sizes="100vw"
           className="object-cover object-center"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-primary via-primary/60 to-primary/20" />
-        <div className="absolute inset-0 bg-gradient-to-r from-primary/70 via-primary/20 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-t from-primary via-primary/55 to-primary/10" />
+        <div className="absolute inset-0 bg-gradient-to-r from-primary/60 via-primary/15 to-transparent" />
 
         <div className="relative z-10 max-w-[1400px] mx-auto px-6 md:px-12 lg:px-24 pb-16 md:pb-24 pt-40 w-full">
           <span className="text-secondary font-space font-bold uppercase tracking-[0.4em] text-[10px] md:text-xs block mb-5">
@@ -246,23 +246,40 @@ export default function AboutPage() {
           </Reveal>
 
           <Reveal delay={0.15} className="h-full flex flex-col gap-5">
-            <div className="flex-1 rounded-[2rem] bg-white border border-muted p-8 md:p-10 space-y-3 flex flex-col justify-center">
-              <p className="text-[9px] font-space font-bold uppercase tracking-[0.3em] text-secondary">Focus</p>
-              <p className="font-serif text-2xl md:text-3xl font-bold text-primary tracking-tight">One country</p>
-              <p className="text-sm md:text-base text-muted-foreground font-light leading-relaxed">
-                North, south, peaks and coast. Tanzania only.
-              </p>
-            </div>
-            <div className="flex-1 rounded-[2rem] bg-primary p-8 md:p-10 text-white space-y-3 flex flex-col justify-center">
-              <p className="text-[9px] font-space font-bold uppercase tracking-[0.3em] text-secondary">Reach</p>
-              <p className="font-serif text-2xl md:text-3xl font-bold tracking-tight">Email the desk</p>
-              <p className="text-sm md:text-base text-white/60 font-light leading-relaxed">
-                <a href="mailto:info@mialesafari.com" className="underline underline-offset-4 hover:text-secondary">
-                  info@mialesafari.com
-                </a>
-                , answered from Arusha.
-              </p>
-            </div>
+            <Link
+              href="/destinations"
+              className="group flex-1 rounded-[2rem] bg-white border border-muted p-8 md:p-10 space-y-4 flex flex-col justify-center transition-all duration-500 hover:border-secondary/60 hover:shadow-lg hover:shadow-secondary/10 hover:-translate-y-0.5"
+            >
+              <span className="w-11 h-11 rounded-full bg-secondary/10 ring-1 ring-secondary/25 flex items-center justify-center text-secondary transition-colors duration-500 group-hover:bg-secondary group-hover:text-white">
+                <Compass className="w-5 h-5" />
+              </span>
+              <div className="space-y-3">
+                <p className="text-[9px] font-space font-bold uppercase tracking-[0.3em] text-secondary">Focus</p>
+                <p className="font-serif text-2xl md:text-3xl font-bold text-primary tracking-tight">One country</p>
+                <p className="text-sm md:text-base text-muted-foreground font-light leading-relaxed">
+                  North, south, peaks and coast. Tanzania only.
+                </p>
+              </div>
+              <span className="flex items-center gap-1.5 text-[9px] font-space font-bold uppercase tracking-[0.3em] text-secondary">
+                Explore <ArrowRight className="w-3.5 h-3.5 transition-transform duration-300 group-hover:translate-x-1" />
+              </span>
+            </Link>
+            <a
+              href="mailto:info@mialesafari.com"
+              className="group flex-1 rounded-[2rem] bg-primary p-8 md:p-10 text-white space-y-4 flex flex-col justify-center transition-all duration-500 hover:shadow-xl hover:shadow-primary/25 hover:-translate-y-0.5"
+            >
+              <span className="w-11 h-11 rounded-full bg-white/10 ring-1 ring-secondary/30 flex items-center justify-center text-secondary transition-colors duration-500 group-hover:bg-secondary group-hover:text-white">
+                <Mail className="w-5 h-5" />
+              </span>
+              <div className="space-y-3">
+                <p className="text-[9px] font-space font-bold uppercase tracking-[0.3em] text-secondary">Reach</p>
+                <p className="font-serif text-2xl md:text-3xl font-bold tracking-tight">Email the desk</p>
+                <p className="text-sm md:text-base text-white/60 font-light leading-relaxed">
+                  <span className="underline underline-offset-4 transition-colors group-hover:text-secondary">info@mialesafari.com</span>
+                  , answered from Arusha.
+                </p>
+              </div>
+            </a>
           </Reveal>
         </div>
 
@@ -305,9 +322,9 @@ export default function AboutPage() {
 
           <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
             {VALUES.map((value, i) => (
-              <Reveal key={value.title} delay={i * 0.08} className="h-full">
-                <div className="h-full rounded-[1.75rem] border border-white/10 bg-white/[0.04] p-6 md:p-7 flex flex-col">
-                  <span className="w-11 h-11 rounded-full border border-secondary/40 flex items-center justify-center text-secondary shrink-0">
+              <Reveal key={value.title} delay={i * 0.08} className="h-full group">
+                <div className="h-full rounded-[1.75rem] border border-white/10 bg-white/[0.04] p-6 md:p-7 flex flex-col transition-all duration-500 hover:bg-white/[0.07] hover:border-secondary/30">
+                  <span className="w-11 h-11 rounded-full border border-secondary/40 flex items-center justify-center text-secondary shrink-0 transition-colors duration-500 group-hover:bg-secondary group-hover:border-secondary group-hover:text-white">
                     <value.icon className="w-5 h-5" />
                   </span>
                   <h3 className="mt-5 font-serif text-lg md:text-xl text-white leading-snug">{value.title}</h3>
@@ -397,7 +414,7 @@ export default function AboutPage() {
             {STEPS.map((step, i) => (
               <Reveal key={step.n} delay={i * 0.07}>
                 <div className="flex gap-6 md:gap-8 items-start border-b border-muted pb-5">
-                  <span className="font-serif text-3xl md:text-4xl font-light text-muted-foreground/40 leading-none shrink-0 w-12">
+                  <span className="font-serif text-3xl md:text-4xl font-light text-secondary/60 leading-none shrink-0 w-12">
                     {step.n}
                   </span>
                   <div>

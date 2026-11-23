@@ -23,6 +23,8 @@ import {
   ArrowRight, 
   ArrowLeft,
   CheckCircle2,
+  Check,
+  Globe,
   Loader2,
   DollarSign,
   ChevronDown,
@@ -42,11 +44,13 @@ interface BookingDialogProps {
 }
 
 const STEPS = [
-  { id: 1, icon: CalendarIcon },
-  { id: 2, icon: Users },
-  { id: 3, icon: Crown },
-  { id: 4, icon: Sparkles },
+  { id: 1, icon: CalendarIcon, label: "bk.step1" },
+  { id: 2, icon: Users, label: "bk.step2" },
+  { id: 3, icon: Crown, label: "bk.step3" },
+  { id: 4, icon: Sparkles, label: "bk.step4" },
 ];
+
+const fieldCls = "h-12 rounded-xl bg-muted/40 border-muted/80 hover:border-secondary/50 focus-visible:ring-secondary focus-visible:border-secondary transition-colors";
 
 const COUNTRIES = [
   { name: "Afghanistan", flag: "🇦🇫" }, { name: "Albania", flag: "🇦🇱" }, { name: "Algeria", flag: "🇩🇿" }, { name: "Andorra", flag: "🇦🇩" },
@@ -190,6 +194,12 @@ export const BookingDialog = ({ children }: BookingDialogProps) => {
 
   const travellerCount = () => (parseInt(formData.adults) || 0) + (parseInt(formData.children) || 0);
 
+  const fmtDate = (iso: string) => (
+    new Date(`${iso}T00:00:00`).toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "numeric" })
+  );
+
+  const tierLabel = (tier: string) => t(`bk.tier${tier.charAt(0).toUpperCase()}${tier.slice(1)}`);
+
   const filteredCountries = COUNTRIES.filter(c => c.name.toLowerCase().includes(nationalitySearch.toLowerCase()));
 
   return (
@@ -208,17 +218,32 @@ export const BookingDialog = ({ children }: BookingDialogProps) => {
                 <DialogTitle className="text-3xl md:text-4xl font-serif text-primary">{t("bk.title")} <span className="italic">{t("bk.titleAccent")}</span></DialogTitle>
               </DialogHeader>
 
-              <div className="flex justify-between items-center mb-10 relative px-4 shrink-0">
-                <div className="absolute top-1/2 left-0 right-0 h-px bg-muted -z-0" />
-                {STEPS.map((s) => (
-                  <div key={s.id} className="relative z-10 flex flex-col items-center gap-2">
-                    <div className={cn(
-                      "w-8 h-8 md:w-10 md:h-10 rounded-full flex items-center justify-center transition-all duration-500 border-2",
-                      step >= s.id ? "bg-primary border-primary text-white" : "bg-white border-muted text-muted-foreground"
-                    )}>
-                      <s.icon className="w-4 h-4 md:w-5 md:h-5" />
+              <div className="flex items-start mb-8 shrink-0">
+                {STEPS.map((s, i) => (
+                  <React.Fragment key={s.id}>
+                    <div className="flex flex-col items-center gap-2 shrink-0">
+                      <div className={cn(
+                        "w-9 h-9 md:w-10 md:h-10 rounded-full flex items-center justify-center transition-all duration-500 border-2",
+                        step > s.id ? "bg-primary border-primary text-white"
+                        : step === s.id ? "bg-secondary border-secondary text-white shadow-lg shadow-secondary/30"
+                        : "bg-white border-muted text-muted-foreground"
+                      )}>
+                        {step > s.id ? <Check className="w-4 h-4 md:w-5 md:h-5" /> : <s.icon className="w-4 h-4 md:w-5 md:h-5" />}
+                      </div>
+                      <span className={cn(
+                        "hidden md:block text-[9px] font-space font-bold uppercase tracking-[0.2em] transition-colors whitespace-nowrap",
+                        step === s.id ? "text-secondary" : step > s.id ? "text-primary" : "text-muted-foreground/60"
+                      )}>
+                        {t(s.label)}
+                      </span>
                     </div>
-                  </div>
+                    {i < STEPS.length - 1 && (
+                      <div className={cn(
+                        "flex-1 h-px mx-2 md:mx-3 self-start mt-[18px] md:mt-[20px] transition-colors duration-500",
+                        step > s.id ? "bg-primary/60" : "bg-muted"
+                      )} />
+                    )}
+                  </React.Fragment>
                 ))}
               </div>
 
@@ -230,11 +255,11 @@ export const BookingDialog = ({ children }: BookingDialogProps) => {
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                           <div className="space-y-2">
                             <Label className="text-[10px] uppercase tracking-widest font-bold text-muted-foreground">{t("bk.startDate")}</Label>
-                            <Input type="date" min={today} className="h-12 rounded-xl border-muted" value={formData.startDate} onChange={e => setFormData(p => ({...p, startDate: e.target.value}))} />
+                            <Input type="date" min={today} className={fieldCls} value={formData.startDate} onChange={e => setFormData(p => ({...p, startDate: e.target.value}))} />
                           </div>
                           <div className="space-y-2">
                             <Label className="text-[10px] uppercase tracking-widest font-bold text-muted-foreground">{t("bk.departure")}</Label>
-                            <Input type="date" min={formData.startDate || today} className="h-12 rounded-xl border-muted" value={formData.endDate} onChange={e => setFormData(p => ({...p, endDate: e.target.value}))} />
+                            <Input type="date" min={formData.startDate || today} className={fieldCls} value={formData.endDate} onChange={e => setFormData(p => ({...p, endDate: e.target.value}))} />
                           </div>
                         </div>
                       )}
@@ -243,18 +268,23 @@ export const BookingDialog = ({ children }: BookingDialogProps) => {
                           <div className="space-y-2 relative" ref={countryRef}>
                             <Label className="text-[10px] uppercase tracking-widest font-bold text-muted-foreground">{t("bk.nationality")}</Label>
                             <div className="relative">
-                              <Button 
+                              <button 
                                 type="button"
-                                variant="outline" 
                                 onClick={() => setNationalityOpen(!nationalityOpen)}
-                                className="w-full justify-between h-12 rounded-xl border-muted bg-white/50"
+                                className="w-full inline-flex items-center justify-between h-12 rounded-xl border border-muted/80 bg-muted/40 px-4 text-sm hover:border-secondary/50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-secondary transition-colors"
                               >
-                                {formData.nationality ? formData.nationality : t("bk.selectCountry")}
+                                {formData.nationality ? (
+                                  <span className="flex items-center gap-2 text-primary font-medium">
+                                    <span>{COUNTRIES.find(c => c.name === formData.nationality)?.flag}</span> {formData.nationality}
+                                  </span>
+                                ) : (
+                                  <span className="text-muted-foreground">{t("bk.selectCountry")}</span>
+                                )}
                                 <ChevronDown className={cn("w-4 h-4 opacity-50", nationalityOpen && "rotate-180")} />
-                              </Button>
+                              </button>
                               
                               {nationalityOpen && (
-                                <div className="absolute top-full left-0 right-0 z-50 mt-2 bg-white border border-muted shadow-2xl rounded-2xl overflow-hidden flex flex-col max-h-[300px]">
+                                <div className="absolute top-full left-0 right-0 z-50 mt-2 bg-white ring-1 ring-muted shadow-2xl rounded-2xl overflow-hidden flex flex-col">
                                   <div className="p-3 border-b border-muted flex items-center gap-2 bg-muted/10 shrink-0">
                                     <Search className="w-4 h-4 text-muted-foreground" />
                                     <Input
@@ -266,14 +296,17 @@ export const BookingDialog = ({ children }: BookingDialogProps) => {
                                       autoFocus
                                     />
                                   </div>
-                                  <div className="overflow-y-auto p-1 bg-white flex-1 min-h-0">
-                                    <div className="max-h-[200px]">
+                                  <div className="overflow-y-auto p-1 bg-white">
+                                    <div className="max-h-[160px]">
                                       {filteredCountries.map(c => (
                                         <button 
                                           key={c.name} 
                                           type="button" 
                                           onClick={() => { setFormData(p => ({...p, nationality: c.name})); setNationalityOpen(false); }}
-                                          className="flex w-full items-center gap-2 px-3 py-2 text-sm rounded-lg hover:bg-muted transition-colors text-left"
+                                          className={cn(
+                                            "flex w-full items-center gap-2 px-3 py-2 text-sm rounded-lg transition-colors text-left",
+                                            formData.nationality === c.name ? "bg-secondary/10 text-primary font-medium" : "hover:bg-muted"
+                                          )}
                                         >
                                           <span>{c.flag}</span> {c.name}
                                         </button>
@@ -288,11 +321,11 @@ export const BookingDialog = ({ children }: BookingDialogProps) => {
                           <div className="grid grid-cols-2 gap-4">
                             <div className="space-y-2">
                               <Label className="text-[10px] uppercase tracking-widest font-bold text-muted-foreground">{t("bk.adults")}</Label>
-                              <Input type="number" min="1" className="h-12 rounded-xl border-muted" value={formData.adults} onChange={e => setFormData(p => ({...p, adults: e.target.value}))} />
+                              <Input type="number" min="1" className={fieldCls} value={formData.adults} onChange={e => setFormData(p => ({...p, adults: e.target.value}))} />
                             </div>
                             <div className="space-y-2">
                               <Label className="text-[10px] uppercase tracking-widest font-bold text-muted-foreground">{t("bk.children")}</Label>
-                              <Input type="number" min="0" className="h-12 rounded-xl border-muted" value={formData.children} onChange={e => setFormData(p => ({...p, children: e.target.value}))} />
+                              <Input type="number" min="0" className={fieldCls} value={formData.children} onChange={e => setFormData(p => ({...p, children: e.target.value}))} />
                             </div>
                           </div>
                         </div>
@@ -300,26 +333,50 @@ export const BookingDialog = ({ children }: BookingDialogProps) => {
                       {step === 3 && (
                         <div className="space-y-6">
                           <div className="grid grid-cols-3 gap-3">
-                            {['classic', 'luxury', 'elite'].map(tier => (
-                              <button key={tier} type="button" onClick={() => setFormData(p => ({...p, tier}))} className={cn("p-4 rounded-2xl border-2 text-left transition-all", formData.tier === tier ? "border-secondary bg-secondary/5" : "border-transparent bg-muted/20")}>
-                                <p className="font-serif font-bold text-primary">{t(`bk.tier${tier.charAt(0).toUpperCase()}${tier.slice(1)}`)}</p>
-                              </button>
-                            ))}
+                            {['classic', 'luxury', 'elite'].map(tier => {
+                              const active = formData.tier === tier;
+                              return (
+                                <button key={tier} type="button" onClick={() => setFormData(p => ({...p, tier}))} className={cn(
+                                  "p-4 rounded-2xl border-2 text-left transition-all duration-300",
+                                  active ? "border-secondary bg-secondary shadow-lg shadow-secondary/30" : "border-transparent bg-muted/20 hover:border-secondary/40"
+                                )}>
+                                  <p className={cn("font-serif font-bold", active ? "text-white" : "text-primary")}>{tierLabel(tier)}</p>
+                                </button>
+                              );
+                            })}
                           </div>
                           <div className="space-y-2">
                             <Label className="text-[10px] uppercase tracking-widest font-bold text-muted-foreground">{t("bk.budget")}</Label>
                             <div className="relative">
                               <DollarSign className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
-                              <Input type="number" required placeholder={t("bk.budgetPlaceholder")} className="pl-10 h-12 rounded-xl" value={formData.budget} onChange={e => setFormData(p => ({...p, budget: e.target.value}))} />
+                              <Input type="number" required placeholder={t("bk.budgetPlaceholder")} className={cn(fieldCls, "pl-10")} value={formData.budget} onChange={e => setFormData(p => ({...p, budget: e.target.value}))} />
                             </div>
                           </div>
-                          <div className="p-4 bg-primary rounded-2xl text-white flex justify-between items-center">
-                            <div className="flex items-center gap-3">
-                              <Wallet className="w-5 h-5 text-secondary" />
+                          <div className="p-5 bg-primary rounded-2xl text-white">
+                            <div className="flex items-start gap-3">
+                              <Wallet className="w-5 h-5 text-secondary shrink-0 mt-0.5" />
                               <div>
                                 <p className="text-[8px] uppercase font-space text-white/40 tracking-widest">{t("bk.theBrief")}</p>
                                 <p className="text-xl font-serif text-secondary">{t("bk.briefLine", { n: travellerCount(), d: tripDays() })}</p>
                               </div>
+                            </div>
+                            <div className="mt-4 pt-3 border-t border-white/10 flex flex-wrap items-center gap-x-6 gap-y-2">
+                              {formData.startDate && formData.endDate && (
+                                <span className="flex items-center gap-2 text-xs text-white/70">
+                                  <CalendarIcon className="w-3.5 h-3.5 text-secondary" />
+                                  {fmtDate(formData.startDate)} - {fmtDate(formData.endDate)}
+                                </span>
+                              )}
+                              {formData.nationality && (
+                                <span className="flex items-center gap-2 text-xs text-white/70">
+                                  <Globe className="w-3.5 h-3.5 text-secondary" />
+                                  {formData.nationality}
+                                </span>
+                              )}
+                              <span className="flex items-center gap-2 text-xs text-white/70">
+                                <Crown className="w-3.5 h-3.5 text-secondary" />
+                                {tierLabel(formData.tier)}
+                              </span>
                             </div>
                           </div>
                         </div>
@@ -329,16 +386,16 @@ export const BookingDialog = ({ children }: BookingDialogProps) => {
                           <div className="grid grid-cols-2 gap-4">
                             <div className="space-y-2">
                               <Label className="text-[10px] uppercase tracking-widest font-bold text-muted-foreground">{t("bk.fullName")}</Label>
-                              <Input required value={formData.fullName} onChange={e => setFormData(p => ({...p, fullName: e.target.value}))} placeholder={t("bk.namePlaceholder")} className="h-12 rounded-xl" />
+                              <Input required value={formData.fullName} onChange={e => setFormData(p => ({...p, fullName: e.target.value}))} placeholder={t("bk.namePlaceholder")} className={fieldCls} />
                             </div>
                             <div className="space-y-2">
                               <Label className="text-[10px] uppercase tracking-widest font-bold text-muted-foreground">{t("bk.email")}</Label>
-                              <Input type="email" required value={formData.email} onChange={e => setFormData(p => ({...p, email: e.target.value}))} placeholder={t("bk.emailPlaceholder")} className="h-12 rounded-xl" />
+                              <Input type="email" required value={formData.email} onChange={e => setFormData(p => ({...p, email: e.target.value}))} placeholder={t("bk.emailPlaceholder")} className={fieldCls} />
                             </div>
                           </div>
                           <div className="space-y-2">
                             <Label className="text-[10px] uppercase tracking-widest font-bold text-muted-foreground">{t("bk.requests")}</Label>
-                            <Textarea placeholder={t("bk.requestsPlaceholder")} className="min-h-[100px] rounded-xl" value={formData.requests} onChange={e => setFormData(p => ({...p, requests: e.target.value}))} />
+                            <Textarea placeholder={t("bk.requestsPlaceholder")} className="min-h-[100px] rounded-xl bg-muted/40 border-muted/80 hover:border-secondary/50 focus-visible:ring-secondary focus-visible:border-secondary transition-colors" value={formData.requests} onChange={e => setFormData(p => ({...p, requests: e.target.value}))} />
                           </div>
                         </div>
                       )}
@@ -350,7 +407,7 @@ export const BookingDialog = ({ children }: BookingDialogProps) => {
                   <Button type="button" variant="ghost" onClick={prevStep} disabled={step === 1 || loading} className="text-muted-foreground font-space font-bold uppercase tracking-widest text-[10px]">
                     <ArrowLeft className="w-4 h-4 mr-2" /> {t("bk.back")}
                   </Button>
-                  <Button type="submit" disabled={loading} className="rounded-full bg-primary text-white hover:bg-primary/90 px-10 h-12 font-space font-bold uppercase tracking-widest text-[10px]">
+                  <Button type="submit" disabled={loading} className="rounded-full bg-secondary text-white hover:bg-primary px-10 h-12 font-space font-bold uppercase tracking-widest text-[10px] shadow-lg shadow-secondary/25">
                     {loading ? <Loader2 className="w-4 h-4 animate-spin mr-2" /> : (step === 4 ? t("bk.requestQuote") : t("bk.continue"))}
                     {step < 4 && <ArrowRight className="ml-2 w-4 h-4" />}
                   </Button>

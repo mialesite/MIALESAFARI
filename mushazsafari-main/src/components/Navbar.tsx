@@ -338,7 +338,7 @@ export const Navbar = () => {
             <BookingDialog>
               <Button
                 className={cn(
-                  "rounded-full px-6 md:px-8 text-[9px] md:text-[10px] font-space font-bold uppercase tracking-widest h-10 md:h-12 transition-all duration-500 shadow-xl",
+                  "rounded-full px-6 md:px-8 text-[9px] md:text-[10px] font-space font-bold uppercase tracking-widest h-10 md:h-12 transition-all duration-500 shadow-xl focus:outline-none focus-visible:ring-2 focus-visible:ring-secondary focus-visible:ring-offset-2",
                   solid
                     ? "bg-primary text-white hover:bg-primary/90"
                     : "bg-white text-primary hover:bg-secondary hover:text-white"
@@ -491,7 +491,7 @@ export const Navbar = () => {
               <BookingDialog>
                 <Button
                   onClick={() => setMobileMenuOpen(false)}
-                  className="w-full rounded-full h-14 bg-secondary text-white text-[11px] font-space font-bold uppercase tracking-[0.3em] hover:bg-white hover:text-primary transition-all duration-500"
+                  className="w-full rounded-full h-14 bg-secondary text-white text-[11px] font-space font-bold uppercase tracking-[0.3em] hover:bg-white hover:text-primary transition-all duration-500 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-primary"
                 >
                   {t("nav.plan")}
                 </Button>

@@ -5,7 +5,7 @@
  * to 3 decimals and simplified for rendering; shapes remain to scale.
  */
 
-export type ParkShapeKind = "country" | "water" | "destination" | "context";
+export type ParkShapeKind = "country" | "water" | "destination" | "context" | "region";
 
 export interface ParkShape {
   key: string;

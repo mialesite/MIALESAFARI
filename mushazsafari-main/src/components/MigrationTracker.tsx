@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
-import { Waves, ArrowRight } from "lucide-react";
+import { Waves, ArrowRight, Pause, Play } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { BookingDialog } from "@/components/BookingDialog";
 import { MigrationMap } from "@/components/MigrationMap";
@@ -69,27 +69,27 @@ export function MigrationTracker() {
   };
 
   return (
-    <section ref={sectionRef} id="migration" className="py-14 md:py-16 lg:py-6 px-6 md:px-12 lg:px-24 bg-primary text-white overflow-hidden">
+    <section ref={sectionRef} id="migration" className="py-16 md:py-24 lg:py-28 px-6 md:px-12 lg:px-24 bg-primary text-white overflow-hidden">
       <div className="max-w-[1500px] mx-auto">
-        <div>
-          <span className="text-[10px] md:text-[11px] font-space font-bold text-secondary uppercase tracking-[0.45em] mb-3 block">
+        <div className="text-right">
+          <span className="text-[10px] md:text-[11px] font-space font-bold text-secondary uppercase tracking-[0.45em] mb-4 block">
             {t("tr.eyebrow")}
           </span>
-          <h2 className="text-4xl md:text-5xl font-serif leading-[0.98] tracking-tighter text-white mb-4">
+          <h2 className="text-4xl md:text-6xl font-serif leading-[0.98] tracking-tighter text-white mb-5">
             {t("tr.title")} <span className="italic font-light text-white/60">{t("tr.titleAccent")}</span>
           </h2>
-          <p className="text-[15px] text-white/65 font-light leading-relaxed max-w-3xl">
+          <p className="text-[15px] md:text-base text-white/65 font-light leading-relaxed max-w-2xl ml-auto">
             {t("tr.body")}
           </p>
         </div>
 
-        <div className="mt-8 lg:mt-5 grid grid-cols-1 lg:grid-cols-[340px_1fr] gap-8 lg:gap-12 items-center">
+        <div className="mt-10 lg:mt-12 grid grid-cols-1 lg:grid-cols-[360px_1fr] xl:grid-cols-[480px_1fr] gap-10 lg:gap-14 items-center">
           <div>
             <div className="relative w-full overflow-hidden rounded-[2rem] md:rounded-[2.5rem] shadow-2xl ring-1 ring-white/10">
               <MigrationMap activeIndex={activeIndex} onSelect={selectMonth} />
             </div>
 
-            <p className="mt-2 text-[9px] md:text-[10px] font-space uppercase tracking-[0.18em] text-white/35 leading-relaxed">
+            <p className="mt-3 text-[9px] md:text-[10px] font-space uppercase tracking-[0.18em] text-white/35 leading-relaxed">
               {t("tr.mapNote")}
             </p>
 
@@ -104,8 +104,8 @@ export function MigrationTracker() {
           </div>
 
           <div>
-            <p className="text-[9px] font-space font-bold uppercase tracking-[0.35em] text-white/40 mb-2">{t("tr.choose")}</p>
-            <div className="grid grid-cols-4 sm:grid-cols-6 gap-2 mb-2">
+            <p className="text-[9px] font-space font-bold uppercase tracking-[0.35em] text-white/40 mb-2.5">{t("tr.choose")}</p>
+            <div className="grid grid-cols-4 sm:grid-cols-6 xl:grid-cols-12 gap-1.5 mb-3">
               {MIGRATION_MONTHS.map((entry) => {
                 const active = entry.index === activeIndex;
                 return (
@@ -115,9 +115,9 @@ export function MigrationTracker() {
                     onClick={() => selectMonth(entry.index)}
                     aria-pressed={active}
                     className={cn(
-                      "h-9 rounded-full text-[10px] font-space font-bold uppercase tracking-[0.18em] transition-all duration-300 border",
+                      "h-8 rounded-full text-[9px] font-space font-bold uppercase tracking-[0.16em] transition-all duration-300 border",
                       active
-                        ? "bg-secondary text-white border-secondary shadow-lg"
+                        ? "bg-secondary text-white border-secondary shadow-lg shadow-secondary/30"
                         : "text-white/55 border-white/15 hover:border-secondary hover:text-secondary"
                     )}
                   >
@@ -134,66 +134,76 @@ export function MigrationTracker() {
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -8 }}
                 transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
+                className="rounded-[2rem] bg-white/[0.04] ring-1 ring-white/10 backdrop-blur-sm p-6 md:p-8"
               >
-                <div className="flex items-start gap-4 mb-2">
-                  <span
-                    className="mt-0.5 flex h-9 w-9 shrink-0 items-center justify-center rounded-full"
-                    style={{ backgroundColor: `${PHASE_COLOUR[month.phase]}22`, border: `1px solid ${PHASE_COLOUR[month.phase]}` }}
-                  >
-                    <span className="h-2.5 w-2.5 rounded-full" style={{ backgroundColor: PHASE_COLOUR[month.phase] }} />
+                <div className="flex items-center gap-3 mb-2.5">
+                  <span className="relative flex h-2.5 w-2.5 shrink-0">
+                    {playing && (
+                      <span
+                        className="animate-ping absolute inline-flex h-full w-full rounded-full opacity-60"
+                        style={{ backgroundColor: PHASE_COLOUR[month.phase] }}
+                      />
+                    )}
+                    <span className="relative inline-flex h-2.5 w-2.5 rounded-full" style={{ backgroundColor: PHASE_COLOUR[month.phase] }} />
                   </span>
-                  <div>
-                    <p className="text-[9px] font-space font-bold uppercase tracking-[0.3em] text-white/45 mb-1.5">
-                      {monthName} &middot; {phaseLabels[month.phase]}
-                    </p>
-                    <h3 className="text-2xl md:text-[1.7rem] font-serif leading-tight text-white">{monthTitle}</h3>
-                  </div>
+                  <p className="text-[9px] font-space font-bold uppercase tracking-[0.3em] text-white/45">
+                    {monthName} &middot; {phaseLabels[month.phase]}
+                  </p>
                 </div>
 
-                <p className="text-[10px] font-space uppercase tracking-[0.22em] text-secondary mb-1.5">{monthLocation}</p>
-                <p className="text-[15px] text-white/70 font-light leading-relaxed mb-3">{monthBlurb}</p>
+                <h3 className="text-2xl md:text-[2rem] font-serif leading-tight text-white">{monthTitle}</h3>
+                <p className="text-[10px] font-space uppercase tracking-[0.22em] text-secondary mt-2">{monthLocation}</p>
+                <p className="text-[15px] text-white/70 font-light leading-relaxed mt-3">{monthBlurb}</p>
 
-                <div className="flex flex-wrap items-center gap-x-4 gap-y-2 mb-3">
+                <div className="flex flex-wrap items-center gap-x-4 gap-y-2 mt-4">
                   {monthSignals.map((signal) => (
                     <span key={signal} className="inline-flex items-center gap-2 text-[13px] text-white/80 font-light">
                       <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-secondary" />
                       {signal}
                     </span>
                   ))}
-                  {month.crossings.map((key) => (
-                    <span
-                      key={key}
-                      className="inline-flex items-center gap-2 rounded-full border border-[#4E7C74] bg-[#4E7C74]/20 px-3.5 py-1 text-[9px] font-space font-bold uppercase tracking-[0.16em] text-white"
-                    >
-                      <Waves className="h-3 w-3" />
-                      {crossingLabels[key]}
-                    </span>
-                  ))}
                 </div>
+
+                {month.crossings.length > 0 && (
+                  <div className="flex flex-wrap items-center gap-2 mt-3.5">
+                    {month.crossings.map((key) => (
+                      <span
+                        key={key}
+                        className="inline-flex items-center gap-2 rounded-full border border-[#4E7C74] bg-[#4E7C74]/20 px-3.5 py-1 text-[9px] font-space font-bold uppercase tracking-[0.16em] text-white"
+                      >
+                        <Waves className="h-3 w-3" />
+                        {crossingLabels[key]}
+                      </span>
+                    ))}
+                  </div>
+                )}
               </motion.div>
             </AnimatePresence>
 
-            <div className="flex flex-wrap items-center gap-x-6 gap-y-3 border-t border-white/10 pt-3">
+            <div className="mt-5 flex flex-wrap items-center gap-x-6 gap-y-3 border-t border-white/10 pt-4">
               <button
                 type="button"
                 onClick={() => setPlaying((current) => !current)}
                 aria-pressed={playing}
-                className="text-[9px] font-space uppercase tracking-[0.2em] text-white/55 hover:text-secondary transition-colors"
+                className="inline-flex items-center gap-2 text-[9px] font-space uppercase tracking-[0.2em] text-white/55 hover:text-secondary transition-colors"
               >
+                {playing ? <Pause className="h-3 w-3" /> : <Play className="h-3 w-3" />}
                 {playing ? t("tr.pause") : t("tr.play")}
               </button>
-              <BookingDialog>
-                <Button className="h-10 rounded-full bg-secondary text-white text-[9px] md:text-[10px] font-space font-bold uppercase tracking-[0.2em] px-6 hover:bg-white hover:text-primary transition-all duration-500">
-                  {t("tr.planCta")}
-                </Button>
-              </BookingDialog>
-              <Link
-                href={{ pathname: "/itineraries", query: { category: "Migration" } }}
-                className="ml-auto inline-flex items-center gap-2 text-[9px] md:text-[10px] font-space font-bold uppercase tracking-[0.2em] text-white/70 hover:text-secondary transition-colors"
-              >
-                {t("tr.linkItineraries")}
-                <ArrowRight className="h-3 w-3" />
-              </Link>
+              <div className="ml-auto flex flex-wrap items-center gap-x-5 gap-y-3">
+                <BookingDialog>
+                  <Button className="h-10 rounded-full bg-secondary text-white text-[9px] md:text-[10px] font-space font-bold uppercase tracking-[0.2em] px-6 hover:bg-white hover:text-primary transition-all duration-500">
+                    {t("tr.planCta")}
+                  </Button>
+                </BookingDialog>
+                <Link
+                  href={{ pathname: "/itineraries", query: { category: "Migration" } }}
+                  className="inline-flex items-center gap-2 text-[9px] md:text-[10px] font-space font-bold uppercase tracking-[0.2em] text-white/70 hover:text-secondary transition-colors"
+                >
+                  {t("tr.linkItineraries")}
+                  <ArrowRight className="h-3 w-3" />
+                </Link>
+              </div>
             </div>
           </div>
         </div>
