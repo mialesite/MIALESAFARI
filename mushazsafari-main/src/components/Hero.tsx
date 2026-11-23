@@ -115,7 +115,7 @@ export const Hero = () => {
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.3 }}
-          className="max-w-6xl w-full lg:col-span-8"
+          className="max-w-6xl w-full lg:col-span-8 xl:col-span-7"
         >
           <p className="font-space text-[9px] md:text-[11px] uppercase tracking-[0.45em] text-secondary mb-6 md:mb-8">
             {t("hero.eyebrow")}
@@ -159,9 +159,9 @@ export const Hero = () => {
           initial={{ opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, delay: 0.45 }}
-          className="hidden lg:block lg:col-span-4"
+          className="hidden lg:block lg:col-span-4 xl:col-span-5"
         >
-          <div className="max-w-md w-full ml-auto pt-2">
+          <div className="w-full ml-auto pt-2">
             <CircuitMap activeNames={ALL_PARK_NAMES} glass />
           </div>
         </motion.div>
