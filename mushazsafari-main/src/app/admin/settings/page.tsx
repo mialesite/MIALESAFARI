@@ -9,9 +9,9 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/hooks/use-toast";
-import { 
-  Loader2, Save, Mail, Shield, Server, Send, 
-  FileCode, AlignLeft, Info, Lock, AlertCircle, 
+import {
+  Loader2, Save, Shield, Server, Send,
+  FileCode, AlignLeft,
   CheckCircle2, XCircle, Gauge
 } from "lucide-react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -19,7 +19,6 @@ import { Textarea } from "@/components/ui/textarea";
 import { errorEmitter } from "@/firebase/error-emitter";
 import { FirestorePermissionError, type SecurityRuleContext } from "@/firebase/errors";
 import { cn } from "@/lib/utils";
-import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import type { SMTPDiagnosticResult } from "@/services/email/service";
 
 const AUTHORIZED_EMAILS = [
@@ -42,12 +41,6 @@ export default function AdminSettings() {
   const { data: config, loading: configLoading } = useDoc(configRef);
 
   const [companySignature, setCompanySignature] = useState("");
-  const [smtpConfig, setSmtpConfig] = useState({
-    emailHost: "",
-    emailPort: "",
-    emailUser: "",
-    emailPass: ""
-  });
   const [saving, setSaving] = useState(false);
   const [testing, setTesting] = useState(false);
   const [testEmail, setTestEmail] = useState("");
@@ -56,12 +49,6 @@ export default function AdminSettings() {
   useEffect(() => {
     if (config) {
       setCompanySignature(config.companySignature || "");
-      setSmtpConfig({
-        emailHost: config.emailHost || "",
-        emailPort: config.emailPort || "",
-        emailUser: config.emailUser || "",
-        emailPass: config.emailPass || ""
-      });
     }
   }, [config]);
 
@@ -70,11 +57,11 @@ export default function AdminSettings() {
     if (!configRef || !user) return;
 
     setSaving(true);
-    const data = { ...smtpConfig, companySignature };
-    
+    const data = { companySignature };
+
     setDoc(configRef, data, { merge: true })
       .then(() => {
-        toast({ title: "Configuration Updated", description: "SMTP and Branding settings have been synchronized." });
+        toast({ title: "Configuration Updated", description: "Branding settings have been synchronized." });
         setSaving(false)
       })
       .catch(async (serverError) => {
@@ -155,120 +142,72 @@ export default function AdminSettings() {
 
       <Tabs defaultValue="smtp">
         <TabsList className="bg-muted/50 p-1 mb-8">
-          <TabsTrigger value="smtp" className="flex gap-2"><Server className="w-4 h-4" /> Dispatch Proxy</TabsTrigger>
+          <TabsTrigger value="smtp" className="flex gap-2"><Server className="w-4 h-4" /> Relay Diagnostics</TabsTrigger>
           <TabsTrigger value="branding" className="flex gap-2"><FileCode className="w-4 h-4" /> Global Branding</TabsTrigger>
           <TabsTrigger value="security" className="flex gap-2"><Shield className="w-4 h-4" /> Access Policy</TabsTrigger>
         </TabsList>
 
         <TabsContent value="smtp" className="space-y-6">
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-            <div className="lg:col-span-2">
-              <Card className="border-none shadow-sm overflow-hidden">
-                <CardHeader className="bg-[#1e1e1e] text-white">
-                  <CardTitle className="text-xl flex items-center gap-2 font-headline text-honey-gold">
-                    <Lock className="w-5 h-5" />
-                    SMTP Runtime Credentials
-                  </CardTitle>
-                  <CardDescription className="text-white/40 text-[10px] uppercase tracking-widest font-bold">Priority Management via system/config</CardDescription>
-                </CardHeader>
-                <CardContent className="p-8 space-y-6">
-                   <Alert className="bg-honey-gold/5 border-honey-gold/20 rounded-2xl">
-                     <Info className="h-4 w-4 text-honey-gold" />
-                     <AlertTitle className="text-xs font-bold uppercase tracking-widest text-honey-gold">Port 465 Recommendation</AlertTitle>
-                     <AlertDescription className="text-[10px] text-muted-foreground leading-relaxed">
-                        Miale prioritizes <strong>Port 465 (Implicit SSL)</strong> for security. The infrastructure includes an automatic fallback to <strong>Port 587</strong> if 465 is restricted by your local firewall.
-                     </AlertDescription>
-                   </Alert>
+          <Card className="border-none shadow-sm max-w-xl">
+            <CardHeader>
+              <CardTitle className="text-lg font-headline">Relay Diagnostics</CardTitle>
+              <CardDescription>Mail runs on the environment SMTP settings. Verify the connection and port here.</CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <div className="space-y-2">
+                <Label className="text-[10px] uppercase font-bold text-muted-foreground">Test Recipient</Label>
+                <Input
+                  placeholder="test@example.com"
+                  value={testEmail}
+                  onChange={(e) => setTestEmail(e.target.value)}
+                  className="text-xs h-10 rounded-xl"
+                />
+              </div>
+              <Button
+                variant="outline"
+                className="w-full h-10 border-honey-gold text-honey-gold hover:bg-honey-gold hover:text-honey-dark font-bold rounded-xl"
+                onClick={handleTestEmail}
+                disabled={testing || !testEmail}
+              >
+                {testing ? <Loader2 className="animate-spin mr-2" /> : <Send className="w-3 h-3 mr-2" />}
+                Dispatch Test
+              </Button>
 
-                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                      <div className="space-y-2">
-                        <Label className="text-[10px] uppercase font-bold text-muted-foreground">SMTP Host</Label>
-                        <Input value={smtpConfig.emailHost} onChange={e => setSmtpConfig(p => ({...p, emailHost: e.target.value}))} placeholder="mialesafari.com" className="h-12 rounded-xl" />
-                      </div>
-                      <div className="space-y-2">
-                        <Label className="text-[10px] uppercase font-bold text-muted-foreground">Preferred Port</Label>
-                        <Input value={smtpConfig.emailPort} onChange={e => setSmtpConfig(p => ({...p, emailPort: e.target.value}))} placeholder="465" className="h-12 rounded-xl" />
-                      </div>
-                      <div className="space-y-2">
-                        <Label className="text-[10px] uppercase font-bold text-muted-foreground">Authorized User</Label>
-                        <Input value={smtpConfig.emailUser} onChange={e => setSmtpConfig(p => ({...p, emailUser: e.target.value}))} placeholder="info@mialesafari.com" className="h-12 rounded-xl" />
-                      </div>
-                      <div className="space-y-2">
-                        <Label className="text-[10px] uppercase font-bold text-muted-foreground">Secure Password</Label>
-                        <Input type="password" value={smtpConfig.emailPass} onChange={e => setSmtpConfig(p => ({...p, emailPass: e.target.value}))} placeholder="••••••••" className="h-12 rounded-xl" />
-                      </div>
-                   </div>
-                   <Button onClick={handleSaveConfig} disabled={saving} className="w-full bg-honey-gold text-honey-dark font-bold rounded-xl h-12 shadow-lg shadow-honey-gold/20">
-                      {saving ? <Loader2 className="animate-spin mr-2" /> : <Save className="w-4 h-4 mr-2" />}
-                      Apply Infrastructure Changes
-                   </Button>
-                </CardContent>
-              </Card>
-            </div>
-
-            <div className="space-y-6">
-              <Card className="border-none shadow-sm">
-                <CardHeader>
-                  <CardTitle className="text-lg font-headline">Relay Diagnostics</CardTitle>
-                  <CardDescription>Verify SMTP authorization and check for port restrictions.</CardDescription>
-                </CardHeader>
-                <CardContent className="space-y-4">
-                  <div className="space-y-2">
-                    <Label className="text-[10px] uppercase font-bold text-muted-foreground">Test Recipient</Label>
-                    <Input 
-                      placeholder="test@example.com" 
-                      value={testEmail}
-                      onChange={(e) => setTestEmail(e.target.value)}
-                      className="text-xs h-10 rounded-xl"
-                    />
+              {diagnostic && (
+                <div className={cn(
+                  "p-4 rounded-xl border text-xs space-y-3",
+                  diagnostic.success ? "bg-green-50 border-green-200" : "bg-red-50 border-red-200"
+                )}>
+                  <div className="flex items-center gap-2 font-bold">
+                    {diagnostic.success ? (
+                      <CheckCircle2 className="w-4 h-4 text-green-600" />
+                    ) : (
+                      <XCircle className="w-4 h-4 text-red-600" />
+                    )}
+                    <span className={diagnostic.success ? "text-green-700" : "text-red-700"}>
+                      {diagnostic.message}
+                    </span>
                   </div>
-                  <Button 
-                    variant="outline" 
-                    className="w-full h-10 border-honey-gold text-honey-gold hover:bg-honey-gold hover:text-honey-dark font-bold rounded-xl"
-                    onClick={handleTestEmail}
-                    disabled={testing || !testEmail}
-                  >
-                    {testing ? <Loader2 className="animate-spin mr-2" /> : <Send className="w-3 h-3 mr-2" />}
-                    Dispatch Test
-                  </Button>
 
-                  {diagnostic && (
-                    <div className={cn(
-                      "p-4 rounded-xl border text-xs space-y-3",
-                      diagnostic.success ? "bg-green-50 border-green-200" : "bg-red-50 border-red-200"
-                    )}>
-                      <div className="flex items-center gap-2 font-bold">
-                        {diagnostic.success ? (
-                          <CheckCircle2 className="w-4 h-4 text-green-600" />
-                        ) : (
-                          <XCircle className="w-4 h-4 text-red-600" />
-                        )}
-                        <span className={diagnostic.success ? "text-green-700" : "text-red-700"}>
-                          {diagnostic.message}
-                        </span>
-                      </div>
-                      
-                      {diagnostic.success && (
-                        <div className="grid grid-cols-2 gap-2 text-[10px] text-green-600/70 uppercase font-bold">
-                          <div className="flex items-center gap-1"><Gauge className="w-3 h-3" /> {diagnostic.responseTime}</div>
-                          <div className="flex items-center gap-1"><Server className="w-3 h-3" /> Port {diagnostic.port}</div>
-                        </div>
-                      )}
-
-                      {!diagnostic.success && (
-                        <div className="space-y-2">
-                          <p className="text-red-600 font-medium">{diagnostic.errorDetail}</p>
-                          <div className="p-2 bg-white rounded-lg border border-red-100 text-[10px] text-red-800 italic">
-                            <strong>Suggested:</strong> {diagnostic.suggestedFix}
-                          </div>
-                        </div>
-                      )}
+                  {diagnostic.success && (
+                    <div className="grid grid-cols-2 gap-2 text-[10px] text-green-600/70 uppercase font-bold">
+                      <div className="flex items-center gap-1"><Gauge className="w-3 h-3" /> {diagnostic.responseTime}</div>
+                      <div className="flex items-center gap-1"><Server className="w-3 h-3" /> Port {diagnostic.port}</div>
                     </div>
                   )}
-                </CardContent>
-              </Card>
-            </div>
-          </div>
+
+                  {!diagnostic.success && (
+                    <div className="space-y-2">
+                      <p className="text-red-600 font-medium">{diagnostic.errorDetail}</p>
+                      <div className="p-2 bg-white rounded-lg border border-red-100 text-[10px] text-red-800 italic">
+                        <strong>Suggested:</strong> {diagnostic.suggestedFix}
+                      </div>
+                    </div>
+                  )}
+                </div>
+              )}
+            </CardContent>
+          </Card>
         </TabsContent>
 
         <TabsContent value="branding" className="space-y-6">

@@ -1,6 +1,6 @@
 /**
  * @fileOverview Production-grade Email Service for Miale.
- * Handles dynamic SMTP configuration, Port 465 -> 587 auto-fallback, 
+ * Handles environment-based SMTP configuration, Port 465 -> 587 auto-fallback, 
  * and detailed diagnostic reporting.
  */
 
@@ -62,23 +62,22 @@ class EmailService {
   }
 
   /**
-   * Loads credentials from Firestore (Priority) or Env Variables (Fallback)
+   * Loads credentials from the environment only. The admin settings page no
+   * longer stores SMTP fields, so SMTP_* / EMAIL_* env vars are the sole source.
    */
   private async getConfig() {
-    const data = await this.readConfigDoc();
-
     // The bare domain no longer routes to the mail server (its DNS record
     // moved off Hostinger), so Hostinger's SMTP hostname is the default.
-    const host = data.emailHost || process.env.SMTP_HOST || "smtp.hostinger.com";
-    const port = Number(data.emailPort || process.env.SMTP_PORT || 465);
-    const user = data.emailUser || process.env.SMTP_USER || "info@mialesafari.com";
-    const pass = data.emailPass || process.env.SMTP_PASS;
+    const host = process.env.SMTP_HOST || "smtp.hostinger.com";
+    const port = Number(process.env.SMTP_PORT || 465);
+    const user = process.env.SMTP_USER || "info@mialesafari.com";
+    const pass = process.env.SMTP_PASS;
     const fromName = process.env.EMAIL_FROM_NAME || "Miale";
-    const fromAddress = data.emailUser || process.env.EMAIL_FROM_ADDRESS || "info@mialesafari.com";
+    const fromAddress = process.env.EMAIL_FROM_ADDRESS || "info@mialesafari.com";
     const adminEmail = process.env.ADMIN_NOTIFY_EMAIL || "info@mialesafari.com";
 
     if (!pass) {
-      throw new Error("SMTP Credentials (Password) missing in settings and environment.");
+      throw new Error("SMTP Credentials (Password) missing in environment.");
     }
 
     return { host, port, user, pass, fromName, fromAddress, adminEmail };
@@ -126,7 +125,7 @@ class EmailService {
         secure: false,
         message: "Configuration Error",
         errorDetail: e.message,
-        suggestedFix: "Ensure SMTP_PASS is set in environment or saved in Admin Settings."
+        suggestedFix: "Ensure SMTP_PASS is set in the environment."
       };
     }
 
