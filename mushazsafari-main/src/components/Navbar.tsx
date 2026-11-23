@@ -253,16 +253,16 @@ export const Navbar = () => {
 
                   <AnimatePresence>
                     {open && (
-                      <div className="absolute left-1/2 top-full -translate-x-1/2 pt-5">
+                      <div className="absolute left-0 top-full pt-5">
                         <motion.div
                           initial={{ opacity: 0, y: 10 }}
                           animate={{ opacity: 1, y: 0 }}
                           exit={{ opacity: 0, y: 10 }}
                           transition={{ duration: 0.22, ease: [0.16, 1, 0.3, 1] }}
                         >
-                        <div data-panel className="w-[660px] max-w-[calc(100vw-2rem)] overflow-hidden rounded-[1.5rem] border border-muted/70 bg-white shadow-2xl shadow-primary/15">
+                        <div data-panel className="w-[800px] max-w-[calc(100vw-2rem)] overflow-hidden rounded-[1.5rem] border border-muted/70 bg-white shadow-2xl shadow-primary/15">
                           <div className="h-[2px] bg-gradient-to-r from-secondary via-secondary/50 to-transparent" />
-                          <div className="grid grid-cols-[1fr_1fr_190px] divide-x divide-muted/50">
+                          <div className="grid grid-cols-[1fr_1fr_220px] divide-x divide-muted/50">
                             {group.columns.map((column) => (
                               <div key={column.title} className="p-5">
                                 <p className="px-3 pb-3 text-[9px] font-space font-bold uppercase tracking-[0.3em] text-secondary">

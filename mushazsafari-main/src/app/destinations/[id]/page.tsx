@@ -118,13 +118,7 @@ export default function DestinationDetailPage(props: { params: Promise<{ id: str
 
             <div className="lg:col-span-4">
               <div className="p-5 md:p-6 max-w-sm w-full mx-auto lg:mx-0 lg:ml-auto">
-                <p className="text-accent font-space font-bold uppercase tracking-[0.4em] text-[10px] mb-3">
-                  {t("ds.mapPark")}
-                </p>
                 <CircuitMap activeNames={[destination.name]} glass />
-                <p className="mt-4 text-[9px] font-space uppercase tracking-[0.2em] text-white/70">
-                  {t("ds.mapFootnote")}
-                </p>
               </div>
             </div>
           </motion.div>

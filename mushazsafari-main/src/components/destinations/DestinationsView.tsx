@@ -2,11 +2,12 @@
 
 import { Navbar } from "@/components/Navbar";
 import { CircuitMap } from "@/components/CircuitMap";
+import { ParkCard } from "@/components/ParkCard";
 import { motion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
-import { ArrowRight, Compass, Loader2 } from "lucide-react";
+import { Compass, Loader2 } from "lucide-react";
 import { useCollection, useFirestore, useMemoFirebase, useUser } from "@/firebase";
 import { collection, query, where, writeBatch, doc, serverTimestamp, getDocs } from "firebase/firestore";
 import { useToast } from "@/hooks/use-toast";
@@ -202,13 +203,7 @@ export function DestinationsView({ circuit }: { circuit: "All" | DestinationsCir
               className="lg:col-span-5"
             >
               <div className="p-5 md:p-7 max-w-md w-full mx-auto lg:max-w-none">
-                <p className="text-accent font-space font-bold uppercase tracking-[0.4em] text-[10px] mb-3">
-                  {circuit === "All" ? t("ds.mapAll") : t("ds.mapCircuit")}
-                </p>
                 <CircuitMap activeNames={scoped.map((d: any) => d.name)} glass />
-                <p className="mt-4 text-[9px] font-space uppercase tracking-[0.2em] text-white/70">
-                  {t("ds.mapFootnote")}
-                </p>
               </div>
             </motion.div>
           </div>
@@ -276,11 +271,24 @@ export function DestinationsView({ circuit }: { circuit: "All" | DestinationsCir
                   </span>
                 </div>
 
-                <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-6 md:gap-8">
-                  {group.items.map((dest: any, i) => (
-                    <DestinationCard key={dest.id} dest={dest} index={i} />
-                  ))}
-                </div>
+                {(() => {
+                  const n = group.items.length;
+                  // Same column rhythm as /parks: three tiles per row on
+                  // desktop; lone and pair groups sit on a narrow centred
+                  // measure instead of stretching to half-container cards.
+                  const cols = n === 1
+                    ? "grid-cols-1 max-w-md mx-auto"
+                    : n === 2
+                      ? "grid-cols-1 md:grid-cols-2 max-w-3xl mx-auto"
+                      : "grid-cols-1 md:grid-cols-2 lg:grid-cols-3";
+                  return (
+                    <div className={`grid gap-6 md:gap-8 ${cols}`}>
+                      {group.items.map((dest: any, i) => (
+                        <ParkCard key={dest.id} park={dest} index={i} />
+                      ))}
+                    </div>
+                  );
+                })()}
               </div>
             ))
           )}
@@ -312,57 +320,5 @@ export function DestinationsView({ circuit }: { circuit: "All" | DestinationsCir
         </div>
       </section>
     </main>
-  );
-}
-
-function DestinationCard({ dest, index }: { dest: any; index: number }) {
-  return (
-    <motion.div
-      initial={{ opacity: 0, y: 24 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.55, delay: (index % 3) * 0.06 }}
-      viewport={{ once: true, margin: "-60px" }}
-    >
-      <Link
-        href={`/destinations/${dest.id}`}
-        className="group relative block overflow-hidden rounded-[2rem] bg-primary shadow-sm hover:shadow-2xl transition-shadow duration-500 accelerate"
-      >
-        <div className="relative aspect-[4/5] w-full overflow-hidden">
-          <Image
-            src={mediaFor(dest.featuredImage).src}
-            alt={dest.name}
-            fill
-            quality={70}
-            className="object-cover transition-transform duration-[1400ms] ease-out group-hover:scale-[1.06]"
-            sizes="(min-width: 1280px) 33vw, (min-width: 640px) 50vw, 92vw"
-          />
-          <div className="absolute inset-0 bg-[linear-gradient(to_top,rgba(13,26,18,0.94),rgba(13,26,18,0.42)_38%,rgba(13,26,18,0.08)_68%,transparent_86%)]" />
-
-          <span className="absolute top-5 left-5 glass px-4 py-2 rounded-full border-white/20 text-[9px] font-bold text-white uppercase tracking-[0.2em]">
-            {dest.type}
-          </span>
-
-          <span className="absolute top-5 right-5 grid h-10 w-10 place-items-center rounded-full bg-white/10 border border-white/25 text-white opacity-0 -translate-y-1 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-500">
-            <ArrowRight className="w-4 h-4" />
-          </span>
-
-          <div className="absolute bottom-0 left-0 right-0 p-6 md:p-7">
-            {dest.distance ? (
-              <p className="text-[9px] md:text-[10px] font-space font-bold uppercase tracking-[0.3em] text-secondary mb-2">
-                {dest.distance}
-              </p>
-            ) : null}
-            <h3 className="text-3xl md:text-4xl font-serif font-medium text-white leading-[1.05] transition-colors group-hover:text-secondary">
-              {dest.name}
-            </h3>
-            {dest.shortDescription ? (
-              <p className="mt-2.5 text-sm text-white/75 font-light leading-relaxed line-clamp-2">
-                {dest.shortDescription}
-              </p>
-            ) : null}
-          </div>
-        </div>
-      </Link>
-    </motion.div>
   );
 }

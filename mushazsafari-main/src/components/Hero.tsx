@@ -162,13 +162,7 @@ export const Hero = () => {
           className="hidden lg:block lg:col-span-4"
         >
           <div className="max-w-md w-full ml-auto pt-2">
-            <p className="text-accent font-space font-bold uppercase tracking-[0.4em] text-[10px] mb-3">
-              {t("ds.mapAll")}
-            </p>
             <CircuitMap activeNames={ALL_PARK_NAMES} glass />
-            <p className="mt-4 text-[9px] font-space uppercase tracking-[0.2em] text-white/70">
-              {t("ds.mapFootnote")}
-            </p>
           </div>
         </motion.div>
       </div>

@@ -49,6 +49,8 @@ const Reveal = ({
 const heroImage = mediaFor("ngorongoro-crater-rim");
 const gorgeImage = mediaFor("olduvai-gorge-rim");
 const processImage = mediaFor("elephant-family-crossing");
+const focusImage = mediaFor("single-acacia-green-plains");
+const reachImage = mediaFor("afcon-arusha-city");
 
 const FACTS = [
   { value: "Sombetini JR", label: "The office, Arusha" },
@@ -248,33 +250,45 @@ export default function AboutPage() {
           <Reveal delay={0.15} className="h-full flex flex-col gap-5">
             <Link
               href="/destinations"
-              className="group flex-1 rounded-[2rem] bg-white border border-muted p-8 md:p-10 space-y-4 flex flex-col justify-center transition-all duration-500 hover:border-secondary/60 hover:shadow-lg hover:shadow-secondary/10 hover:-translate-y-0.5"
+              className="group relative flex-1 min-h-[340px] md:min-h-[420px] rounded-[2rem] overflow-hidden flex flex-col justify-end transition-all duration-500 hover:shadow-xl hover:shadow-primary/25"
             >
-              <span className="w-11 h-11 rounded-full bg-secondary/10 ring-1 ring-secondary/25 flex items-center justify-center text-secondary transition-colors duration-500 group-hover:bg-secondary group-hover:text-white">
-                <Compass className="w-5 h-5" />
-              </span>
-              <div className="space-y-3">
+              <Image
+                src={focusImage.src}
+                alt={focusImage.alt}
+                fill
+                quality={70}
+                sizes="(min-width: 1024px) 50vw, 92vw"
+                className="object-cover transition-transform duration-[4000ms] ease-out group-hover:scale-[1.06]"
+              />
+              <div className="absolute inset-0 bg-[linear-gradient(to_top,rgba(36,66,46,0.96),rgba(36,66,46,0.72)_32%,rgba(36,66,46,0.12)_68%,transparent_88%)]" />
+              <div className="relative p-8 md:p-10 space-y-3 text-white">
                 <p className="text-[9px] font-space font-bold uppercase tracking-[0.3em] text-secondary">Focus</p>
-                <p className="font-serif text-2xl md:text-3xl font-bold text-primary tracking-tight">One country</p>
-                <p className="text-sm md:text-base text-muted-foreground font-light leading-relaxed">
+                <p className="font-serif text-2xl md:text-3xl font-bold tracking-tight">One country</p>
+                <p className="text-sm md:text-base text-white/75 font-light leading-relaxed">
                   North, south, peaks and coast. Tanzania only.
                 </p>
+                <span className="flex items-center gap-1.5 text-[9px] font-space font-bold uppercase tracking-[0.3em] text-secondary">
+                  Explore <ArrowRight className="w-3.5 h-3.5 transition-transform duration-300 group-hover:translate-x-1" />
+                </span>
               </div>
-              <span className="flex items-center gap-1.5 text-[9px] font-space font-bold uppercase tracking-[0.3em] text-secondary">
-                Explore <ArrowRight className="w-3.5 h-3.5 transition-transform duration-300 group-hover:translate-x-1" />
-              </span>
             </Link>
             <a
               href="mailto:info@mialesafari.com"
-              className="group flex-1 rounded-[2rem] bg-primary p-8 md:p-10 text-white space-y-4 flex flex-col justify-center transition-all duration-500 hover:shadow-xl hover:shadow-primary/25 hover:-translate-y-0.5"
+              className="group relative flex-1 min-h-[340px] md:min-h-[420px] rounded-[2rem] overflow-hidden flex flex-col justify-end transition-all duration-500 hover:shadow-xl hover:shadow-primary/25"
             >
-              <span className="w-11 h-11 rounded-full bg-white/10 ring-1 ring-secondary/30 flex items-center justify-center text-secondary transition-colors duration-500 group-hover:bg-secondary group-hover:text-white">
-                <Mail className="w-5 h-5" />
-              </span>
-              <div className="space-y-3">
+              <Image
+                src={reachImage.src}
+                alt={reachImage.alt}
+                fill
+                quality={70}
+                sizes="(min-width: 1024px) 50vw, 92vw"
+                className="object-cover transition-transform duration-[4000ms] ease-out group-hover:scale-[1.06]"
+              />
+              <div className="absolute inset-0 bg-[linear-gradient(to_top,rgba(36,66,46,0.96),rgba(36,66,46,0.72)_32%,rgba(36,66,46,0.12)_68%,transparent_88%)]" />
+              <div className="relative p-8 md:p-10 space-y-3 text-white">
                 <p className="text-[9px] font-space font-bold uppercase tracking-[0.3em] text-secondary">Reach</p>
                 <p className="font-serif text-2xl md:text-3xl font-bold tracking-tight">Email the desk</p>
-                <p className="text-sm md:text-base text-white/60 font-light leading-relaxed">
+                <p className="text-sm md:text-base text-white/75 font-light leading-relaxed">
                   <span className="underline underline-offset-4 transition-colors group-hover:text-secondary">info@mialesafari.com</span>
                   , answered from Arusha.
                 </p>
