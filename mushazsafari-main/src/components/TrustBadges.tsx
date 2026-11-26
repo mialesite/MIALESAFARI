@@ -1,27 +1,27 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Compass, MapPin, FileText, BadgeCheck } from "lucide-react";
+import { Leaf, Compass, Footprints, PawPrint } from "lucide-react";
 import { useLanguage } from "@/context/LanguageContext";
 
 const BADGES = [
   {
-    icon: Compass,
+    icon: Leaf,
     titleKey: "badge1.title",
     descKey: "badge1.desc"
   },
   {
-    icon: MapPin,
+    icon: Compass,
     titleKey: "badge2.title",
     descKey: "badge2.desc"
   },
   {
-    icon: FileText,
+    icon: Footprints,
     titleKey: "badge3.title",
     descKey: "badge3.desc"
   },
   {
-    icon: BadgeCheck,
+    icon: PawPrint,
     titleKey: "badge4.title",
     descKey: "badge4.desc"
   },

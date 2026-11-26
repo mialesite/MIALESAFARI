@@ -11,45 +11,22 @@ import { mediaFor } from "@/lib/media";
 import { useLanguage } from "@/context/LanguageContext";
 import { CircuitMap } from "@/components/CircuitMap";
 import { MASTER_DESTINATIONS } from "@/lib/master-destinations";
-import { CIRCUIT_LABEL, labelFor } from "@/lib/i18n";
 
 // Lazy load BookingDialog
 const BookingDialog = dynamic(() => import("./BookingDialog").then(mod => mod.BookingDialog), { ssr: false });
 
 const ALL_PARK_NAMES = MASTER_DESTINATIONS.map((d) => d.name);
 
-// One photograph per circuit, the same heroes the destinations pages use,
-// captioned with the circuit's name in the active language.
-const CIRCUIT_SLIDES: { circuit: string; imageUrl: string; alt: string }[] = [
-  {
-    circuit: "Northern Circuit",
-    imageUrl: mediaFor("serengeti-balloons-sunrise").src,
-    alt: "Balloons drifting over the Serengeti plains at sunrise",
-  },
-  {
-    circuit: "Southern Circuit",
-    imageUrl: mediaFor("hippo-pool").src,
-    alt: "Hippos crowded in a river pool in the southern parks",
-  },
-  {
-    circuit: "Western Frontiers",
-    imageUrl: mediaFor("mahale-chimpanzee").src,
-    alt: "A chimpanzee in the Mahale mountain forest",
-  },
-  {
-    circuit: "Zanzibar & Islands",
-    imageUrl: mediaFor("mafia-island-lagoon").src,
-    alt: "A turquoise lagoon ringed by coastal forest",
-  },
-  {
-    circuit: "The Peaks",
-    imageUrl: mediaFor("kilimanjaro-summit-clear").src,
-    alt: "The snows on the summit of Kilimanjaro",
-  },
+// The hero speaks to the three kinds of traveller Miale builds for, not to the
+// parks: most first-time visitors cannot place Mikumi or Ndutu on a map.
+const THEME_SLIDES: { tagKey: string; titleKey: string; accentKey: string; subKey: string; imageId: string }[] = [
+  { tagKey: "hero.tag1", titleKey: "hero.title1", accentKey: "hero.accent1", subKey: "hero.sub1", imageId: "serengeti-balloons-sunrise" },
+  { tagKey: "hero.tag2", titleKey: "hero.title2", accentKey: "hero.accent2", subKey: "hero.sub2", imageId: "cheetah-close-encounter" },
+  { tagKey: "hero.tag3", titleKey: "hero.title3", accentKey: "hero.accent3", subKey: "hero.sub3", imageId: "wildebeest-herd-green-plain" },
 ];
 
 export const Hero = () => {
-  const { t, lang } = useLanguage();
+  const { t } = useLanguage();
   const [currentSlide, setCurrentSlide] = useState(0);
   const [painted, setPainted] = useState(0);
   const containerRef = useRef<HTMLDivElement>(null);
@@ -58,7 +35,7 @@ export const Hero = () => {
   const y = useTransform(scrollY, [0, 1000], [0, 400]);
   const scale = useTransform(scrollY, [0, 500], [1, 1.05]);
 
-  const slides = CIRCUIT_SLIDES;
+  const slides = THEME_SLIDES;
 
   useEffect(() => {
     if (slides.length <= 1) return;
@@ -72,13 +49,15 @@ export const Hero = () => {
   const heldIndex = painted % slides.length;
   const slide = slides[index];
   const incomingReady = index === heldIndex;
+  const slideImage = mediaFor(slide.imageId);
+  const heldImage = mediaFor(slides[heldIndex].imageId);
 
   return (
     <section ref={containerRef} className="relative h-[100svh] w-full overflow-hidden bg-safari-charcoal">
       <motion.div style={{ y, scale }} className="absolute inset-0 z-0 accelerate">
         {!incomingReady && (
           <Image
-            src={slides[heldIndex].imageUrl}
+            src={heldImage.src}
             alt=""
             fill
             className="object-cover"
@@ -92,8 +71,8 @@ export const Hero = () => {
           )}
         >
           <Image
-            src={slide.imageUrl}
-            alt={slide.alt}
+            src={slideImage.src}
+            alt={slideImage.alt}
             fill
             className="object-cover"
             quality={70}
@@ -117,30 +96,30 @@ export const Hero = () => {
           transition={{ duration: 0.8, delay: 0.3 }}
           className="max-w-6xl w-full lg:col-span-8 xl:col-span-7"
         >
-          <p className="font-space text-[9px] md:text-[11px] uppercase tracking-[0.45em] text-secondary mb-6 md:mb-8">
-            {t("hero.eyebrow")}
-          </p>
-
-          <h1 className="font-serif font-medium leading-[0.95] md:leading-[0.82] text-white tracking-tighter drop-shadow-2xl mb-6 md:mb-8 text-4xl sm:text-6xl md:text-8xl">
-            {t("hero.title")}
-            <span className="block font-light italic text-white/70">{t("hero.titleAccent")}</span>
-          </h1>
-
-          <p className="text-white/75 max-w-2xl font-light leading-relaxed mb-8 md:mb-10 text-sm sm:text-lg md:text-xl mx-auto lg:mx-0">
-            {t("hero.subline")}
-          </p>
-
           <motion.p
-            key={`caption-${index}`}
+            key={`tag-${index}`}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-            className="flex items-center justify-center gap-3 mb-8 md:mb-10 lg:justify-start font-space text-[9px] md:text-[10px] uppercase tracking-[0.35em] text-white/50"
+            transition={{ duration: 0.6 }}
+            className="font-space text-[9px] md:text-[11px] uppercase tracking-[0.45em] text-secondary mb-5 md:mb-7"
           >
-            <span className="h-px w-8 bg-white/25" />
-            {labelFor(CIRCUIT_LABEL, lang, slide.circuit)}
-            <span className="h-px w-8 bg-white/25" />
+            {t(slide.tagKey)}
           </motion.p>
+
+          <motion.h1
+            key={`title-${index}`}
+            initial={{ opacity: 0, y: 14 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7 }}
+            className="font-serif font-medium leading-[0.95] md:leading-[0.82] text-white tracking-tighter drop-shadow-2xl mb-6 md:mb-8 text-4xl sm:text-6xl md:text-8xl"
+          >
+            {t(slide.titleKey)}
+            <span className="block font-light italic text-white/70">{t(slide.accentKey)}</span>
+          </motion.h1>
+
+          <p key={`sub-${index}`} className="text-white/75 max-w-2xl font-light leading-relaxed mb-8 md:mb-10 text-sm sm:text-lg md:text-xl mx-auto lg:mx-0">
+            {t(slide.subKey)}
+          </p>
 
           <div className="flex flex-col sm:flex-row items-center justify-center gap-6 md:gap-8 pt-4 lg:justify-start">
             <BookingDialog>
@@ -148,7 +127,7 @@ export const Hero = () => {
                 size="lg"
                 className="w-full sm:w-auto h-14 md:h-16 px-10 md:px-12 rounded-full bg-secondary text-white hover:bg-accent transition-all font-space font-bold uppercase tracking-widest group shadow-2xl text-[10px]"
               >
-                {t("hero.fallbackCta")}
+                {t("hero.cta")}
                 <ArrowRight className="ml-2 w-3 h-3 group-hover:translate-x-1 transition-transform" />
               </Button>
             </BookingDialog>
@@ -174,7 +153,7 @@ export const Hero = () => {
           </button>
           <div className="flex gap-2">
             {slides.map((s, i) => (
-              <div key={s.circuit} className={cn("h-1 rounded-full transition-all duration-700", i === index ? "w-8 bg-secondary" : "w-1.5 bg-white/20")} />
+              <div key={s.tagKey} className={cn("h-1 rounded-full transition-all duration-700", i === index ? "w-8 bg-secondary" : "w-1.5 bg-white/20")} />
             ))}
           </div>
           <button onClick={() => setCurrentSlide((p) => (p + 1) % slides.length)} className="text-white/50 hover:text-white transition-colors">

@@ -192,6 +192,19 @@ export const TOUR_DATA: Record<string, any> = {
 export const TOURS = Object.values(TOUR_DATA);
 
 /**
+ * The six routes the homepage showcases: one per circuit, plus the coast at the
+ * end of a mainland trip. Framed by the experience rather than the destination.
+ */
+export const SIGNATURE_SHOWCASE = [
+  "serengeti-migration-journey",
+  "central-serengeti-deep-dive",
+  "mahale-mountains-luxury",
+  "kilimanjaro-lemosho-route",
+  "ruaha-wilderness-expedition",
+  "zanzibar-stone-town-beach",
+];
+
+/**
  * A price is only shown once the desk has entered one. The static itinerary list deliberately
  * carries none, so the public pages read "Priced to order" until a real figure lands in
  * Admin → Expeditions.

@@ -5,85 +5,32 @@ import { motion } from "framer-motion";
 import Image from "next/image";
 import { mediaFor } from "@/lib/media";
 import { Button } from "@/components/ui/button";
-import { ArrowRight, Compass, Clock, Loader2, RefreshCw } from "lucide-react";
+import { ArrowRight, Clock, Compass } from "lucide-react";
 import Link from "next/link";
-import { useCollection, useFirestore, useMemoFirebase, useUser } from "@/firebase";
-import { collection, query, where, limit, writeBatch, doc, serverTimestamp, getDocs } from "firebase/firestore";
-import { useState } from "react";
-import { useToast } from "@/hooks/use-toast";
-import { TOURS } from "@/lib/tours";
+import { useCollection, useFirestore, useMemoFirebase } from "@/firebase";
+import { collection, query, where, limit } from "firebase/firestore";
+import { SIGNATURE_SHOWCASE, TOUR_DATA } from "@/lib/tours";
 import { useLanguage } from "@/context/LanguageContext";
-import { CATEGORY_LABEL, labelFor } from "@/lib/i18n";
+import { CATEGORY_LABEL, EXPERIENCE_LABEL, labelFor } from "@/lib/i18n";
 
 /**
- * @fileOverview Featured Expeditions Grid
- * Optimized for performance: uses responsive image sizing and hardware acceleration.
+ * @fileOverview Signature experiences
+ * Six routes, named for what you do on them rather than where they are. An edited
+ * Firestore row wins; the static registry keeps the section full on a cold read.
  */
 export const FeaturedTours = () => {
   const db = useFirestore();
-  const { user } = useUser();
   const { lang, t } = useLanguage();
-  const { toast } = useToast();
-  const [syncing, setSyncing] = useState(false);
 
-  // Status check is required for public listing
-  const toursQuery = useMemoFirebase(() => 
-    query(collection(db, "itineraries"), where("status", "==", "active"), limit(6)), 
+  const toursQuery = useMemoFirebase(() =>
+    query(collection(db, "itineraries"), where("status", "==", "active"), limit(50)),
   [db]);
-  const { data: firestoreTours, loading } = useCollection(toursQuery);
+  const { data: firestoreTours } = useCollection(toursQuery);
 
-  // "Direct-to-App" Logic: Fallback to static master data for near-instant loads
-  const featuredTours = firestoreTours && firestoreTours.length > 0 
-    ? firestoreTours 
-    : TOURS.slice(0, 6).map((t, i) => ({ ...t, id: t.slug || `local-${i}` }));
-
-  const handleSync = async () => {
-    if (!user) {
-      toast({
-        variant: "destructive",
-        title: t("ft.adminTitle"),
-        description: t("ft.adminDesc"),
-      });
-      return;
-    }
-
-    setSyncing(true);
-    const batch = writeBatch(db);
-    let count = 0;
-
-    try {
-      for (const master of TOURS) {
-        const existingQuery = query(collection(db, "itineraries"), where("slug", "==", master.slug));
-        const existingSnap = await getDocs(existingQuery);
-
-        if (existingSnap.empty) {
-          const docRef = doc(collection(db, "itineraries"));
-          batch.set(docRef, {
-            ...master,
-            status: "active",
-            createdAt: serverTimestamp(),
-            updatedAt: serverTimestamp()
-          });
-          count++;
-        }
-      }
-
-      if (count > 0) {
-        await batch.commit();
-        toast({ title: t("ft.syncToast"), description: t("ft.syncToastDesc", { count }) });
-      } else {
-        toast({ title: t("ft.upToDate") });
-      }
-    } catch (err: any) {
-      toast({
-        variant: "destructive",
-        title: t("ft.syncError"),
-        description: err.message || t("ft.authRequired"),
-      });
-    } finally {
-      setSyncing(false);
-    }
-  };
+  const showcase = SIGNATURE_SHOWCASE.map((slug) => {
+    const row: any = firestoreTours?.find((tour: any) => tour.slug === slug) || TOUR_DATA[slug];
+    return row ? { ...row, slug: row.slug || slug, id: row.slug || slug } : null;
+  }).filter(Boolean);
 
   return (
     <section className="py-24 md:py-28 px-6 md:px-12 bg-white" id="tours">
@@ -103,14 +50,10 @@ export const FeaturedTours = () => {
           </p>
         </div>
 
-        {loading && !firestoreTours ? (
-          <div className="py-32 flex flex-col items-center justify-center text-muted-foreground">
-            <Loader2 className="w-12 h-12 animate-spin text-secondary mb-4" />
-            <p className="text-xs font-bold uppercase tracking-widest">{t("ft.loading")}</p>
-          </div>
-        ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {featuredTours.map((tour: any, index) => (
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {showcase.map((tour: any, index: number) => {
+            const experience = labelFor(EXPERIENCE_LABEL, lang, tour.slug) || tour.title;
+            return (
               <motion.div
                 key={tour.id}
                 initial={{ opacity: 0, y: 30 }}
@@ -123,14 +66,14 @@ export const FeaturedTours = () => {
                   <div className="relative aspect-[4/5] overflow-hidden rounded-[2.5rem] mb-8 shadow-sm">
                     <Image
                       src={mediaFor(tour.featuredImage).src}
-                      alt={tour.title}
+                      alt={experience}
                       fill
                       quality={70}
                       className="object-cover transition-transform duration-1000 group-hover:scale-110"
                       sizes="(min-width: 1024px) 32vw, (min-width: 768px) 48vw, 70vw"
                     />
                     <div className="absolute inset-0 bg-[linear-gradient(to_top,rgba(36,66,46,0.96),rgba(36,66,46,0.78)_30%,rgba(36,66,46,0.15)_62%,transparent_80%)]" />
-                    
+
                     <div className="absolute top-6 left-6">
                       <span className="glass px-4 py-1.5 rounded-full text-white text-[9px] font-space font-bold uppercase tracking-widest">
                         {labelFor(CATEGORY_LABEL, lang, tour.category)}
@@ -139,21 +82,21 @@ export const FeaturedTours = () => {
 
                     <div className="absolute bottom-8 left-8 right-8 text-white">
                       <div className="flex items-center gap-4 text-[10px] font-space font-bold uppercase tracking-widest mb-4">
-                        <div className="flex items-center gap-1.5">
+                        <div className="flex items-center gap-1.5 shrink-0">
                           <Clock className="w-3 h-3 text-secondary" />
                           <span>{tour.duration}</span>
                         </div>
-                        <div className="flex items-center gap-1.5">
-                          <Compass className="w-3 h-3 text-secondary" />
-                          <span>{tour.focus || t("ft.wilderness")}</span>
+                        <div className="flex items-center gap-1.5 min-w-0">
+                          <Compass className="w-3 h-3 text-secondary shrink-0" />
+                          <span className="truncate">{tour.title}</span>
                         </div>
                       </div>
-                      <h3 className="text-3xl font-serif font-medium leading-tight text-white group-hover:text-secondary transition-colors duration-500">
-                        {tour.title}
+                      <h3 className="text-2xl md:text-3xl font-serif font-medium leading-tight text-white group-hover:text-secondary transition-colors duration-500">
+                        {experience}
                       </h3>
                     </div>
                   </div>
-                  
+
                   <div className="flex justify-between items-center px-4">
                     <div className="space-y-1">
                       {/* Seed rows carry invented priceFrom figures, so only a written price is publishable here. */}
@@ -165,9 +108,9 @@ export const FeaturedTours = () => {
                   </div>
                 </Link>
               </motion.div>
-            ))}
-          </div>
-        )}
+            );
+          })}
+        </div>
 
         <div className="mt-16 text-center">
           <Button 

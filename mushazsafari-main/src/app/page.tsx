@@ -3,7 +3,6 @@
 import { Navbar } from "@/components/Navbar";
 import { Hero } from "@/components/Hero";
 import { FeaturedTours } from "@/components/FeaturedTours";
-import { InteractiveExplorer } from "@/components/InteractiveExplorer";
 import { MigrationTracker } from "@/components/MigrationTracker";
 import { TrustBadges } from "@/components/TrustBadges";
 import { ContactSection } from "@/components/ContactSection";
@@ -63,14 +62,13 @@ export default function Home() {
               <span className="text-[10px] md:text-[11px] font-space font-bold text-secondary uppercase tracking-[0.45em] block">{t("ed.eyebrow")}</span>
               <h2 className="text-5xl md:text-7xl font-serif leading-[0.98] tracking-tighter text-white">
                 {t("ed.title")}{" "}
-                <span className="font-light italic text-white/55">{t("ed.titleAccent")}</span>{" "}
-                {t("ed.titleTail")}
+                <span className="font-light italic text-white/55">{t("ed.titleAccent")}</span>
               </h2>
             </div>
 
             <div className="rounded-[2rem] bg-white/[0.04] ring-1 ring-white/10 backdrop-blur-sm p-6 md:p-8">
               <p className="text-[15px] md:text-lg text-white/75 font-light leading-relaxed">
-                {t("ed.quote")}
+                {t("ed.statement")}
               </p>
               <div className="grid grid-cols-3 gap-4 md:gap-8 mt-6 md:mt-8">
                 {[
@@ -97,7 +95,6 @@ export default function Home() {
         </div>
       </section>
 
-      <InteractiveExplorer />
       <MigrationTracker />
       <FeaturedTours />
       <ContactSection />

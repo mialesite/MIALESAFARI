@@ -192,14 +192,14 @@ export const Navbar = () => {
       <div className="max-w-[1800px] mx-auto flex items-center justify-between">
         <div className="flex items-center gap-6 lg:gap-12">
           <Link href="/" className="group flex items-center shrink-0">
-            <div className="relative w-32 h-8 md:w-56 md:h-14 transition-transform duration-500 group-hover:scale-105">
+            <div className="transition-transform duration-500 group-hover:scale-105">
               <Image
                 src={logo.src}
                 alt="Miale"
                 width={logo.width}
                 height={logo.height}
-                className="h-8 w-auto md:h-11 object-contain"
-                sizes="(max-width: 768px) 128px, 224px"
+                className="h-7 w-auto md:h-10 lg:h-11 object-contain"
+                sizes="(max-width: 768px) 168px, 264px"
                 priority
               />
             </div>
@@ -385,14 +385,14 @@ export const Navbar = () => {
             className="fixed inset-0 z-[60] overflow-y-auto bg-primary flex flex-col p-8 md:p-12 [-webkit-tap-highlight-color:transparent]"
           >
             <div className="flex justify-between items-center mb-10 md:mb-16">
-              <div className="relative w-36 h-8 md:w-48 md:h-12">
+              <div>
                 <Image
                   src={solidLogo.src}
                   alt="Miale"
                   width={solidLogo.width}
                   height={solidLogo.height}
-                  className="h-8 w-auto md:h-10 object-contain"
-                  sizes="(max-width: 768px) 144px, 192px"
+                  className="h-7 w-auto md:h-9 object-contain"
+                  sizes="(max-width: 768px) 168px, 216px"
                 />
               </div>
               <div className="flex items-center gap-3">

@@ -129,9 +129,8 @@ Supplied by the tour operator for use on this site. Provenance per file is recor
 
 ## Brand mark
 
-- `/images/brand/miale-logo.webp` (640x282, 37 KB) — Miale wordmark, client supplied.
-- `/images/brand/miale-logo-on-dark.webp` (914x402, 60 KB) — Miale wordmark, client supplied.
-- `/images/brand/miale-logo.webp` (640x282, 37 KB) — Miale wordmark, client supplied.
+- `/images/brand/miale-wordmark.webp` (577x96, 13 KB) — Miale wordmark, client supplied artwork cropped to the MIALE letters only.
+- `/images/brand/miale-wordmark-on-dark.webp` (577x96, 14 KB) — same crop, reversed for dark backgrounds.
 
 ## Missing provenance
 

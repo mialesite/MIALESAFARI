@@ -70,13 +70,14 @@ export function SiteFooter() {
       <div className="max-w-[1500px] mx-auto">
         <div className="flex flex-col gap-12 lg:flex-row lg:gap-16 border-b border-white/10 pb-12 lg:pb-16">
           <div className="max-w-sm lg:w-80 lg:shrink-0 space-y-7">
-            <Link href="/" className="block relative w-44 md:w-52 h-14 md:h-16">
+            <Link href="/" className="block">
               <Image
                 src={logoUrl.src}
                 alt={logoUrl.alt}
-                fill
-                className="object-contain object-left"
-                sizes="200px"
+                width={logoUrl.width}
+                height={logoUrl.height}
+                className="object-contain h-8 md:h-9 w-auto"
+                sizes="224px"
               />
             </Link>
             <p className="text-white/55 text-sm font-light leading-relaxed">
