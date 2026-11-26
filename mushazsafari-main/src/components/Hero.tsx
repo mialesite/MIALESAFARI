@@ -19,10 +19,13 @@ const ALL_PARK_NAMES = MASTER_DESTINATIONS.map((d) => d.name);
 
 // The hero speaks to the three kinds of traveller Miale builds for, not to the
 // parks: most first-time visitors cannot place Mikumi or Ndutu on a map.
-const THEME_SLIDES: { tagKey: string; titleKey: string; accentKey: string; subKey: string; imageId: string }[] = [
-  { tagKey: "hero.tag1", titleKey: "hero.title1", accentKey: "hero.accent1", subKey: "hero.sub1", imageId: "serengeti-balloons-sunrise" },
-  { tagKey: "hero.tag2", titleKey: "hero.title2", accentKey: "hero.accent2", subKey: "hero.sub2", imageId: "cheetah-close-encounter" },
-  { tagKey: "hero.tag3", titleKey: "hero.title3", accentKey: "hero.accent3", subKey: "hero.sub3", imageId: "wildebeest-herd-green-plain" },
+// `focus` is where object-cover should anchor each frame, because the wide
+// desktop viewport crops a portrait photograph hard and the interesting part
+// of the cheetah is its face, not its flank.
+const THEME_SLIDES: { tagKey: string; titleKey: string; accentKey: string; subKey: string; imageId: string; focus: string }[] = [
+  { tagKey: "hero.tag1", titleKey: "hero.title1", accentKey: "hero.accent1", subKey: "hero.sub1", imageId: "serengeti-balloons-sunrise", focus: "50% 50%" },
+  { tagKey: "hero.tag2", titleKey: "hero.title2", accentKey: "hero.accent2", subKey: "hero.sub2", imageId: "cheetah-close-encounter", focus: "56% 30%" },
+  { tagKey: "hero.tag3", titleKey: "hero.title3", accentKey: "hero.accent3", subKey: "hero.sub3", imageId: "wildebeest-herd-green-plain", focus: "50% 55%" },
 ];
 
 export const Hero = () => {
@@ -60,6 +63,7 @@ export const Hero = () => {
             src={heldImage.src}
             alt=""
             fill
+            style={{ objectPosition: slides[heldIndex].focus }}
             className="object-cover"
             sizes="100vw"
           />
@@ -75,6 +79,7 @@ export const Hero = () => {
             alt={slideImage.alt}
             fill
             className="object-cover"
+            style={{ objectPosition: slide.focus }}
             quality={70}
             priority={index === 0}
             onLoad={() => setPainted(index)}
