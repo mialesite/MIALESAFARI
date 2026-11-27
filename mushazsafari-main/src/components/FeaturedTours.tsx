@@ -75,7 +75,7 @@ export const FeaturedTours = () => {
                     <div className="absolute inset-0 bg-[linear-gradient(to_top,rgba(36,66,46,0.96),rgba(36,66,46,0.78)_30%,rgba(36,66,46,0.15)_62%,transparent_80%)]" />
 
                     <div className="absolute top-6 left-6">
-                      <span className="glass px-4 py-1.5 rounded-full text-white text-[9px] font-space font-bold uppercase tracking-widest">
+                      <span className="px-4 py-1.5 rounded-full bg-safari-green/70 border border-white/15 backdrop-blur-md text-white text-[9px] font-space font-bold uppercase tracking-widest">
                         {labelFor(CATEGORY_LABEL, lang, tour.category)}
                       </span>
                     </div>

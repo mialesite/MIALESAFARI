@@ -245,7 +245,7 @@ function SafariCollection() {
                     <div className="absolute inset-0 bg-[linear-gradient(to_top,rgba(13,26,18,0.94),rgba(13,26,18,0.42)_38%,rgba(13,26,18,0.08)_68%,transparent_86%)]" />
 
                     <div className="absolute top-5 left-5">
-                      <span className="glass px-4 py-1.5 rounded-full text-white text-[9px] font-space font-bold uppercase tracking-[0.2em]">
+                      <span className="px-4 py-1.5 rounded-full bg-safari-green/70 border border-white/15 backdrop-blur-md text-white text-[9px] font-space font-bold uppercase tracking-[0.2em]">
                         {labelFor(CATEGORY_LABEL, lang, tour.category)}
                       </span>
                     </div>

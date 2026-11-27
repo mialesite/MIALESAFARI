@@ -11,11 +11,6 @@ export default function robots(): MetadataRoute.Robots {
         disallow: [
           "/admin",
           "/api/",
-          "/shop",
-          "/checkout",
-          "/profile",
-          "/beekeeping",
-          "/wishlist",
         ],
       },
     ],

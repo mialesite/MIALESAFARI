@@ -134,4 +134,4 @@ Supplied by the tour operator for use on this site. Provenance per file is recor
 
 ## Missing provenance
 
-75 files carry no per-file licence record in `src/lib/media.json`. Before publishing `/credits`, either confirm the operator's written permission covers on-site use or replace those frames.
+75 files (the 72 `operator-photography` frames plus the 3 brand marks) carry no per-file licence record in `src/lib/media.json`. The public `/credits` page lists the 26 Commons files with author, licence and source link, and describes the remaining frames as held in the Miale library rather than licensing them. Before any of those 72 are reused off this site, confirm the operator's written permission covers that use, or replace them.

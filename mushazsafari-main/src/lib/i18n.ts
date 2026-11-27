@@ -252,6 +252,7 @@ const EN = {
   "footer.byOrbit": "BY ORBIT UNIVERSE",
   "footer.privacy": "Privacy Policy",
   "footer.terms": "Terms of Service",
+  "footer.credits": "Photo Credits",
   "footer.subFailed": "Subscription failed",
   "footer.subFailedDesc": "Something went wrong. Please try again later.",
 
@@ -508,6 +509,7 @@ const SW: Record<keyof typeof EN, string> = {
   "footer.byOrbit": "KWA ORBIT UNIVERSE",
   "footer.privacy": "Sera ya Faragha",
   "footer.terms": "Masharti ya Huduma",
+  "footer.credits": "Mikopo ya Picha",
   "footer.subFailed": "Usajiandikisha Umeshindikana",
   "footer.subFailedDesc": "Kuna hitilafu. Tafadhali jaribu tena baadaye.",
 

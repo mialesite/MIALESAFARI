@@ -62,6 +62,13 @@ export default {
           charcoal: "#1E1E1E",
           white: "#F8F7F3",
           orange: "#D97A32",
+        },
+        // The admin console is written against these three names throughout.
+        // They are aliases of the safari palette, not a second set of colours.
+        honey: {
+          gold: "#B68D40",
+          amber: "#9A7636",
+          dark: "#1E1E1E",
         }
       },
       borderRadius: {

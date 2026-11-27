@@ -3,10 +3,7 @@ import { Cormorant_Garamond, Plus_Jakarta_Sans } from "next/font/google";
 import "./globals.css";
 import { Toaster } from "@/components/ui/toaster";
 import { SmoothScrollProvider } from "@/components/providers/SmoothScrollProvider";
-import { LanguageCurrencyProvider } from "@/context/LanguageCurrencyContext";
 import { SiteLanguageProvider } from "@/context/LanguageContext";
-import { CartProvider } from "@/context/cart-context";
-import { WishlistProvider } from "@/context/wishlist-context";
 import { FirebaseClientProvider } from "@/firebase/client-provider";
 import { SiteFooter } from "@/components/SiteFooter";
 import { WhatsAppButton } from "@/components/WhatsAppButton";
@@ -70,18 +67,12 @@ export default function RootLayout({
       <body className={`${display.variable} ${sans.variable} font-sans antialiased overflow-x-hidden`}>
         <FirebaseClientProvider>
           <SiteLanguageProvider>
-            <LanguageCurrencyProvider>
-              <CartProvider>
-                <WishlistProvider>
-                  <SmoothScrollProvider>
-                    {children}
-                    <SiteFooter />
-                    <WhatsAppButton />
-                    <Toaster />
-                  </SmoothScrollProvider>
-                </WishlistProvider>
-              </CartProvider>
-            </LanguageCurrencyProvider>
+            <SmoothScrollProvider>
+              {children}
+              <SiteFooter />
+              <WhatsAppButton />
+              <Toaster />
+            </SmoothScrollProvider>
           </SiteLanguageProvider>
         </FirebaseClientProvider>
       </body>

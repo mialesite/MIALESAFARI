@@ -13,6 +13,7 @@ const PAGES: { path: string; priority: number; changefreq: MetadataRoute.Sitemap
   { path: "/about", priority: 0.7, changefreq: "monthly" },
   { path: "/contact", priority: 0.7, changefreq: "monthly" },
   { path: "/privacy", priority: 0.3, changefreq: "yearly" },
+  { path: "/credits", priority: 0.3, changefreq: "yearly" },
   { path: "/terms", priority: 0.3, changefreq: "yearly" },
 ];
 

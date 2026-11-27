@@ -35,11 +35,6 @@ export async function generateSignatureContent(input: GenerateSignatureInput): P
     return await response.json();
   } catch (error) {
     console.error('AI Proxy Error:', error);
-    return {
-      tagline: "Harvesting the Gold Standard of Tanzanian Honey.",
-      ctaText: "Visit Our Honey Store",
-      disclaimer: "Confidentiality Notice: This email is intended for the addressee only.",
-      brandInsight: "Fallback content used due to connection timeout."
-    };
+    throw new Error('AI Service Unavailable');
   }
 }

@@ -14,6 +14,19 @@ export function generateStaticParams() {
   return Object.keys(CIRCUITS).map((slug) => ({ slug }));
 }
 
+const CIRCUIT_COPY: Record<string, string> = {
+  "northern-circuit":
+    "The Northern Circuit: Serengeti, Ngorongoro, Tarangire, Lake Manyara and the short grass plains, and how Miale sequences them into one trip.",
+  "southern-circuit":
+    "The Southern Circuit: Ruaha, Nyerere, Mikumi and the Rufiji, the quieter half of Tanzania where the herds and the predators stay put.",
+  "western-frontiers":
+    "The Western Frontiers: Mahale and Gombe, chimpanzee country on the shores of Lake Tanganyika.",
+  "zanzibar-islands":
+    "Zanzibar and the islands: Stone Town, the east coast reefs and the beach finish that closes a mainland trip.",
+  "the-peaks":
+    "The Peaks: Kilimanjaro, Meru and Ol Doinyo Lengai, the treks that sit alongside a safari rather than instead of one.",
+};
+
 export async function generateMetadata({
   params,
 }: {
@@ -22,7 +35,8 @@ export async function generateMetadata({
   const { slug } = await params;
   const circuit = CIRCUITS[slug];
   return {
-    title: circuit ? `${circuit} | Miale Safaris` : "Destinations | Miale Safaris",
+    title: circuit || "Destinations",
+    description: CIRCUIT_COPY[slug] || "Tanzania safari regions and the parks inside them.",
   };
 }
 

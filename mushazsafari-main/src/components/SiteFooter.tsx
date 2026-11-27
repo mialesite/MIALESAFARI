@@ -11,7 +11,7 @@ import { useToast } from "@/hooks/use-toast";
 import { mediaFor } from "@/lib/media";
 import { useLanguage } from "@/context/LanguageContext";
 
-const HIDDEN_ROUTES = ["/admin", "/profile", "/shop", "/checkout", "/beekeeping"];
+const HIDDEN_ROUTES = ["/admin"];
 
 const EXPLORE_LINKS = [
   { labelKey: "fl.destinations", href: "/destinations" },
@@ -211,6 +211,7 @@ export function SiteFooter() {
           </div>
           <div className="flex gap-6 md:gap-8 text-white/25 text-[10px] font-space font-bold uppercase tracking-widest items-center">
             <Link href="/privacy" className="hover:text-secondary transition-colors">{t("footer.privacy")}</Link>
+            <Link href="/credits" className="hover:text-secondary transition-colors">{t("footer.credits")}</Link>
             <div className="flex items-center gap-2 group">
               <Link href="/terms" className="hover:text-secondary transition-colors">{t("footer.terms")}</Link>
               <Link

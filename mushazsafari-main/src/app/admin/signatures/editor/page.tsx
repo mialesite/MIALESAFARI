@@ -51,7 +51,7 @@ function EditorContent() {
 
   const [formData, setFormData] = useState({
     fullName: "MIALE",
-    jobTitle: "TRAVEL DESIGNER",
+    jobTitle: "",
     companyName: "Miale",
     email: "info@mialesafari.com",
     phone: "+255 769 333 331",
@@ -65,7 +65,7 @@ function EditorContent() {
     disclaimer: "This email and any files transmitted with it are confidential and intended solely for the use of the individual or entity to whom they are addressed.",
     ctaText: "Plan Your Safari",
     ctaUrl: "https://mialesafari.com",
-    tagline: "Where Elegance encounters The Wild.",
+    tagline: "",
     showTrustBadges: true,
     socials: {
       facebook: "#",

@@ -9,7 +9,7 @@ const signaturePrompt = ai.definePrompt({
   name: 'signaturePrompt',
   input: { schema: GenerateSignatureInputSchema },
   output: { schema: GenerateSignatureOutputSchema },
-  prompt: `You are a Senior Brand Identity Consultant for Alvena Bees Investment.
+  prompt: `You are a Senior Brand Identity Consultant for Miale Safari, a Tanzania tour operator.
   Generate premium tagline and CTA for:
   Name: {{{fullName}}}
   Title: {{{jobTitle}}}

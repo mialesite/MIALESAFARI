@@ -45,7 +45,7 @@ export const TrustBadges = () => {
               <badge.icon className="w-7 h-7" />
             </div>
             <div>
-              <h4 className="text-[11px] font-space font-bold uppercase tracking-[0.2em] text-primary mb-2">{t(badge.titleKey)}</h4>
+              <h4 className="text-[10px] sm:text-[11px] font-space font-bold uppercase tracking-[0.14em] sm:tracking-[0.2em] text-primary mb-2">{t(badge.titleKey)}</h4>
               <p className="text-[13px] leading-relaxed text-muted-foreground font-light max-w-[240px]">{t(badge.descKey)}</p>
             </div>
           </motion.div>
